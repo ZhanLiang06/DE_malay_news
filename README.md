@@ -50,7 +50,7 @@ The method `findWordMetaData` method will be our method of interest for this pro
   Where this dictionary will have one __key__, which is the `word` value you pass to the method as argument.
   The __value__ will be dictionory with two key value pairs
 | Key | Value |
-| --- | ----- |
+| -------- | ---------- |
 | 'meaning' | list of string, each string is the meaning of word |
 | 'synonym' | list of synonym |
  
