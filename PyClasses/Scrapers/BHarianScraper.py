@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from datetime import datetime, timedelta
+import traceback
 
 from bs4 import BeautifulSoup
 
@@ -46,40 +47,41 @@ class BHarianScraper:
         self.relLinkToArticle_all = []
         article_teasers=[]
         #Web Crawl Begins
+        self.driver = webdriver.Chrome(service=self.service, options=self.options)
         for i in range (0,21):
+        #try:
+            #self.driver = webdriver.Chrome(service=self.service, options=self.options)
+            self.driver.get(f"{self.baseUrl}{self.category}?page={i}")
+            self.driver.implicitly_wait(10)
             try:
-                self.driver = webdriver.Chrome(service=self.service, options=self.options)
-                self.driver.get(f"{self.baseUrl}{self.category}?page={i}")
-                self.driver.implicitly_wait(10)
-
-                try:
-                    # Wait for the div with class article-teaser to appear
-                    WebDriverWait(self.driver, 20).until(
-                        EC.presence_of_element_located((By.CLASS_NAME, 'article-teaser'))
-                    )
-                    print(f"Article teaser found on page {i}.")
-                except Exception as e:
-                    print(f"Error: {e}")
-                    return None
-                # Get the page HTML Text 
-                page_source = self.driver.page_source
-                soup = BeautifulSoup(page_source, "html.parser")
-                article_teasers = soup.find_all(
-                    lambda tag: tag.name == 'div' 
-                    and 'article-teaser' in tag.get('class', []) 
-                    and 'd-block' not in tag.get('class', [])
+                # Wait for the div with class article-teaser to appear
+                WebDriverWait(self.driver, 20).until(
+                    EC.presence_of_element_located((By.CLASS_NAME, 'article-teaser'))
                 )
-                # for content in article_teasers:
-                #     print(content.prettify())
-                # print(len(article_teasers))
-            finally:
-                self.driver.quit()
-    
-            # scrap all info
-            # Due to every page last teaser is the next page first teaser
-            # We have to remove the 1st teasers when we at page 1
+                print(f"Article teaser found on page {i}.")
+            except Exception as e:
+                print(f"Error: {e}")
+                return None
+            # Get the page HTML Text 
+            page_source = self.driver.page_source
+            soup = BeautifulSoup(page_source, "html.parser")
+            article_teasers = soup.find_all(
+                lambda tag: tag.name == 'div' 
+                and 'article-teaser' in tag.get('class', []) 
+                and 'd-block' not in tag.get('class', [])
+            )
+            # for content in article_teasers:
+            #     print(content.prettify())
+            # print(len(article_teasers))
+        #finally:
+            #self.driver.quit()
+
+        # scrap all info
+        # Due to every page last teaser is the next page first teaser
+        # We have to remove the 1st teasers when we at page 1
             if i !=0:
                 article_teasers.pop(0)
+            
             for teaser in article_teasers:
                 # get article create time
                 span_PublishTimeInfo = teaser.find('span', class_='created-ago')
@@ -94,6 +96,7 @@ class BHarianScraper:
                 if(timePublish_datetime > self.fromDate):
                     self.relLinkToArticle_all.append(relLinkToArticle)
                 else:
+                    self.driver.quit()
                     return self.relLinkToArticle_all
         
 
@@ -130,42 +133,47 @@ class BHarianScraper:
         scrappedResults = [] 
         count = 1
         print(f'Scrapping {len(self.relLinkToArticle_all)} article links ...')
+        #Start chrome
+        self.driver = webdriver.Chrome(service=self.service, options=self.options)
         for link in self.relLinkToArticle_all:
+            scrappedOneResult = None
             try:
                 scrappedOneResult = self.scrapOneArticle(link)
             except Exception as e: 
-                print('exception occur')
                 print(f'{count}. fail to scrap on {link}')
+                traceback.print_exc()
             if scrappedOneResult:
                 scrappedResults.append(scrappedOneResult)
                 print(f"{len(scrappedResults)}. Scrap success on url: \'{link}\'")
             count += 1
-
+        
+        self.driver.quit()
         return scrappedResults
 
     def scrapOneArticle(self,url):
         soup = None
-        try:
-            self.driver = webdriver.Chrome(service=self.service, options=self.options)
-            destUrl = self.baseUrl + url
-            self.driver.get(destUrl)
-            self.driver.implicitly_wait(10)
-            # try:
-            #     # Wait for the div with class article-teaser to appear
-            #     WebDriverWait(self.driver, 20).until(
-            #         EC.presence_of_element_located((By.CLASS_NAME, 'article-teaser'))
-            #     )
-            #     print("Article teaser found.")
-            # except Exception as e:
-            #     print(f"Error: {e}")
-            #     return None
-            # Get the page HTML Text 
-            page_source = self.driver.page_source
-            soup = BeautifulSoup(page_source, "html.parser")
+        #try:
+        #self.driver = webdriver.Chrome(service=self.service, options=self.options)
+        destUrl = self.baseUrl + url
+        self.driver.get(destUrl)
+        self.driver.implicitly_wait(10)
+        # try:
+        #     # Wait for the div with class article-teaser to appear
+        #     WebDriverWait(self.driver, 20).until(
+        #         EC.presence_of_element_located((By.CLASS_NAME, 'article-teaser'))
+        #     )
+        #     print("Article teaser found.")
+        # except Exception as e:
+        #     print(f"Error: {e}")
+        #     return None
+        # Get the page HTML Text 
+        page_source = self.driver.page_source
+        soup = BeautifulSoup(page_source, "html.parser")
             
-        finally:
-            self.driver.quit()
+        #finally:
+            #self.driver.quit()
 
+        #timeStart = datetime.now()
         #get Article Title
         title = ''
         titleEle = soup.find('span', class_='d-inline-block mr-1')
@@ -179,7 +187,9 @@ class BHarianScraper:
         authorRelativeLink = ''
         author_email = ''
         authorDict = {}
-        
+
+        ## There are scenario of having no HTML elements to scrap, thus it need to be handle, so far try catch will be used for more fault-tolerent application
+        ## Future improvement includes change from try-catch to if-else for the purpose of reducing computation resources
         try:
             #get authName
             author_n_dateTimeEle = soup.find('div',class_='article-meta mb-2 mb-lg-0 d-flex align-items-center')
@@ -225,10 +235,10 @@ class BHarianScraper:
         articleContent_soup = soup.find('div',class_='dable-content-wrapper')
         articleContents = self.getArticleContents(articleContent_soup)
 
-        scrappedResults = {"Title":title,"authDetail":authorDict,
+        scrappedResults = {"title":title,"authDetail":authorDict,
                            "publishTime":publishTime_txt,"articleBrief":articleBrief,
                            "contents":articleContents,"url":url}
-
+        #print(f'Time Taken to process retrived HTML {datetime.now()-timeStart}')
         return scrappedResults
         
     def getArticleContents(self,soup):
