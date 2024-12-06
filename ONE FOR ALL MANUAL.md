@@ -65,6 +65,7 @@ pip install bs4
 
 
 # GitHub Linux Handbook
+Note: Everytime you working on the project, make sure you are on your branch, use `git branch` to see which branch are you currently in
 ## 1.0 Git Installation on Linux
 currently, you at linux cli as student 
 ### 1. install git
@@ -88,6 +89,8 @@ currently, you at linux cli as student
 
 ### 5. coding
 here you make changes on the files like jupyter notebook
+
+**Note: Everytime you working on the project, make sure you are on your branch, use `git branch` to see which branch are you currently in**
 
 ### 6. Now you wish to update the contents in your branch (which is commit changes)
 - `git add {files that you have made changes}`
@@ -121,6 +124,8 @@ In general sense, we can say that:
 - local repo (the folders inside your computer linux)
 - remote repo (the folders you see on github website)
 Your linux main and branch in your PC will not automatically update to the most recent commit from this website (if you no perform fetch and pull at your linux environment)
+
+### Note: Everytime you working on the project, make sure you are on your branch, use `git branch` to see which branch are you currently in
 
 
 
