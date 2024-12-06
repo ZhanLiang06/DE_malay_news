@@ -40,6 +40,7 @@ This setup will install selenium, webdriver_manager and bs4 library for you as w
 
 Lastly, you should be able to use the `BHarianScraper` library 
 NOTE: There is more method and properties that might help you when buildling the DE project
+NOTE THAT when using the `scrapOneArticle` method, you have to **manually start the driver first** and **quit it** after executing.
 
 ## 1.2 Web Scraping on PRPM
 User-defined `PRPMScraper` python class will be used to scrap data from PRPM
