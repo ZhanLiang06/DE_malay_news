@@ -21,7 +21,7 @@ This `scrapArticles` will returns you list of dictionary where dictionary format
 | url | list of string    | Article contents seperated by paragraphs |
 
 
-** the authDetail dictonary consist of
+** The authDetail dictonary consist of
 | Key    | Data Type | Desc |
 | -------- | ------- | -------------------------------- |
 | authName  | string    | Author Name |
@@ -49,10 +49,10 @@ The method `findWordMetaData` method will be our method of interest for this pro
 * This method will return data in dictionary data type:
   Where this dictionary will have one __key__, which is the `word` value you pass to the method as argument.
   The __value__ will be dictionory with two key value pairs
-  * | Key | Value |
-  * | --- | ----- |
-  * | 'meaning' | list of string, each string is the meaning of word |
-  * | 'synonym' | list of synonym |
+| Key | Value |
+| --- | ----- |
+| 'meaning' | list of string, each string is the meaning of word |
+| 'synonym' | list of synonym |
  
 ### Setup required to use `PRPMScraper` library
 You can ignore this if you already have bs4 library installed in your python environment
