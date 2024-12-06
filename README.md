@@ -8,9 +8,9 @@ User-defined `BHarianScraper` python class will be used for crawling the data.
 * fromDate is datetime datatype (to use datetime, `from datetime import datetime`)
 * category is string type which specify the news category (e.g. 'sukan/bola')
 *   the category value are value that will append to base url (https://www.bharian.com.my/)
-*   e.g. https://www.bharian.com.my/ + 'sukan/bola' will direct to page sukan/bola category
+*   e.g. https://www.bharian.com.my/ + 'sukan/bola' will direct to page sukan/bola category (the page url: https://www.bharian.com.my/sukan/bola)
 
-This `scrapArticles` will returns you list of dictionary where dictionary format as followed:
+This `scrapArticles` will return you list of dictionary where dictionary format as followed:
 | Key    | Data Type | Desc |
 | -------- | ------- | - |
 | title  | string    | Article Title |
