@@ -119,7 +119,9 @@ class BHarianScraper:
         elif 'jam' in timePublish_text:
             hoursAgoInt = int(timePublish_text.split()[0])
             return (toDateTime - timedelta(hours=hoursAgoInt))
-        # minit before
+        elif 'seminit' in timePublish_text:
+            return (toDateTime - timedelta(minutes=1))
+        # minits before
         else:
             minutesAgoInt = int(timePublish_text.split()[0])
             return (toDateTime - timedelta(minutes=minutesAgoInt))
