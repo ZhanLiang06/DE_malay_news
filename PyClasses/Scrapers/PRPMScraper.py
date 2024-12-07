@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 # PRPM web scraping
 class PRPMScraper:
@@ -22,16 +23,21 @@ class PRPMScraper:
     
     def getWordMeanings(self, soup):
         meanings = []
-        contents = soup.find_all('div', class_='tab-pane')
-        for content in contents:
-            defiTab = content.find('b', string='Definisi : ')
-            meanings.append(defiTab.next_sibling.strip())
+        # Extract all definitions
+        tabs = soup.find_all('div', class_="tab-pane")
+        
+        for tab in tabs:
+            # Step 1: Remove "Definisi :" at the start
+            cleaned_text = re.sub(r".*?Definisi\s*:\s", "", tab.get_text())
+
+            # Step 2: Remove the last parenthetical block `(Kamus Inggeris-Melayu Dewan)`
+            cleaned_text = re.sub(r"\s*\(K.*?\)$", "", cleaned_text)
+            meanings.append(cleaned_text)
         return(meanings)
     
     def getSynonym(self, soup):
         synonymList = []
         contents = soup.find_all('b', string='Bersinonim dengan ')
-        print(contents)
         for content in contents:
             synonym = content.find_next_sibling('a').text
             synonymList.append(synonym)
@@ -40,7 +46,6 @@ class PRPMScraper:
     def getSynonym(self, soup):
         synonymList = []
         contents = soup.find_all('b', string='Bersinonim dengan ')
-        print(contents)
         for content in contents:
             all_synonyms = content.find_next_siblings('a')
             for synonym in all_synonyms: 
