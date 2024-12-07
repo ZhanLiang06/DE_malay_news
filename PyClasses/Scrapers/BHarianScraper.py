@@ -79,7 +79,7 @@ class BHarianScraper:
         # scrap all info
         # Due to every page last teaser is the next page first teaser
         # We have to remove the 1st teasers when we at page 1
-            if i !=0:
+            if i > 0 and i < 20:
                 article_teasers.pop(0)
             
             for teaser in article_teasers:
@@ -96,8 +96,12 @@ class BHarianScraper:
                 if(timePublish_datetime > self.fromDate):
                     self.relLinkToArticle_all.append(relLinkToArticle)
                 else:
+                    print(f'Current no. of link: {len(self.relLinkToArticle_all)}')
                     self.driver.quit()
                     return self.relLinkToArticle_all
+            print(f'Current no. of link: {len(self.relLinkToArticle_all)}')
+        self.driver.quit()
+        return self.relLinkToArticle_all
         
 
 
