@@ -67,102 +67,101 @@ class BHarianScraper:
                 #     return None
                 page_source = scraperInstance.driver.page_source
                 soup = BeautifulSoup(page_source, "html.parser")
-                break;
+
+                 #timeStart = datetime.now()
+                #get Article Title
+                title = ''
+                titleEle = soup.find('span', class_='d-inline-block mr-1')
+                try:
+                    title = titleEle.get_text()
+                except Exception as e:
+                    #do nothing cuz ady initialize title
+                    pass
+        
+                author = ''
+                authorRelativeLink = ''
+                author_email = ''
+                authorDict = {}
+        
+                ## There are scenario of having no HTML elements to scrap, thus it need to be handle, so far try catch will be used for more fault-tolerent application
+                ## Future improvement includes change from try-catch to if-else for the purpose of reducing computation resources
+                try:
+                    #get authName
+                    author_n_dateTimeEle = soup.find('div',class_='article-meta mb-2 mb-lg-0 d-flex align-items-center')
+                    author_aTag = author_n_dateTimeEle.find('a')
+                    author = author_aTag.get_text()
+                    try:
+                        #get author link in BH
+                        authorRelativeLink = author_aTag['href']
+                        author_aTag.decompose()
+                        try:
+                            email_aTag = author_n_dateTimeEle.find('a')
+                            author_email = email_aTag.get_text()
+                            email_aTag.decompose()
+                        except Exception as e:
+                            #do nothing cuz ady initialize auth_email
+                            pass
+                    except Exception as e:
+                        #do nothing cuz ady initialize author_aTag
+                        pass
+                except Exception as e:
+                    #do nothing cuz ady initialize authorDict
+                    pass
+        
+                authorDict = {"authName":author,"relLink":authorRelativeLink,"email":author_email}
+                # get date time
+                if not author_n_dateTimeEle: 
+                    print(f'\'author_n_dateTimeEle\' element on \'{url}\' not found. Scrap Attempt:{i} time(s)')
+                    break;
+                haveSpanIfHaveAuthor = author_n_dateTimeEle.find('span')
+                if haveSpanIfHaveAuthor is not None:
+                    author_n_dateTimeEle.find('span').decompose()
+                publishTime_txt = author_n_dateTimeEle.get_text().strip()
+                
+                # get article brief
+                articleBrief = ''
+                articleBrief_ele = soup.find('figcaption',class_='p-2')
+                try:
+                    articleBrief = articleBrief_ele.get_text()
+                except Exception as e:
+                    #do nothing cuz ady initialize articleBrief
+                    pass
+                
+        
+                # get article content
+                articleContent_soup = soup.find('div',class_='dable-content-wrapper')
+                articleContents = scraperInstance.getArticleContents(articleContent_soup)
+        
+                # scrappedResults = {"title":title,"authDetail":authorDict,
+                #                    "publishTime":publishTime_txt,"articleBrief":articleBrief,
+                #                    "contents":articleContents,"url":url}
+                # #print(f'Time Taken to process retrived HTML {datetime.now()-timeStart}')
+                # if scrappedResults:
+                #     print(f"Scrap success on url: \'{url}\'")
+                # else:
+                #     print(f'Fail to scrap on {url}')
+                #     return Row(title='',
+                #           authorDetails = {"authName":'',"relLink":'',"email":''},
+                #           publishTime = '',
+                #           articleBrief = '',
+                #           contents = '',
+                #           url = '')
+                
+                #print(f"Scrap success on url: \'{url}\'")
+                return Row(title=title, 
+                           authorDetails = authorDict,
+                           publishTime = publishTime_txt,
+                           articleBrief = articleBrief,
+                           contents = articleContents,
+                           url = url)
             except:
-                print(f'Timeout error on \'{url}\' {i} time(s)')
+                print(f'Timeout error on \'{url}\'. Scrap Attempt: {i} time(s)')
                 if i == 3:
-                    print(f'Fail to scrap on \'{url}\' {i} due to timeout')
+                    print(f'Fail to scrap on \'{url}\' after {i} scrap attempt(s):.')
                     return None
             finally:
                 scraperInstance.driver.quit()
-        
-
-        #timeStart = datetime.now()
-        #get Article Title
-        title = ''
-        titleEle = soup.find('span', class_='d-inline-block mr-1')
-        try:
-            title = titleEle.get_text()
-        except Exception as e:
-            #do nothing cuz ady initialize title
-            pass
-
-        author = ''
-        authorRelativeLink = ''
-        author_email = ''
-        authorDict = {}
-
-        ## There are scenario of having no HTML elements to scrap, thus it need to be handle, so far try catch will be used for more fault-tolerent application
-        ## Future improvement includes change from try-catch to if-else for the purpose of reducing computation resources
-        try:
-            #get authName
-            author_n_dateTimeEle = soup.find('div',class_='article-meta mb-2 mb-lg-0 d-flex align-items-center')
-            author_aTag = author_n_dateTimeEle.find('a')
-            author = author_aTag.get_text()
-            try:
-                #get author link in BH
-                authorRelativeLink = author_aTag['href']
-                author_aTag.decompose()
-                try:
-                    email_aTag = author_n_dateTimeEle.find('a')
-                    author_email = email_aTag.get_text()
-                    email_aTag.decompose()
-                except Exception as e:
-                    #do nothing cuz ady initialize auth_email
-                    pass
-            except Exception as e:
-                #do nothing cuz ady initialize author_aTag
-                pass
-        except Exception as e:
-            #do nothing cuz ady initialize authorDict
-            pass
-
-        authorDict = {"authName":author,"relLink":authorRelativeLink,"email":author_email}
-        # get date time
-        if not author_n_dateTimeEle: 
-            print(f'No author_n_dateTimeEle \'{url}\' fail.')
-            return None
-        haveSpanIfHaveAuthor = author_n_dateTimeEle.find('span')
-        if haveSpanIfHaveAuthor is not None:
-            author_n_dateTimeEle.find('span').decompose()
-        publishTime_txt = author_n_dateTimeEle.get_text().strip()
-        
-        # get article brief
-        articleBrief = ''
-        articleBrief_ele = soup.find('figcaption',class_='p-2')
-        try:
-            articleBrief = articleBrief_ele.get_text()
-        except Exception as e:
-            #do nothing cuz ady initialize articleBrief
-            pass
-        
-
-        # get article content
-        articleContent_soup = soup.find('div',class_='dable-content-wrapper')
-        articleContents = scraperInstance.getArticleContents(articleContent_soup)
-
-        # scrappedResults = {"title":title,"authDetail":authorDict,
-        #                    "publishTime":publishTime_txt,"articleBrief":articleBrief,
-        #                    "contents":articleContents,"url":url}
-        # #print(f'Time Taken to process retrived HTML {datetime.now()-timeStart}')
-        # if scrappedResults:
-        #     print(f"Scrap success on url: \'{url}\'")
-        # else:
-        #     print(f'Fail to scrap on {url}')
-        #     return Row(title='',
-        #           authorDetails = {"authName":'',"relLink":'',"email":''},
-        #           publishTime = '',
-        #           articleBrief = '',
-        #           contents = '',
-        #           url = '')
-        
-        #print(f"Scrap success on url: \'{url}\'")
-        return Row(title=title,
-                  authorDetails = authorDict,
-                  publishTime = publishTime_txt,
-                  articleBrief = articleBrief,
-                  contents = articleContents,
-                  url = url)
+    
         
     
     def scrapArticleLinks(self,fromDate, category):
@@ -210,9 +209,9 @@ class BHarianScraper:
                     )
                     break;
                 except Exception as e:
-                    print(f'Timeout error on \'{url}\' {tryAttempt} time(s)')
+                    print(f'Timeout error on \'{url}\'. Scrap Attempt: {tryAttempt} time(s)')
                     if i == 3:
-                        print(f'Fail to load \'{url}\' {tryAttempt} due to timeout')
+                        print(f'Fail to load \'{url}\' Scrap Attempt: {tryAttempt} due to timeout')
                         self.driver.quit()
                         return None
             # for content in article_teasers:
