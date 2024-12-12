@@ -18,7 +18,7 @@ class PRPMScraper:
         self.meanings = self.getWordMeanings(soup)
         self.synonym = self.getSynonym(soup)
         if self.meanings:
-            return {self.word: {"meanings": self.meanings, "synonym": self.synonym}}
+            return {"word": self.word, "meanings": self.meanings, "synonym": self.synonym}
         return None
     
     def getWordMeanings(self, soup):
