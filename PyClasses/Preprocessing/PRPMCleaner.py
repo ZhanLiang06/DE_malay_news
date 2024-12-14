@@ -14,7 +14,6 @@ model = malaya.spelling_correction.symspell.load()
 
 class PRPMCleaner:
     def __init__(self):
-        
         self.shortform_map = {
             "bh": "bahan",
             "bkn": "bukan",
@@ -32,7 +31,6 @@ class PRPMCleaner:
             "spt": "seperti",
             "utk": "untuk",
             "yg": "yang"
-            
         }
 
     def clean_meaning(self, meaning):

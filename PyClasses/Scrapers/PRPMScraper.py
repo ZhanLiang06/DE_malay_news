@@ -1,15 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from PyClasses.Preprocessing.PRPMCleaner import PRPMCleaner
 
 # PRPM web scraping
 class PRPMScraper:
-    def __init__(self):
+    def __init__(self,prpmCleaner):
         self.baseUrl = 'https://prpm.dbp.gov.my/Cari1?keyword='
         self.word = None
         self.meanings = None
         self.synonym = None
         self.antonym = None
+        self.cleaner = prpmCleaner
 
     def findWordMetaData(self, word):
         urlReq = self.baseUrl + word
@@ -20,6 +22,7 @@ class PRPMScraper:
         self.synonym = self.getSynonym(soup)
         self.antonym = self.getAntonym(soup)
         if self.meanings:
+            self.meanings = self.cleaner.clean_all_meanings(self.meanings)
             return {self.word: {"meanings": self.meanings, "synonym": self.synonym, "antonym": self.antonym}}
         return None
 

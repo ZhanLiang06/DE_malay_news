@@ -2,7 +2,7 @@
 import sys
 
 def mapper():
-    for line in sys.stdin:
+    for line in sys.strip:
         word = line.strip()
         if word:  
             print(f"{word}\t1")
