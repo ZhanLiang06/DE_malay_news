@@ -3,8 +3,12 @@ from malaya.stem import sastrawi
 from pyspark.sql import functions
 from pyspark.sql.functions import array, col, concat_ws
 from pyspark.sql import Row
+from pyspark import SparkContext
 from itertools import chain
 import re
+from py4j.java_gateway import java_import
+import os
+import subprocess
 
 class DE_Transformation:
 
@@ -50,8 +54,7 @@ class DE_Transformation:
             
         rdd_sentences_clean = rdd_sentences.map(remove_special_characters)
         
-        rdd_result = rdd_sentences_clean.coalesce(1) 
-        result_list = rdd_result.collect()
+        result_list = rdd_sentences_clean.collect()
 
         flattenned_sentences = [item for sublist in result_list for item in sublist]
         # save sentences to text file 
@@ -74,17 +77,84 @@ class DE_Transformation:
         df = self.spark.createDataFrame([(x,) for x in flattened_tokenized_words],["Word"])
         df.write.mode("overwrite").text('DE-prj/Words')
         
-        # # Stem
-        # stemmer = sastrawi()
-        # words_rdd = self.spark.sparkContext.parallelize(flattened_tokenized_words)
-        # stemmed_output = words_rdd.map(stemmer.stem)
-        # result_list = stemmed_output.collect()
-        # flattened_stemmed_words = [item for sublist in result_list for item in sublist]
-        # df = self.spark.createDataFrame([(x,) for x in flattened_tokenized_words],["StemmedWord"])
-        # df.write.mode("overwrite").text('DE-prj/StemmedWords')
+        # Stem
+        stemmer = sastrawi()
+        words_rdd = self.spark.sparkContext.parallelize(flattened_tokenized_words)
+        stemmed_output = words_rdd.map(stemmer.stem)
+        result_list = stemmed_output.collect()
+        flattened_stemmed_words = [item for sublist in result_list for item in sublist]
+        df = self.spark.createDataFrame([(x,) for x in flattened_tokenized_words],["StemmedWord"])
+        df.write.mode("overwrite").text('DE-prj/StemmedWords')
 
         
         return flattenned_sentences, flattened_tokenized_words    
+
+    @classmethod
+    def wordCountMapReduce(cls):
+        outputDir = "hdfs://localhost:9000/user/student/DE-prj/MR_WC_Result"
+        inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/Words/")
+        try:
+            subprocess.run(f"hdfs dfs -rm -r {outputDir}", shell=True, check=True)
+        except:
+            pass
+        # Set the HADOOP_HOME environment variable if not already set
+        hadoop_home = os.getenv('HADOOP_HOME', '/home/hduser/hadoop3')
+        
+        # Check if HADOOP_HOME is set correctly
+        if not hadoop_home:
+            raise ValueError("HADOOP_HOME environment variable is not set!")
+    
+        # Define the Hadoop streaming command
+        hadoop_streaming_command = [
+            f"{hadoop_home}/bin/hadoop", "jar",  # hadoop executable and jar
+            f"{hadoop_home}/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar",  # Path to streaming JAR
+            "-input", ",".join(inputFiles),
+            "-output", outputDir,
+            "-mapper", "PyClasses/MapReduce/WordCount/mapper.py",
+            "-reducer", "PyClasses/MapReduce/WordCount/reducer.py",
+            "-file", "PyClasses/MapReduce/WordCount/mapper.py",
+            "-file", "PyClasses/MapReduce/WordCount/reducer.py"
+        ]
+        print(hadoop_streaming_command)
+        # Run the command using subprocess
+        try:
+            result = subprocess.run(hadoop_streaming_command, check=True, capture_output=True, text=True)
+            # Print the output from the Hadoop job
+            print("Hadoop Streaming Command Output:")
+            print(result.stdout)
+        except subprocess.CalledProcessError as e:
+            print("Error running the Hadoop streaming job:")
+            print(e.stderr)
+            
+    @classmethod
+    def get_processed_words_file_path(cls,directory):
+        # Initialize SparkContext
+        sc = SparkContext.getOrCreate()
+        
+        # Import Hadoop's FileSystem
+        java_import(sc._jvm, 'org.apache.hadoop.fs.FileSystem')
+        java_import(sc._jvm, 'org.apache.hadoop.fs.Path')
+        
+        # Get the Hadoop Configuration and FileSystem object
+        hadoop_conf = sc._jsc.hadoopConfiguration()
+        fs = sc._jvm.FileSystem.get(hadoop_conf)
+        
+        # Define the HDFS path (replace with your directory path)
+        hdfs_directory = f'hdfs://localhost:9000{directory}'
+        
+        # Create a Path object
+        path = sc._jvm.Path(hdfs_directory)
+        
+        # List the files in the directory
+        file_status = fs.listStatus(path)
+        
+        # Print the file paths
+        result = []
+        for status in file_status:
+            file_path = status.getPath().toString()
+            if file_path.startswith('hdfs://localhost:9000/user/student/DE-prj/Words/part'):
+                result.append(file_path)
+        return result
 
 
 #==========================================OLD CODE====================================================

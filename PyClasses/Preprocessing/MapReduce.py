@@ -4,7 +4,7 @@
 # Note : i only use one of the text file in StemmedWords folder
 # Note : StemmedWords/part-00015-28ceba8e-151d-49cb-a4a3-66f892718b6c-c000.txt this path will only appear after running the transformation.ipynb
 # Note : it will be inside hdfs but i move to my local file system 
-
+# pip install MRJob
 from mrjob.job import MRJob
 from mrjob.step import MRStep
 
@@ -33,7 +33,6 @@ class WordCounter(MRJob):
 
 if __name__ == '__main__':
     WordCounter.run()
-
 
 
 
