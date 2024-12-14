@@ -1,5 +1,5 @@
 # YN : 
-# If since this MR is run in CLI so the command are like this : 
+# Since this MR is run in CLI so the command are like this : 
 # (de-venv) student@YN:~/DE_malay_news$ python PyClasses/Preprocessing/MapReduce.py StemmedWords/part-00015-28ceba8e-151d-49cb-a4a3-66f892718b6c-c000.txt
 # Note : i only use one of the text file in StemmedWords folder
 # Note : StemmedWords/part-00015-28ceba8e-151d-49cb-a4a3-66f892718b6c-c000.txt this path will only appear after running the transformation.ipynb
