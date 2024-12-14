@@ -9,6 +9,7 @@ class PRPMScraper:
         self.word = None
         self.meanings = None
         self.synonym = None
+        self.antonym = None
 
     def findWordMetaData(self, word):
         urlReq = self.baseUrl + word
@@ -17,8 +18,9 @@ class PRPMScraper:
         self.word = word
         self.meanings = self.getWordMeanings(soup)
         self.synonym = self.getSynonym(soup)
+        self.antonym = self.getAntonym(soup)
         if self.meanings:
-            return {self.word: {"meanings": self.meanings, "synonym": self.synonym}}
+            return {self.word: {"meanings": self.meanings, "synonym": self.synonym, "antonym": self.antonym}}
         return None
 
     def getWordMeanings(self, soup):
@@ -64,9 +66,32 @@ class PRPMScraper:
 
     def getSynonym(self, soup):
         synonymList = []
-        contents = soup.find_all('b', string='Bersinonim dengan ')
+        contents = soup.find_all('b', string='Bersinonim dengan')
         for content in contents:
-            all_synonyms = content.find_next_siblings('a')
-            for synonym in all_synonyms:
-                synonymList.append(synonym.text.strip())
+            for sibling in content.find_all_next(string=False):
+                if sibling.name == 'a': 
+                    synonymList.append(sibling.text.strip())
+                elif sibling.name == 'b':
+                    break
         return synonymList
+
+    
+    def getAntonym(self, soup):
+        antonyms = []
+        contents = soup.find_all('b', string='Berantonim dengan')
+        for content in contents:
+            for sibling in content.find_all_next(string=False):
+                if sibling.name == 'a':  
+                    antonyms.append(sibling.text.strip())
+                elif sibling.name == 'b':  
+                    break
+    
+        return antonyms
+
+
+
+
+
+
+
+        
