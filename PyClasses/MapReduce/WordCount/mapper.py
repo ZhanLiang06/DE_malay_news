@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 import sys
-
-def mapper():
-    for line in sys.strip:
-        word = line.strip()
-        if word:  
-            print(f"{word}\t1")
-
-if __name__ == "__main__":
-    mapper()
+for line in sys.stdin:
+    words = line.strip().split()
+    for word in words:
+        print(f"{word}\t1")
