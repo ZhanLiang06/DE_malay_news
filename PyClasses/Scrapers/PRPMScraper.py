@@ -5,13 +5,13 @@ from PyClasses.Preprocessing.PRPMCleaner import PRPMCleaner
 
 # PRPM web scraping
 class PRPMScraper:
-    def __init__(self,prpmCleaner):
+    def __init__(self):
         self.baseUrl = 'https://prpm.dbp.gov.my/Cari1?keyword='
         self.word = None
         self.meanings = None
         self.synonym = None
         self.antonym = None
-        self.cleaner = prpmCleaner
+        self.cleaner = PRPMCleaner()
 
     def findWordMetaData(self, word):
         urlReq = self.baseUrl + word

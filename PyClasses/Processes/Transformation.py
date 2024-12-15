@@ -76,14 +76,20 @@ class DE_Transformation:
         df = self.spark.createDataFrame([(x,) for x in flattened_tokenized_words],["Word"])
         df.write.mode("overwrite").text('DE-prj/Words')
         
-        # Stem
-        stemmer = sastrawi()
-        words_rdd = self.spark.sparkContext.parallelize(flattened_tokenized_words)
-        stemmed_output = words_rdd.map(stemmer.stem)
-        result_list = stemmed_output.collect()
-        flattened_stemmed_words = [item for sublist in result_list for item in sublist]
-        df = self.spark.createDataFrame([(x,) for x in flattened_tokenized_words],["StemmedWord"])
-        df.write.mode("overwrite").text('DE-prj/StemmedWords')
+        # # Stem
+        # stemmer = sastrawi()
+        # words_rdd = self.spark.sparkContext.parallelize(flattened_tokenized_words)
+        # def stem(texts):
+        #     result = []
+        #     stemmer = sastrawi()
+        #     for text in texts:
+        #         result.append(steammer.stem(text))
+        #     return result
+        # stemmed_output = words_rdd.mapPartitions(stemmer.stem)
+        # result_list = stemmed_output.collect()
+        # flattened_stemmed_words = [item for sublist in result_list for item in sublist]
+        # df = self.spark.createDataFrame([(x,) for x in flattened_tokenized_words],["StemmedWord"])
+        # df.write.mode("overwrite").text('DE-prj/StemmedWords')
 
         
         return flattenned_sentences, flattened_tokenized_words    

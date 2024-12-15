@@ -1,25 +1,22 @@
 #!/usr/bin/env python3
 import sys
+from itertools import groupby
+from operator import itemgetter
 
-def reducer():
-    current_word = None
-    current_count = 0
+current_word = None
+current_count = 0
 
-    for line in sys.stdin:
-        word, count = line.strip().split('\t')
-        count = int(count)
+for line in sys.stdin:
+    word, count = line.strip().split("\t")
+    count = int(count)
 
-        if current_word == word:
-            current_count += count
-        else:
-            if current_word is not None: 
-                print(f"{current_word}\t{current_count}")
-            current_word = word
-            current_count = count
+    if word == current_word:
+        current_count += count
+    else:
+        if current_word:
+            print(f"{current_word}\t{current_count}")
+        current_word = word
+        current_count = count
 
-    # Emit the last word's count
-    if current_word is not None:
-        print(f"{current_word}\t{current_count}")
-
-if __name__ == "__main__":
-    reducer()
+if current_word:
+    print(f"{current_word}\t{current_count}")
