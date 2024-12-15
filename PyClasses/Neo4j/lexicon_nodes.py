@@ -3,39 +3,55 @@ from neo4j import GraphDatabase
 class LexiconNodeManager:
     def __init__(self, uri, auth):
         self.driver = GraphDatabase.driver(uri, auth=auth)
+        print("Established Connection")
 
     def close(self):
+        print("connection lost")
         self.driver.close()
 
     # This method is used to create the WORD node
     def create_word_node(self, word_meta):
+        #{'word':'ab': ,'meanings': ['kep anggaran belanja. (kamus dewan edisi keempat)'], 'synonym': [], 'antonym': [], 'base': 'ab', 'count': 3, 'POS': 'Proper noun', 'SentimentLabel': 'neutral'}
         try:
             # Extract word information
-            word = word_meta["word"]
+            word = word_meta.get("word", "") or""
             definitions = word_meta.get("meanings", []) or [] # Returns meaning(s) of the word
             synonyms = word_meta.get("synonym", []) or [] # Returns synonym(s) of the word
+            antonyms = word_meta.get("antonym", []) or []
+            base_word = word_meta.get("base", "") or ""
+            word_count = word_meta.get("count", 0) or 0
+            pos = word_meta.get("POS", "") or ""
+            label = word_meta.get("SentimentLabel", "") or ""
             #word_count = content.lower().count(word.lower()) # Returns the no. of occurence of the word in the article --> to be changed
 
             # Write Cypher query to create a WORD node
             query = """
             MERGE (w:WORD {word: $word})
-            ON CREATE SET w.definitions = $definitions, 
-                          w.synonyms = $synonyms
+            ON CREATE SET w.definitions = $definitions,
+                          w.synonyms = $synonyms,
+                          w.antonyms = $antonyms,
+                          w.base_word = $base_word,
+                          w.word_count = $word_count,
+                          w.POS = $pos,
+                          w.Label = $label
             RETURN w, count(w) AS node_count
             """
             # Parameters
             params = {
                 'word': word,
-                'part_of_speech': "",  # Default is empty first
                 'definitions': definitions,
                 'synonyms': synonyms,
-                #'word_count': word_count
+                'antonyms': antonyms,
+                'base_word': base_word,
+                'word_count': word_count,
+                'pos': pos,
+                'label': label
             }
             # Execute the query
             with self.driver.session() as session:
                 result = session.run(query, params)
                 node_count = result.single()["node_count"]
-                print(f"Successfully created {node_count} new WORD node(s)!")
+                print(f"Successfully created \"{word}\" new WORD node(s)! {node_count}")
                 #return result.single()[node_count]
                 return None
             

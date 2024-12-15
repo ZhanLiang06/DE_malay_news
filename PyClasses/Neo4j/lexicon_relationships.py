@@ -26,7 +26,7 @@ class LexiconRelManager:
         
         try:
             self.driver.execute_query(query, params)
-            print(f"Successfully established relationship(s)!")
+            print(f"Successfully established \"{node1_name} {relationship_type} {node2_name}\" relationship(s)!")
         except Exception as e:
             print(f"Error creating relationship: {e}")
 
