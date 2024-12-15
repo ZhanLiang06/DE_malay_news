@@ -30,7 +30,7 @@ This `scrapArticles` will return you list of dictionary where dictionary format 
 
 ### Setup required to use this `BHarianScraper` library
 ```
-apt --fix-broken install
+sudo apt --fix-broken install
 pip install selenium webdriver_manager bs4
 sudo apt update
 sudo apt upgrade
