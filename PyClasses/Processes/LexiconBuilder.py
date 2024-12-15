@@ -32,7 +32,7 @@ class LexiconBuilder:
             return None
 
 
-    def get_words_properties(self):
+    def build_lexicon(self,uri,auth):
         # get map reduced words
         df = self.get_reduced_words()
 
@@ -54,8 +54,10 @@ class LexiconBuilder:
         formatted_dict = {item['Tag']: item['Description'].split(',')[0].strip() for item in pos_dict}
         formatted_pos_dict_BC = self.spark.sparkContext.broadcast(formatted_dict)
         sentiment_model_BC = self.spark.sparkContext.broadcast(sentiment_models)
+        neo4j_uri_BC = self.spark.sparkContext.broadcast(uri)
+        neo4j_auth_BC = self.spark.sparkContext.broadcast(auth)
         
-        def build_lexicon(rows,uri,auth):
+        def build_lexicon_to_neo4j(rows):
             PRPMscrap = PRPMScraper()
             model = modelBC.value
             pos_model = pos_modelBC.value
@@ -63,8 +65,8 @@ class LexiconBuilder:
             sentiment_model = sentiment_model_BC.value
 
             #Establish Connection 
-            lnm = LexiconNodeManager(uri, auth)
-            lrm = LexiconRelManager(uri, auth)
+            lnm = LexiconNodeManager(neo4j_uri_BC.value, neo4j_auth_BC.value)
+            lrm = LexiconRelManager(neo4j_uri_BC.value, neo4j_auth_BC.value)
             for row in rows:
                 singleResult = PRPMscrap.findWordMetaData(row.word)
                 if singleResult is not None:
@@ -112,9 +114,9 @@ class LexiconBuilder:
                                 ## Establish Relationships "ANTONYM_OF"
                                 lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", word, "ANTONYM_OF")
 
-        wordRows_rdd = df.rdd.repartition(4)
+        wordRows_rdd = df.rdd.repartition(3)
         timeNow = datetime.now() 
-        wordRows_rdd.foreachPartition(get_word_metadata)
+        wordRows_rdd.foreachPartition(build_lexicon_to_neo4j)
         timeEnd =  datetime.now() 
         timeTaken = timeEnd - timeNow
         print(f'Processing Start Time: {timeNow}')
