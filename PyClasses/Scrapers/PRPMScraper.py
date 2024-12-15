@@ -23,7 +23,7 @@ class PRPMScraper:
         self.antonym = self.getAntonym(soup)
         if self.meanings:
             self.meanings = self.cleaner.clean_all_meanings(self.meanings)
-            return {self.word: {"meanings": self.meanings, "synonym": self.synonym, "antonym": self.antonym}}
+            return {"word":self.word, "meanings": self.meanings, "synonym": self.synonym, "antonym": self.antonym}
         return None
 
     def getWordMeanings(self, soup):
