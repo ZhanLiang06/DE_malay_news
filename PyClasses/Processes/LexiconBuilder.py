@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import split
 from PyClasses.Scrapers.PRPMScraper import PRPMScraper
+from PyClasses.Scrapers.PERIScraper import PeriScraper
 from PyClasses.Preprocessing.PRPMCleaner import PRPMCleaner
 from datetime import datetime, timedelta
 from malaya.pos import huggingface as POSModel
@@ -15,7 +16,9 @@ from PyClasses.Neo4j.lexicon_relationships import LexiconRelManager
 import traceback
 
 class LexiconBuilder:
-    def __init__(self, spark):
+    def __init__(self, spark,uri,auth):
+        self.uri = uri
+        self.auth = auth
         self.spark = spark
         
     def get_reduced_words(self):
@@ -31,8 +34,57 @@ class LexiconBuilder:
         except:
             return None
 
+    def build_peribahasa(self):
+        peri_scrap = PeriScraper()
+        proverbs_data_AM = peri_scrap.scrape_page(peri_scrap.AM_Url)
+        proverbs_data_NZ = peri_scrap.scrape_page(peri_scrap.NZ_Url)
+        combined_peri = proverbs_data_AM + proverbs_data_NZ
 
-    def build_lexicon(self,uri,auth):
+        # Load the sentiment model
+        model_name = 'mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased'
+        sentiment_model = load(
+            model=model_name,
+            class_model=Classification,
+            available_huggingface=available_huggingface,
+            force_check=True
+        ) 
+        
+        # Broadcast variables (including model)
+        modelBC = self.spark.sparkContext.broadcast(malaya.stem.huggingface())
+        pos_modelBC = self.spark.sparkContext.broadcast(POSModel())
+        formatted_dict = {item['Tag']: item['Description'].split(',')[0].strip() for item in pos_dict}
+        formatted_pos_dict_BC = self.spark.sparkContext.broadcast(formatted_dict)
+        sentiment_model_BC = self.spark.sparkContext.broadcast(sentiment_model)
+        neo4j_uri_BC = self.spark.sparkContext.broadcast(self.uri)
+        neo4j_auth_BC = self.spark.sparkContext.broadcast(self.auth)
+        
+        def register_peri_node(peri_metadata):
+            PRPMscrap = PRPMScraper()
+            lnm = LexiconNodeManager(neo4j_uri_BC.value, neo4j_auth_BC.value)
+            model = modelBC.value
+            pos_dict = formatted_pos_dict_BC.value
+            pos_model = pos_modelBC.value
+            sentiment_model = sentiment_model_BC.value
+            for data in peri_metadata:
+                lnm.create_peri_node(data)
+                tokens = list(set(data['peri'].split()))
+                for token in tokens:
+                    word_metadata = PRPMscrap.findWordMetaData(token)
+                    if word_metadata is not None:
+                        word_metadata["base"] = model.stem(row.word)
+                        word_metadata["count"] = row["count"]
+                        word_metadata["POS"] = pos_dict[pos_model.predict(row.word)[0][1]]
+                        word_metadata["SentimentLabel"] = sentiment_model.predict(row.word)[0]
+                        lnm.create_word_node(word_metadata)
+                        lrm.create_node_relationship("PERIBAHASA", "peribahasa", data['peri'], "WORD", "word", word_metadata["word"], "HAS WORD")
+        def phase1(peri_metadata):
+            
+        peri_rdd = self.spark.sparkContext.parallelize(combined_peri)
+        peri_rdd.foreachPartition(register_peri_node)
+        return 'success register peri nodes'
+
+
+    def build_lexicon(self):
         # get map reduced words
         df = self.get_reduced_words()
 
@@ -51,8 +103,8 @@ class LexiconBuilder:
         formatted_dict = {item['Tag']: item['Description'].split(',')[0].strip() for item in pos_dict}
         formatted_pos_dict_BC = self.spark.sparkContext.broadcast(formatted_dict)
         sentiment_model_BC = self.spark.sparkContext.broadcast(sentiment_model)
-        neo4j_uri_BC = self.spark.sparkContext.broadcast(uri)
-        neo4j_auth_BC = self.spark.sparkContext.broadcast(auth)
+        neo4j_uri_BC = self.spark.sparkContext.broadcast(self.uri)
+        neo4j_auth_BC = self.spark.sparkContext.broadcast(self.auth)
         
         def build_lexicon_to_neo4j(rows):
             PRPMscrap = PRPMScraper()

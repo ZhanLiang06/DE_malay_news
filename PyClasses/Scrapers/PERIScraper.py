@@ -41,7 +41,7 @@ class PeriScraper:
                     proverb = ' '.join(cells[0].stripped_strings)
                     proverb_cleaned = self.clean_proverb(proverb) 
                     meaning = cells[1].get_text(strip=True)
-                    proverbs_data.append((proverb_cleaned, meaning))
+                    proverbs_data.append({'peri':proverb_cleaned,'meaning': meaning})
     
         return proverbs_data
 

@@ -59,6 +59,37 @@ class LexiconNodeManager:
             print(f"Error creating WORD node for '{word}': {e}")
             return None
 
+    # This method is used to create the WORD node
+    def create_peri_node(self, peri_metadata):
+        #{'peri': 'agihagih kungkang kungkang kera kecil', 'meaning': 'Terlampau murah hati atau suka memberi, hingga menderita kesusahan sendiri.'}
+        try:
+            # Extract word information
+            peribahasa = peri_metadata.get("peri", "") or""
+            meaning = peri_metadata.get("meaning", "") or "" # Returns meaning(s) of the word
+
+            # Write Cypher query to create a WORD node
+            query = """
+            MERGE (w:PERIBAHASA {peribahasa: $peribahasa})
+            ON CREATE SET w.meaning = $meaning
+            RETURN w, count(w) AS node_count
+            """
+            # Parameters
+            params = {
+                'peribahasa': peribahasa,
+                'meaning': meaning
+            }
+            # Execute the query
+            with self.driver.session() as session:
+                result = session.run(query, params)
+                node_count = result.single()["node_count"]
+                print(f"Successfully created \"{peribahasa}\" new PERIBAHASA node(s)! {node_count}")
+                #return result.single()[node_count]
+                return None
+            
+        except Exception as e:
+            print(f"Error creating WORD node for '{word}': {e}")
+            return None
+
 
     # This method is used to create the ARTICLES node
     def create_articles_node(self, article_meta):
