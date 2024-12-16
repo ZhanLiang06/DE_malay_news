@@ -37,23 +37,20 @@ class LexiconBuilder:
         df = self.get_reduced_words()
 
         # Load the sentiment model
-        model_names = [
-            'mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased',
-            'mesolitica/sentiment-analysis-nanot5-small-malaysian-cased'
-        ]
-        sentiment_models = [load(
+        model_name = 'mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased'
+        sentiment_model = load(
             model=model_name,
             class_model=Classification,
             available_huggingface=available_huggingface,
             force_check=True
-        ) for model_name in model_names]
+        ) 
         
         # Broadcast variables (including model)
         modelBC = self.spark.sparkContext.broadcast(malaya.stem.huggingface())
         pos_modelBC = self.spark.sparkContext.broadcast(POSModel())
         formatted_dict = {item['Tag']: item['Description'].split(',')[0].strip() for item in pos_dict}
         formatted_pos_dict_BC = self.spark.sparkContext.broadcast(formatted_dict)
-        sentiment_model_BC = self.spark.sparkContext.broadcast(sentiment_models)
+        sentiment_model_BC = self.spark.sparkContext.broadcast(sentiment_model)
         neo4j_uri_BC = self.spark.sparkContext.broadcast(uri)
         neo4j_auth_BC = self.spark.sparkContext.broadcast(auth)
         
@@ -73,7 +70,7 @@ class LexiconBuilder:
                     singleResult["base"] = model.stem(row.word)
                     singleResult["count"] = row["count"]
                     singleResult["POS"] = pos_dict[pos_model.predict(row.word)[0][1]]
-                    singleResult["SentimentLabel"] = WordLabelling.label_word(sentiment_models, row.word)
+                    singleResult["SentimentLabel"] = sentiment_model.predict(row.word)[0]
                     ## Create Nodes
                     lnm.create_word_node(singleResult)
 
@@ -83,7 +80,7 @@ class LexiconBuilder:
                         if base_word_meta is not None:
                             base_word_meta["base"] = model.stem(singleResult["base"])
                             base_word_meta["POS"] = pos_dict[pos_model.predict(singleResult["base"])[0][1]]
-                            base_word_meta["SentimentLabel"] = WordLabelling.label_word(sentiment_models, singleResult["base"])
+                            base_word_meta["SentimentLabel"] = sentiment_model.predict(singleResult["base"])[0]
                             lnm.create_word_node(base_word_meta)
                             ## Establish Relationships "LEMMATIZED" 
                             lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", singleResult["base"], "LEMMATIZED")
@@ -96,7 +93,7 @@ class LexiconBuilder:
                             if word_meta is not None:
                                 word_meta["base"] = model.stem(word)
                                 word_meta["POS"] = pos_dict[pos_model.predict(word)[0][1]]
-                                word_meta["SentimentLabel"] = WordLabelling.label_word(sentiment_models, word)
+                                word_meta["SentimentLabel"] = sentiment_model.predict(word)[0]
                                 lnm.create_word_node(word_meta)
                                 ## Establish Relationships "SYNONYM_OF"
                                 lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", word, "SYNONYM_OF")
@@ -109,12 +106,12 @@ class LexiconBuilder:
                             if word_meta is not None:
                                 word_meta["base"] = model.stem(word)
                                 word_meta["POS"] = pos_dict[pos_model.predict(word)[0][1]]
-                                word_meta["SentimentLabel"] = WordLabelling.label_word(sentiment_models, word)
+                                word_meta["SentimentLabel"] = sentiment_model.predict(word)[0]
                                 lnm.create_word_node(word_meta)
                                 ## Establish Relationships "ANTONYM_OF"
                                 lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", word, "ANTONYM_OF")
 
-        wordRows_rdd = df.rdd.repartition(3)
+        wordRows_rdd = df.rdd.repartition(4)
         timeNow = datetime.now() 
         wordRows_rdd.foreachPartition(build_lexicon_to_neo4j)
         timeEnd =  datetime.now() 
@@ -126,49 +123,49 @@ class LexiconBuilder:
 
 
 
-class WordLabelling:
-    @staticmethod
-    def label_word(sentiment_models, input_string):
-        model_label_mapping = {
-            "positive": 1,
-            "neutral": 0,
-            "negative": -1
-        }
+# class WordLabelling:
+#     @staticmethod
+#     def label_word(sentiment_models, input_string):
+#         model_label_mapping = {
+#             "positive": 1,
+#             "neutral": 0,
+#             "negative": -1
+#         }
 
-        model_predictions = []
+#         model_predictions = []
         
-        # Get predictions from each model
-        for sentiment_model in sentiment_models:
-            result = sentiment_model.predict(input_string)
-            if isinstance(result, list):
-                result = result[0]
-            if isinstance(result, str):
-                sentiment_label = model_label_mapping.get(result.lower(), "unknown")
-            else:
-                sentiment_label = model_label_mapping.get(result.get("label", "").lower(), "unknown")
-            model_predictions.append(sentiment_label)
+#         # Get predictions from each model
+#         for sentiment_model in sentiment_models:
+#             result = sentiment_model.predict(input_string)
+#             if isinstance(result, list):
+#                 result = result[0]
+#             if isinstance(result, str):
+#                 sentiment_label = model_label_mapping.get(result.lower(), "unknown")
+#             else:
+#                 sentiment_label = model_label_mapping.get(result.get("label", "").lower(), "unknown")
+#             model_predictions.append(sentiment_label)
 
-        # Aggregate the predictions
-        sentiment_labels = model_predictions
+#         # Aggregate the predictions
+#         sentiment_labels = model_predictions
 
-        # Majority voting for labels
-        if len(set(sentiment_labels)) == 1:
-            # If both models agree, take the common label
-            final_label = sentiment_labels[0]
-        else:
-            # Tie case: use scores to break the tie
-            positive_score = sum(1 for label in sentiment_labels if label == "positive")
-            negative_score = sum(1 for label in sentiment_labels if label == "negative")
+#         # Majority voting for labels
+#         if len(set(sentiment_labels)) == 1:
+#             # If both models agree, take the common label
+#             final_label = sentiment_labels[0]
+#         else:
+#             # Tie case: use scores to break the tie
+#             positive_score = sum(1 for label in sentiment_labels if label == "positive")
+#             negative_score = sum(1 for label in sentiment_labels if label == "negative")
 
-            # Compare aggregated scores
-            if positive_score > negative_score:
-                final_label = "positive"
-            elif negative_score > positive_score:
-                final_label = "negative"
-            else:
-                # If scores are also tied, use a priority order
-                priority = ["positive", "neutral", "negative"]
-                final_label = max(sentiment_labels, key=priority.index)
+#             # Compare aggregated scores
+#             if positive_score > negative_score:
+#                 final_label = "positive"
+#             elif negative_score > positive_score:
+#                 final_label = "negative"
+#             else:
+#                 # If scores are also tied, use a priority order
+#                 priority = ["positive", "neutral", "negative"]
+#                 final_label = max(sentiment_labels, key=priority.index)
 
-        return final_label
+#         return final_label
         
