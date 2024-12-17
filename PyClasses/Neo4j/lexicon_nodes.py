@@ -9,8 +9,35 @@ class LexiconNodeManager:
         print("connection lost")
         self.driver.close()
 
+    def create_custom_query(self,query):
+        try:
+            with self.driver.session() as session:
+                    result = session.run(query).data()
+                    print(f"Successfully run {query}!")
+                    #return result.single()[node_count]
+                    return result
+        except Exception as e:
+            print(f"Error executing query! Query: {query}")
+            return None
+
+    def get_all_words(self):
+        query = """ 
+        MATCH (n:WORD)
+        RETURN n.word;
+        """
+        try:
+            with self.driver.session() as session:
+                    result = session.run(query).data()
+                    print(f"Successfully retrieved all words no. of words = {len(result)}!")
+                    #return result.single()[node_count]
+                    return result
+        except Exception as e:
+            print(f"Error retrieving all words. {e}")
+            return None
+
+            
     # This method is used to create the WORD node
-    def create_word_node(self, word_meta):
+    def create_word_node(self, word_meta, article_word):
         #{'word':'ab': ,'meanings': ['kep anggaran belanja. (kamus dewan edisi keempat)'], 'synonym': [], 'antonym': [], 'base': 'ab', 'count': 3, 'POS': 'Proper noun', 'SentimentLabel': 'neutral'}
         try:
             # Extract word information
@@ -25,17 +52,31 @@ class LexiconNodeManager:
             #word_count = content.lower().count(word.lower()) # Returns the no. of occurence of the word in the article --> to be changed
 
             # Write Cypher query to create a WORD node
-            query = """
-            MERGE (w:WORD {word: $word})
-            ON CREATE SET w.definitions = $definitions,
-                          w.synonyms = $synonyms,
-                          w.antonyms = $antonyms,
-                          w.base_word = $base_word,
-                          w.word_count = $word_count,
-                          w.POS = $pos,
-                          w.Label = $label
-            RETURN w, count(w) AS node_count
-            """
+            if article_word:
+                query = """
+                MERGE (w:WORD {word: $word})
+                ON CREATE SET w.definitions = $definitions,
+                              w.synonyms = $synonyms,
+                              w.antonyms = $antonyms,
+                              w.base_word = $base_word,
+                              w.word_count = $word_count,
+                              w.POS = $pos,
+                              w.Label = $label
+                ON MATCH SET w.word_count = $word_count
+                RETURN w, count(w) AS node_count
+                """
+            else:
+                query = """
+                MERGE (w:WORD {word: $word})
+                ON CREATE SET w.definitions = $definitions,
+                              w.synonyms = $synonyms,
+                              w.antonyms = $antonyms,
+                              w.base_word = $base_word,
+                              w.word_count = $word_count,
+                              w.POS = $pos,
+                              w.Label = $label
+                RETURN w, count(w) AS node_count
+                """
             # Parameters
             params = {
                 'word': word,

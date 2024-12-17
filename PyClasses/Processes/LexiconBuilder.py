@@ -76,7 +76,7 @@ class LexiconBuilder:
                         word_metadata["count"] = 1
                         word_metadata["POS"] = pos_dict[pos_model.predict(token)[0][1]]
                         word_metadata["SentimentLabel"] = sentiment_model.predict(token)[0]
-                        lnm.create_word_node(word_metadata)
+                        lnm.create_word_node(word_metadata, article_word = False)
                         lrm.create_node_relationship("PERIBAHASA", "peribahasa", data['peri'], "WORD", "word", word_metadata["word"], "HAS_WORD")
             
         peri_rdd = self.spark.sparkContext.parallelize(combined_peri, numSlices = 2)
@@ -124,16 +124,17 @@ class LexiconBuilder:
                     singleResult["POS"] = pos_dict[pos_model.predict(row.word)[0][1]]
                     singleResult["SentimentLabel"] = sentiment_model.predict(row.word)[0]
                     ## Create Nodes
-                    lnm.create_word_node(singleResult)
+                    lnm.create_word_node(singleResult,article_word = True)
 
                     ## Create Base_Word nodes
                     if singleResult["base"] != row.word:
                         base_word_meta = PRPMscrap.findWordMetaData(singleResult["base"])
                         if base_word_meta is not None:
                             base_word_meta["base"] = model.stem(singleResult["base"])
+                            base_word_meta["count"] = 0
                             base_word_meta["POS"] = pos_dict[pos_model.predict(singleResult["base"])[0][1]]
                             base_word_meta["SentimentLabel"] = sentiment_model.predict(singleResult["base"])[0]
-                            lnm.create_word_node(base_word_meta)
+                            lnm.create_word_node(base_word_meta, article_word = False)
                             ## Establish Relationships "LEMMATIZED" 
                             lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", singleResult["base"], "LEMMATIZED")
                         
@@ -144,9 +145,10 @@ class LexiconBuilder:
                             word_meta = PRPMscrap.findWordMetaData(word)
                             if word_meta is not None:
                                 word_meta["base"] = model.stem(word)
+                                word_meta["count"] = 0
                                 word_meta["POS"] = pos_dict[pos_model.predict(word)[0][1]]
                                 word_meta["SentimentLabel"] = sentiment_model.predict(word)[0]
-                                lnm.create_word_node(word_meta)
+                                lnm.create_word_node(word_meta, article_word = False)
                                 ## Establish Relationships "SYNONYM_OF"
                                 lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", word, "SYNONYM_OF")
                     
@@ -157,9 +159,10 @@ class LexiconBuilder:
                             word_meta = PRPMscrap.findWordMetaData(word)
                             if word_meta is not None:
                                 word_meta["base"] = model.stem(word)
+                                word_meta["count"] = 0
                                 word_meta["POS"] = pos_dict[pos_model.predict(word)[0][1]]
                                 word_meta["SentimentLabel"] = sentiment_model.predict(word)[0]
-                                lnm.create_word_node(word_meta)
+                                lnm.create_word_node(word_meta, article_word = False)
                                 ## Establish Relationships "ANTONYM_OF"
                                 lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", word, "ANTONYM_OF")
     
