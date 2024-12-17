@@ -43,7 +43,7 @@ class BHarianScraper:
             return BHarianScraper.scrapOneArticleNoTryCatch(urls)
         except:
             traceback.print_exc()
-            print(f"Fail to scrap \'{url}\' due to function error")
+            print(f"Fail to scrap \'{urls}\' due to function error")
             return None
             
     
