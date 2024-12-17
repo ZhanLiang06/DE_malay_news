@@ -61,6 +61,7 @@ class LexiconBuilder:
         def register_peri_node(peri_metadata):
             PRPMscrap = PRPMScraper()
             lnm = LexiconNodeManager(neo4j_uri_BC.value, neo4j_auth_BC.value)
+            lrm = LexiconRelManager(neo4j_uri_BC.value, neo4j_auth_BC.value)
             model = modelBC.value
             pos_dict = formatted_pos_dict_BC.value
             pos_model = pos_modelBC.value
@@ -71,15 +72,14 @@ class LexiconBuilder:
                 for token in tokens:
                     word_metadata = PRPMscrap.findWordMetaData(token)
                     if word_metadata is not None:
-                        word_metadata["base"] = model.stem(row.word)
-                        word_metadata["count"] = row["count"]
-                        word_metadata["POS"] = pos_dict[pos_model.predict(row.word)[0][1]]
-                        word_metadata["SentimentLabel"] = sentiment_model.predict(row.word)[0]
+                        word_metadata["base"] = model.stem(token)
+                        word_metadata["count"] = 1
+                        word_metadata["POS"] = pos_dict[pos_model.predict(token)[0][1]]
+                        word_metadata["SentimentLabel"] = sentiment_model.predict(token)[0]
                         lnm.create_word_node(word_metadata)
-                        lrm.create_node_relationship("PERIBAHASA", "peribahasa", data['peri'], "WORD", "word", word_metadata["word"], "HAS WORD")
-        def phase1(peri_metadata):
+                        lrm.create_node_relationship("PERIBAHASA", "peribahasa", data['peri'], "WORD", "word", word_metadata["word"], "HAS_WORD")
             
-        peri_rdd = self.spark.sparkContext.parallelize(combined_peri)
+        peri_rdd = self.spark.sparkContext.parallelize(combined_peri, numSlices = 2)
         peri_rdd.foreachPartition(register_peri_node)
         return 'success register peri nodes'
 
@@ -162,8 +162,8 @@ class LexiconBuilder:
                                 lnm.create_word_node(word_meta)
                                 ## Establish Relationships "ANTONYM_OF"
                                 lrm.create_node_relationship("WORD", "word", row.word, "WORD", "word", word, "ANTONYM_OF")
-
-        wordRows_rdd = df.rdd.repartition(4)
+    
+        wordRows_rdd = df.rdd.repartition(3)
         timeNow = datetime.now() 
         wordRows_rdd.foreachPartition(build_lexicon_to_neo4j)
         timeEnd =  datetime.now() 
