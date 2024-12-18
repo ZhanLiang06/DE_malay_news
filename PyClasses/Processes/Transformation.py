@@ -11,7 +11,6 @@ import os
 import subprocess
 
 class DE_Transformation:
-
     def __init__(self, spark):
         self.spark = spark
 
