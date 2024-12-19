@@ -8,7 +8,6 @@ from pyspark.sql import Row
 import malaya
 from kafka import KafkaProducer
 import json
-
 from lexicraft.util.neo4j import LexiconNodeManager
 
 # Function to analyze morphological structure using Sastrawi stemmer
