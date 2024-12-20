@@ -32,8 +32,7 @@ class PeriScraper:
         proverbs_data = []
 
         for index, table in enumerate(tables):
-            # rows = table.find_all('tr')[1:]  # Skip the headerrrr
-            # print(f"Processing Table {index + 1}...")  # If PC is potato, can show progress...
+            rows = table.find_all('tr')[1:]
             for row in rows:
                 cells = row.find_all('td')
                 if len(cells) >= 2: 
