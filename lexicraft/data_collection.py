@@ -13,7 +13,6 @@ from lexicraft.util.kafka import get_kafka_topic_latest_message
 class ArticleDataCollection:
     def __init__(self, spark):
         self.spark = spark
-
     # @staticmethod
     # def safe_json_deserializer(value):
     #     try:
@@ -22,20 +21,25 @@ class ArticleDataCollection:
     #         print(f"Error deserializing JSON: {e}")
     #         return None
     
-    def start_collect_to_kafka(self, fromDate, categoryLink, kafka_topic, kafka_broker):
+    def start_collect_to_kafka(self, fromDate, categoryLink, kafka_topic, kafka_broker, demo_num_of_article=-1):
         bharianScraper = BHarianScraper()
         kafka_producer = KafkaStreamProducer(topic_name=kafka_topic)
     
         # print("Scraping article links...")
         
         crawlledUrls = bharianScraper.scrapArticleLinks(fromDate,categoryLink)
+        scrapToDate = bharianScraper.toDateTime
         if len(crawlledUrls) == 0:
-            return 'No Article Found'
-        url_RDD = self.spark.sparkContext.parallelize(crawlledUrls)
+            return 'No Article Found', scrapToDate
         if crawlledUrls is None:
             print('failed to get article links')
-            return 'fail'
-
+            return 'fail', scrapToDate
+        # demo purpose
+        if demo_num_of_article != -1:
+            crawlledUrls = crawlledUrls[:demo_num_of_article]
+            print(f"Current is in demo stage, {demo_num_of_article} number of article(s) will be scrapped")
+            
+        url_RDD = self.spark.sparkContext.parallelize(crawlledUrls)
         url_RDD = url_RDD.repartition(3)
         scrappedData = url_RDD.mapPartitions(BHarianScraper.scrapBatchArticle).collect()
         scrappedData = [data for data in scrappedData if data is not None]
@@ -56,7 +60,7 @@ class ArticleDataCollection:
         #          print(json_data)
     
         print(f"Number of articles data sent {len(scrapped_dict_list)}")
-        return 'success in sending collected data to kafka'
+        return 'success in sending collected data to kafka', scrapToDate
 
     def collect_data_from_kafka(self,kafka_topic,kafka_broker,partition):
         # TOPIC = "beritaH"  
@@ -75,13 +79,15 @@ class ArticleDataCollection:
             bharian_data = json.load(file)
         
         df = pd.DataFrame(bharian_data)
-        spark_df = self.spark.createDataFrame(df)
+        return df
+        # spark_df = self.spark.createDataFrame(df)
         
-        output_path = "DE-prj/RawData"
-        spark_df.write.format("parquet").mode("overwrite").save(output_path)
-        print(len(data_list))
+        # output_path = "DE-prj/RawData"
+        # spark_df.write.format("parquet").mode("append").save(output_path)
         
-        print("Data has been saved successfully to:", output_path)
-        return 'success in collect data from kafka'
+        # print(len(data_list))
+        
+        # print("Data has been saved successfully to:", output_path)
+        # return 'success in collect data from kafka'
 
       
