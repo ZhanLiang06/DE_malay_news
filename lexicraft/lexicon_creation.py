@@ -38,7 +38,7 @@ class LexiconBuilder:
         proverbs_data_AM = peri_scrap.scrape_page(peri_scrap.AM_Url)
         proverbs_data_NZ = peri_scrap.scrape_page(peri_scrap.NZ_Url)
         combined_peri = proverbs_data_AM + proverbs_data_NZ
-        combined_peri = combined_peri[last_offset:]
+        combined_peri = combined_peri[peri_registered:]
         combined_peri = combined_peri[:count]
         # Load the sentiment model
         model_name = 'mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased'
