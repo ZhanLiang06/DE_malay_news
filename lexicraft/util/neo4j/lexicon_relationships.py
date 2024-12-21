@@ -11,7 +11,7 @@ class LexiconRelManager:
     def create_node_relationship(self, node1_label, node1_property, node1_name, node2_label, node2_property, node2_name, relationship_type):
         query = f"""
         MATCH (n1:{node1_label} {{{node1_property}: $node1_name}}), (n2:{node2_label} {{{node2_property}: $node2_name}})
-        CREATE (n1)-[:{relationship_type}]->(n2)
+        MERGE (n1)-[:{relationship_type}]->(n2)
         """
         # Missing: should check if relationship is already established
         params = {
