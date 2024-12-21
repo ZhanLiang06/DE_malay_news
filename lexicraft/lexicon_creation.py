@@ -73,7 +73,7 @@ class LexiconBuilder:
                     word_metadata = PRPMscrap.findWordMetaData(token)
                     if word_metadata is not None:
                         word_metadata["base"] = model.stem(token)
-                        word_metadata["count"] = 1
+                        word_metadata["count"] = 0
                         word_metadata["POS"] = pos_dict[pos_model.predict(token)[0][1]]
                         word_metadata["SentimentLabel"] = sentiment_model.predict(token)[0]
                         lnm.create_word_node(word_metadata, article_word = False)
