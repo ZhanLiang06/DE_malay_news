@@ -2,7 +2,7 @@
     "db_uri": "neo4j+s://231511d9.databases.neo4j.io",
     "db_username": "neo4j",
     "db_password": "m6fWF6qQUe6yGcZ81yAX0XG425OncyOB28A30vI9VvM",
-    "next_scrap_from": "2024-12-21T16:21:18.428057",
+    "next_scrap_from": "2024-12-21T19:24:20.180285",
     "peri_to_reg": 20,
-    "peri_registered": 0
+    "peri_registered": 60
 }

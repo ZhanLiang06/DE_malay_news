@@ -8,7 +8,17 @@ from pyspark.sql import Row
 import malaya
 from kafka import KafkaProducer
 import json
+from sklearn.feature_extraction.text import TfidfVectorizer,  CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import re
+from sklearn.naive_bayes import MultinomialNB
+import joblib
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 from lexicraft.util.neo4j import LexiconNodeManager
+from lexicraft.scrapers.wiki_scraper import WikiScraper
 
 # Function to analyze morphological structure using Sastrawi stemmer
 class Analysis():
@@ -247,3 +257,207 @@ class Analysis():
         message = df_result.to_json(orient='records')
         self.producer.send("morphological_analysis", partition=0,value=message).add_callback(self.on_send_success).add_errback(self.on_send_error)
         self.producer.flush()
+
+    @staticmethod
+    def intrinsic_accuracy(word_to_find,uri,auth):
+        lnm = LexiconNodeManager(uri, auth)
+        single_word_query = f"""
+            MATCH (n:WORD {{word: '{word_to_find}'}})
+            RETURN n.word AS word, n.definitions AS definitions
+            LIMIT 1
+            """
+        
+        neoresult = lnm.create_custom_query(single_word_query)
+
+        wk = WikiScraper()
+        wikiresult = wk.findWordMetaData(word_to_find)
+        
+        if wikiresult and 'meanings' in wikiresult[word_to_find]:
+            raw_meanings = wikiresult[word_to_find]['meanings']
+            cleaned_meanings = prpm_cleaner.clean_all_meanings(raw_meanings)
+            wikiresult[word_to_find]['meanings'] = cleaned_meanings
+        
+        wiki_meaning = wikiresult[word_to_find]['WikiDefi'][0]
+        neo_combined = ' '.join(neoresult[0]['definitions'])
+
+        def clean_text(text):
+            text = re.sub(r'[^\w\s]', '', text)  # Remove all punctuation
+            text = ' '.join(text.split())       # Normalize multiple spaces to a single space
+            return text.lower()                 # Convert to lowercase
+        
+        # Clean the input texts
+        wiki_cleaned = clean_text(wiki_meaning)
+        neo_cleaned = clean_text(neo_combined)
+        
+        # Tokenize after cleaning
+        wiki_tokens = set(wiki_cleaned.split())
+        neo_tokens = set(neo_cleaned.split())
+        
+        # Calculate intersection and accuracy
+        intersection = wiki_tokens & neo_tokens
+        accuracy = len(intersection) / len(wiki_tokens)
+        
+        # Output
+        print(f"Token Overlap Accuracy: {accuracy:.2f}")
+
+    def intrinsic_coverage(self):
+        lnm = LexiconNodeManager(self.uri, self.auth)
+        analysis_query = """
+            MATCH (n:WORD)
+            RETURN n.word AS word, n.word_count AS count, n.definitions AS definitions
+            ORDER BY n.word_count DESC
+            LIMIT 1000
+            """
+        
+        result = lnm.create_custom_query(analysis_query)
+
+        # Analyze coverage
+        total_words = len(result)
+        covered_words = 0
+        not_covered_words = []
+        
+        for word in result:
+            definitions = word['definitions']
+            if definitions and any(defn.strip() for defn in definitions):
+                covered_words += 1
+            else: 
+                not_covered_words.append(word['word'])
+        
+        coverage_percentage = (covered_words / total_words) * 100 if total_words > 0 else 0
+
+        print(f"Total Words: {total_words}")
+        print(f"Covered Words: {covered_words}")
+        print(f"Coverage Percentage: {coverage_percentage:.2f}%")
+        
+        print("\nExample of Not Covered Words:")
+        print(", ".join(not_covered_words))
+
+        message = {"TotalWords":total_words,"CoveredWords":covered_words,"CoverPercentage":coverage_percentage,"NotCoveredWords":not_covered_words}
+        self.producer.send("intrinsic_coverage", partition=0,value=message).add_callback(self.on_send_success).add_errback(self.on_send_error)
+        self.producer.flush()
+
+    @staticmethod
+    def intrinsic_consistency(list_of_input,uri,auth):
+        lnm = LexiconNodeManager(uri, auth)
+        neoresults = []
+        for word in list_of_input: 
+            single_word_query = f"""
+                MATCH (n:WORD {{word: '{word}'}})
+                RETURN n.word AS word, n.POS AS pos
+                LIMIT 1
+                """
+            neoresult = lnm.create_custom_query(single_word_query)
+            neoresults.append(neoresult)
+            
+        print(neoresults) 
+
+
+    @staticmethod
+    def custom_tokenizer(text):
+        return text.split()
+    
+    @staticmethod
+    def extrinsic_word_sentiment(csv_dataset_filepath,uri,auth):
+        lnm = LexiconNodeManager(uri, auth)
+        neo_query = """
+        MATCH (n)
+        WHERE n.word IS NOT NULL AND n.Label IS NOT NULL
+            AND n.Label IN ['positive', 'neutral', 'negative']
+        RETURN n.word AS word, 
+           CASE 
+               WHEN n.Label = 'positive' THEN 1
+               WHEN n.Label = 'neutral' THEN 0
+               WHEN n.Label = 'negative' THEN -1
+           END AS label_int;
+        """
+        
+        result = lnm.create_custom_query(neo_query)
+        df = pd.DataFrame(result)
+
+        # Train the model
+        vectorizer = CountVectorizer(tokenizer=Analysis.custom_tokenizer, binary=True)
+        X_vec = vectorizer.fit_transform(df['word'])
+        y = df['label_int']
+        
+        # Train a Naive Bayes classifier
+        model = MultinomialNB()
+        model.fit(X_vec, y)
+        
+        # Save the trained model and vectorizer
+        joblib.dump(model, 'sentiment_model.pkl')
+        joblib.dump(vectorizer, 'vectorizer.pkl')
+        print("Model trained successfully on the lexicon dataset.")
+
+        ################################# now perfrom the extrinsic evaluation ##########################################################
+        extrinsic_df = pd.read_csv(csv_dataset_filepath)
+        if 'word' not in extrinsic_df.columns or 'sentiment' not in extrinsic_df.columns:
+                raise ValueError("The extrinsic dataset must contain 'word' and 'sentiment' columns.")
+
+        # Rename columns to match the expected format
+        extrinsic_df.rename(columns={'word': 'filtered_tokens', 'sentiment': 'sentiment_label'}, inplace=True)
+        
+        # Check for missing values in the sentiment_label column
+        if extrinsic_df['sentiment_label'].isnull().any():
+            # Drop rows with missing values
+            extrinsic_df = extrinsic_df.dropna(subset=['sentiment_label'])
+
+        # Check for non-numeric values in the sentiment_label column
+        non_numeric_values = extrinsic_df[~extrinsic_df['sentiment_label'].apply(lambda x: isinstance(x, (int, float)))]
+        if not non_numeric_values.empty:
+            print("Non-numeric values in sentiment_label:")
+            print(non_numeric_values)
+            # Drop rows with non-numeric values
+            extrinsic_df = extrinsic_df[extrinsic_df['sentiment_label'].apply(lambda x: isinstance(x, (int, float)))]
+
+        # Ensure sentiment_label is integer
+        extrinsic_df['sentiment_label'] = extrinsic_df['sentiment_label'].astype(int)
+    
+        # Preprocess the extrinsic dataset
+        extrinsic_df['sentiment_label'] = extrinsic_df['sentiment_label'].astype(int)
+    
+        # Load the trained model and vectorizer
+        model = joblib.load('sentiment_model.pkl')
+        vectorizer = joblib.load('vectorizer.pkl')
+    
+        # Vectorize the extrinsic dataset
+        X_extrinsic = vectorizer.transform(extrinsic_df['filtered_tokens'])
+        y_extrinsic = extrinsic_df['sentiment_label']
+    
+        # Make predictions on the extrinsic dataset
+        y_pred_extrinsic = model.predict(X_extrinsic)
+    
+        # Evaluate the model on the extrinsic dataset
+        accuracy_extrinsic = accuracy_score(y_extrinsic, y_pred_extrinsic)
+        print(f"Extrinsic Evaluation Accuracy: {accuracy_extrinsic:.2f}")
+        print("\nExtrinsic Evaluation Classification Report:")
+        print(classification_report(y_extrinsic, y_pred_extrinsic, target_names=['Negative', 'Neutral', 'Positive']))
+    
+        # Confusion Matrix
+        conf_matrix_extrinsic = confusion_matrix(y_extrinsic, y_pred_extrinsic)
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(conf_matrix_extrinsic, annot=True, fmt='d', cmap='Blues', xticklabels=['Negative', 'Neutral', 'Positive'], yticklabels=['Negative', 'Neutral', 'Positive'])
+        plt.title("Extrinsic Evaluation Confusion Matrix")
+        plt.xlabel("Predicted")
+        plt.ylabel("Actual")
+        plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

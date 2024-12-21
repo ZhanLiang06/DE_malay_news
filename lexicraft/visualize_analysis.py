@@ -8,43 +8,103 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import traceback
+import time
+from multiprocessing import Queue
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import from_json, col, window
+from pyspark.sql.types import StructType, StructField, StringType, TimestampType
+import ast
 
 class AnalysisVisualization:
     @staticmethod
-    def get_kafka_topic_latest_message(topics, bootstrap_servers, kafka_partition):
+    def visualize_analysis_topic_spark_streaming(topics, plot_func, bootstrap_servers, kafka_partition):
         topic = topics
         bootstrap_servers = bootstrap_servers
         partition = kafka_partition
-        consumer = KafkaConsumer(
-            bootstrap_servers=bootstrap_servers,
-            value_deserializer=lambda x: json.loads(x.decode('utf-8'))
-        )
-        topic_partition = TopicPartition(topic, partition)
-        consumer.assign([topic_partition])
-        consumer.seek_to_end(topic_partition)
-        latest_offset = consumer.position(topic_partition)
-
-        consumer.seek(topic_partition, latest_offset - 1)
-        new_message = None
-        for message in consumer:
-            new_message = message
-            break  
-        consumer.close()
-
-        if new_message == None:
-            return None
-        else:
-            # if topic == "morphological_analysis":
-            #     result = json.loads(new_message.value)
-            #     df_received = pd.DataFrame(result)
-            #     return df_received
-            return new_message
-            
-
         
+        spark = SparkSession.builder \
+            .appName("KafkaSparkStreaming") \
+            .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.13:3.5.3") \
+            .getOrCreate()
+    
+        # Schema for the Kafka message value
+        schema = StructType([
+            StructField("key", StringType(), True),
+            StructField("value", StringType(), True),
+            StructField("topic", StringType(), True),
+            StructField("partition", StringType(), True),
+            StructField("offset", StringType(), True),
+            StructField("timestamp", TimestampType(), True),
+            StructField("timestampType", StringType(), True)
+        ])
+
+        df = spark \
+            .readStream \
+            .format("kafka") \
+            .option("kafka.bootstrap.servers", bootstrap_servers) \
+            .option("subscribe", topic) \
+            .option("startingOffsets", "earliest") \
+            .load()
+        
+        df = df.selectExpr("CAST(value AS STRING)","CAST(timestamp AS TIMESTAMP)")
+
+        def process_row(row):
+            cleanned_value = (row.value).replace("null", "None")
+            message = json.loads(cleanned_value)
+            # Write the result to a file
+            with open(f"analysis_sss_result/{topic}_result.json", "w") as f:
+                json.dump({
+                    "result": message,
+                    "timestamp": row.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                }, f)
+            # if topic == "morphological_analysis":
+            #     result = json.loads(row.value)
+            #     df_received = pd.DataFrame(result)
+            #     # Write the result to a file
+            #     df_received['timestamp'] = row.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+            #     df_received.to_csv("analysis_sss_result/morpho.csv", index=False)
+            # else:
+            #     message = json.loads(row.value)
+            #     # Write the result to a file
+            #     with open(f"analysis_sss_result/{topic}_result.json", "w") as f:
+            #         json.dump({
+            #             "result": message,
+            #             "timestamp": row.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+            #         }, f)
+            # try:
+            #     # #last_message_timestamp = datetime.fromtimestamp(row.timestamp / 1000)
+            #     # print("Last Analysis Result Received Time: ", row.timestamp.strftime('%Y-%m-%d %H:%M:%S'))
+            # except Exception as ex:
+            #     # print(f"There is no analysis result for topic \"{topic}\" yet. or error occur when plotting the function")
+            #     # print("Last Updated: ", datetime.now())
+            #     # print("An error occurred:", ex)
+            #     # traceback.print_exc()
+    
+        # Apply the processing function to each row
+        query = df.writeStream \
+            .foreach(process_row) \
+            .start()
+
+
+        time.sleep(5) 
+        query.stop()
+        
+        query.awaitTermination()
+
+        try:
+            with open(f"analysis_sss_result/{topic}_result.json", "r") as f:
+                   result_store = json.load(f)
+                   plot_func(result_store.get("result"))
+                   print("Last Analysis Result Received Time: ", result_store.get("timestamp"))
+        except Exception as ex:
+                print(f"There is no analysis result for topic \"{topic}\" yet. or error occur when plotting the function")
+                print("Last Updated: ", datetime.now())
+                print("An error occurred:", ex)
+                traceback.print_exc()
+
     
     @staticmethod
-    def visualize_analysis_topic(topics, plot_func, auto_update, bootstrap_servers, kafka_partition):
+    def visualize_analysis_topic_kafka(topics, plot_func, auto_update, bootstrap_servers, kafka_partition):
         topic = topics
         bootstrap_servers = bootstrap_servers
         partition = kafka_partition
@@ -65,12 +125,13 @@ class AnalysisVisualization:
                 break  
             consumer.close()
 
-            if topic == "morphological_analysis":
-                result = json.loads(new_message.value)
-                df_received = pd.DataFrame(result)
-                plot_func(df_received)
-            else:
-                plot_func(new_message.value)
+            plot_func(new_message.value)
+            # if topic == "morphological_analysis":
+            #     result = json.loads(new_message.value)
+            #     df_received = pd.DataFrame(result)
+            #     plot_func(df_received)
+            # else:
+            #     plot_func(new_message.value)
                 
             last_message_timestamp = datetime.fromtimestamp(new_message.timestamp / 1000)
             print("Last Analysis Result Received Time: ", last_message_timestamp.strftime('%Y-%m-%d %H:%M:%S'))
@@ -260,7 +321,15 @@ class AnalysisVisualization:
         plt.close()
 
     @staticmethod
-    def plot_morphological(df_result):
+    def plot_morphological(result):
+        try:
+            transformed_result = json.loads(result)
+            df_result = pd.DataFrame(transformed_result)
+        except:
+            result = ast.literal_eval(result)
+            df_result = pd.DataFrame(result)
+        
+            
         clear_output(wait=True)
     
         # Prefix Visualization
@@ -327,6 +396,37 @@ class AnalysisVisualization:
         plt.ylabel('Stem Length')
         display(plt.gcf())
         plt.close()
+
+
+    @staticmethod
+    def get_kafka_topic_latest_message(topics, bootstrap_servers, kafka_partition):
+        topic = topics
+        bootstrap_servers = bootstrap_servers
+        partition = kafka_partition
+        consumer = KafkaConsumer(
+            bootstrap_servers=bootstrap_servers,
+            value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+        )
+        topic_partition = TopicPartition(topic, partition)
+        consumer.assign([topic_partition])
+        consumer.seek_to_end(topic_partition)
+        latest_offset = consumer.position(topic_partition)
+
+        consumer.seek(topic_partition, latest_offset - 1)
+        new_message = None
+        for message in consumer:
+            new_message = message
+            break  
+        consumer.close()
+
+        if new_message == None:
+            return None
+        else:
+            # if topic == "morphological_analysis":
+            #     result = json.loads(new_message.value)
+            #     df_received = pd.DataFrame(result)
+            #     return df_received
+            return new_message
 
     # @staticmethod
     # def lemma_length(auto_update):
