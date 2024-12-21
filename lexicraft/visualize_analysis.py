@@ -52,7 +52,7 @@ class AnalysisVisualization:
             cleanned_value = (row.value).replace("null", "None")
             message = json.loads(cleanned_value)
             # Write the result to a file
-            with open(f"analysis_sss_result/{topic}_result.json", "w") as f:
+            with open(f"analysis_spark_buffer/{topic}_result.json", "w") as f:
                 json.dump({
                     "result": message,
                     "timestamp": row.timestamp.strftime('%Y-%m-%d %H:%M:%S')
@@ -85,14 +85,13 @@ class AnalysisVisualization:
             .foreach(process_row) \
             .start()
 
-
         time.sleep(5) 
         query.stop()
         
         query.awaitTermination()
 
         try:
-            with open(f"analysis_sss_result/{topic}_result.json", "r") as f:
+            with open(f"analysis_spark_buffer/{topic}_result.json", "r") as f:
                    result_store = json.load(f)
                    plot_func(result_store.get("result"))
                    print("Last Analysis Result Received Time: ", result_store.get("timestamp"))
