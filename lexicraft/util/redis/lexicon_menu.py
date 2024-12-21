@@ -63,8 +63,9 @@ class RedisMenuManager:
                     MATCH (n:WORD {word: $term})
                     RETURN n.word as word,
                            n.definitions as definitions,
-                           n.synonyms as synonyms,
-                           n.antonyms as antonyms
+                           n.Label as Label,
+                           n.POS as POS,
+                           n.word_count as word_count
                     """
                     result = session.run(word_query, term=search_term)
                     data = result.single()
@@ -77,13 +78,17 @@ class RedisMenuManager:
                         for i, def_ in enumerate(data['definitions'] or [], 1):
                             print(f"{i}. {def_}")
                         
-                        if data['synonyms']:
-                            print("\nSinonim (Synonyms):")
-                            print(", ".join(data['synonyms']))
+                        if data['POS']:
+                            print("\nPart-of-Speech:")
+                            print(data['POS'])
                         
-                        if data['antonyms']:
-                            print("\nAntonim (Antonyms):")
-                            print(", ".join(data['antonyms']))
+                        if data['Label']:
+                            print("\nLabel:")
+                            print(data['Label'])
+
+                        if data['word_count']:
+                            print("\nWord Count:")
+                            print(data['word_count'])
                     
                 else:  # PERIBAHASA
                     peri_query = """
@@ -131,9 +136,10 @@ class RedisMenuManager:
                     return
             
             # Create query object with metadata
+            now = datetime.now()
             query_object = {
                 'query': query,
-                'created_at': datetime.now().isoformat(),
+                'created_at': now.strftime("%d/%m/%Y %I:%M%p"),
                 'last_used': None
             }
             
@@ -171,7 +177,7 @@ class RedisMenuManager:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
     
-    # List all queries --> one error 'Inappropriate ioctl for device'
+    # List all queries --> one error 'Inappropriate ioctl for device' --> can ignore
     def list_all_queries(self) -> None:
         try:
             # Get all queries from Redis
@@ -262,11 +268,10 @@ class RedisMenuManager:
                 return
     
             while True:
-                # Display all queries with numbers
                 print("\n=== Available Queries ===")
                 print("=" * 50)
                 
-                # Convert to list and sort by last_used (most recent first)
+                # Sort by last used
                 query_list = list(queries.items())
                 query_list.sort(key=lambda x: (x[1]['last_used'] or '0000', x[0]), reverse=True)
     
@@ -295,13 +300,13 @@ class RedisMenuManager:
                         
                         print("\nExecuting query...")
                         
-                        # Execute the query using Neo4j session
                         with self.neo4j_driver.session() as session:
                             result = session.run(query_data['query'])
                             records = list(result)
                             
                             # Update last used timestamp
-                            queries[query_name]['last_used'] = datetime.now().isoformat()
+                            now = datetime.now()
+                            queries[query_name]['last_used'] = now.strftime("%d/%m/%Y %I:%M%p")
                             self.redis_client.set('stored_queries', json.dumps(queries))
                             
                             # Display results
@@ -314,9 +319,13 @@ class RedisMenuManager:
                             else:
                                 columns = records[0].keys()
                                 for record in records:
-                                    values = [str(record[col]) for col in columns]
-                                    print(values) # here got bug --> cannot access only properties and meanings but can return query
-                            
+                                    node = record['n']
+                                    #values = [str(record[col]) for col in columns]
+                                    proverb = node.get('proverb', 'N/A')
+                                    meaning = node.get('meaning', 'N/A')
+                                    print(f"Proverb: {proverb}")
+                                    print(f"Meaning: {meaning}")
+                                    print("-" * 50)
                             print(f"\nTotal records: {len(records)}")
                             
                         input("\nPress Enter to continue...\n")
@@ -343,7 +352,7 @@ class RedisMenuManager:
             print(f"[3] List all queries")
             print(f"[4] Execute queries")
             print(f"[0] Exit")
-            choice = input(f"\nEnter your choice (1-3 or 0): ")
+            choice = input(f"\nEnter your choice (1-4 or 0): ")
 
             if choice == '1':
                 #self.clear_screen()
