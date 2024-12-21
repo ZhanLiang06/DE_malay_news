@@ -21,6 +21,7 @@ def start_lexicraft(config_data, demo_num_of_article=-1):
     # try for 5 times
     for i in range (0,5):
         try:
+            print(config_data.get("peri_to_reg"),config_data.get("peri_registered"))
             ## data collection 
             spark = SparkSession.builder.appName("DE-prj").getOrCreate()
             data_collection = ArticleDataCollection(spark)
@@ -129,7 +130,7 @@ def read_config(file_path):
     #Check all key has value
     required_keys = ["db_uri", "db_username", "db_password", "next_scrap_from", "peri_to_reg", "peri_registered"]
     for key in required_keys:
-        if key not in config_data or not config_data[key]:
+        if key not in config_data or config_data[key] is None:
             print(f"Error: '{key}' is missing or has no value in the config file.")
             exit()
 
@@ -199,6 +200,7 @@ if __name__ == "__main__":
     # next_scrap_from_datetime = datetime.fromisoformat(config_data.get("next_scrap_from"))
     # print(next_scrap_from_datetime)
     config_data["next_scrap_from"] = next_scrap_from_datetime.isoformat()
+    config_data["peri_registered"] += config_data["peri_to_reg"]
     modify_config(config_file_path, config_data)
     # print("modified data", config_data)
     time_end = datetime.now()
