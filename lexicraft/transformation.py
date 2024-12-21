@@ -1,7 +1,8 @@
-from malaya.tokenizer import SentenceTokenizer
-from malaya.stem import sastrawi
+# from malaya.tokenizer import SentenceTokenizer
+# from malaya.stem import sastrawi
 from pyspark.sql import functions
 from pyspark.sql.functions import array, col, concat_ws
+from pyspark.sql import SparkSession
 from pyspark.sql import Row
 from pyspark import SparkContext
 from itertools import chain
@@ -9,37 +10,81 @@ import re
 from py4j.java_gateway import java_import
 import os
 import subprocess
+import json
+import pandas as pd
+from pyspark.sql.utils import AnalysisException
+
+
+from lexicraft.util.kafka import get_kafka_topic_latest_message
+from lexicraft.util.redis import RedisManager
+
 
 class Transformation:
 
-    def __init__(self, spark):
+    def __init__(self, spark, kafka_topic, kafka_broker, topic_partition):
         self.spark = spark
+        self.redis_mgr = RedisManager()
+        self.kafka_topic = kafka_topic
+        self.kafka_broker = kafka_broker
+        self.topic_partition = topic_partition
 
-    def start_transform_rawdata(self):
+    def start_transform_rawdata_from_kafka(self):
         # self.spark = SparkSession.builder.appName("DataTransformationWithMalaya").getOrCreate()
-        df = self.spark.read.parquet("DE-prj/RawData")
+        print("Collecting Data From Kafka...")
+        pd_df = Transformation.collect_data_from_kafka(self.kafka_topic,self.kafka_broker,self.topic_partition)
+        spark_df = self.spark.createDataFrame(pd_df)
         #drop duplicated
-        df = df.drop_duplicates(['url']).select(['title','articleBrief','contents'])
+        spark_df = spark_df.drop_duplicates(['url']).select(['title','articleBrief','contents','url'])
+        #drop duplicated where the article already exist b4 in our RawData (i.e. already srapped b4 on previous session)
+        newData_df = spark_df.select(['title','articleBrief','contents','url'])
+        try:
+            existed_data_df = self.spark.read.parquet("DE-prj/RawData").select(['url'])
+            # if DE-prj/RawData exist drop any data duplicte with records in DE-prj/RawData
+            newData_df = newData_df.join(existed_data_df, existed_data_df["url"] == newData_df["url"], "left_anti").select(['title','articleBrief','contents'])
+            print(f"After dropped duplicated articles which exist in database(DE-prj/RawData),")
+            print(f"Number of articles left to be processed: {newData_df.count()}")
+            if(newData_df.count() == 0):
+                return "no article to be processed"
+        except AnalysisException as e:
+            # Handle case where the path is invalid or the file is missing (i.e. when run for the first time)
+            newData_df = spark_df.select(['title','articleBrief','contents'])
+            print(f"Is this your first time running the system?")
+            print(f"If not please contact support as there is problem in accessing the DE-prj/RawData file in your hadoop file system.")
         
         # Remove strings starting with '-' in the 'articleBrief' column as it convey no meanings, after - the sentences is about the name who take the picture for the articles 
         # e.g. (- Foto fail NSTP, - Foto NSTP Amir Mamat, - Foto NSTP Rohanis Shukri, - Foto fail BERNAMA)
-        df = df.withColumn(
+        newData_df = newData_df.withColumn(
             "articleBrief", 
             functions.regexp_replace(functions.col("articleBrief"), r"\s?-.*", "")
         )
         # Preprocesss the contents columns
-        df = df.withColumn("Flattened_Contents", concat_ws(" ", col("contents")))
-        df = df.select(['title','articleBrief','Flattened_Contents'])
+        newData_df = newData_df.withColumn("Flattened_Contents", concat_ws(" ", col("contents")))
+        newData_df = newData_df.select(['title','articleBrief','Flattened_Contents'])
         # Merge DF
-        merged_df = df.withColumn("Merged", array(*[col(c) for c in df.columns])).select(['Merged'])
+        merged_df = newData_df.withColumn("Merged", array(*[col(c) for c in newData_df.columns])).select(['Merged'])
         lists = merged_df.collect()
         
         # Flatten the 'Merged' column
         flattened_list = list(chain.from_iterable(row.Merged for row in lists))
         #--------------Split into sentences and remove special characters-------------------------------------------------------------------------------------------------------------------------
-        s_tokenizer = SentenceTokenizer()
+
+        # spark_app_name = self.spark.sparkContext.appName
+        # self.spark.stop() # this has to be stopped, else error
+        # self.spark = SparkSession.builder.appName(spark_app_name).getOrCreate()
+        #s_tokenizer = SentenceTokenizer()
         rddInput = self.spark.sparkContext.parallelize(flattened_list)
-        rdd_sentences = rddInput.map(s_tokenizer.tokenize)
+        
+        def tokenize_sentences(text):
+            # Regular expression to split text by periods, exclamation marks, and question marks
+            result = []
+            for data in text:
+                sentences = re.split(r'(?<=[.!?]) +', data)
+                
+                result.append(sentences)
+            return result
+        
+        rdd_sentences = rddInput.mapPartitions(tokenize_sentences)
+        
         # remove none result
         rdd_sentences = rdd_sentences.filter(lambda x: len(x) > 0)
         def remove_special_characters(sentences):
@@ -54,13 +99,18 @@ class Transformation:
         
         rdd_sentences_clean = rdd_sentences.map(remove_special_characters)
         print("Breaking raw data into list of sentences...")
-        rdd_result = rdd_sentences_clean.coalesce(1) 
-        result_list = rdd_result.collect()
+        # rdd_result = rdd_sentences_clean.coalesce(1) 
+        # result_list = rdd_result.collect()
+        result_list = rdd_sentences_clean.collect()
 
-        flattenned_sentences = [item for sublist in result_list for item in sublist]
+        flattenned_sentences = [item for sublist in result_list for item in sublist if item != ""]
+        # save flattenned_sentences on redis
+        flattenned_sentences_json = json.dumps(flattenned_sentences)
+        self.redis_mgr.redis_client.set("temp_sentences",flattenned_sentences_json)
+        
         # save sentences to text file 
-        df = self.spark.createDataFrame([(x,) for x in flattenned_sentences],["Sentence"])
-        df.write.mode("overwrite").text('DE-prj/Sentences')
+        # df = self.spark.createDataFrame([(x,) for x in flattenned_sentences],["Sentence"])
+        # df.write.mode("overwrite").text('DE-prj/Sentences')
 
         #----------------Tokenization--------------------------------------------------------------------------------------------------------------------------------------------------------------------
         def tokenize(sentences):
@@ -76,8 +126,11 @@ class Transformation:
         print("Breaking sentences into words...")
         result_list = tokenize_map_output.collect()
         flattened_tokenized_words = [item for sublist in result_list for item in sublist]
+        flattened_tokenized_words_json = json.dumps(flattened_tokenized_words)
+        self.redis_mgr.redis_client.set("temp_words",flattened_tokenized_words_json)
+        # store in hdfs label as temp to do hadoop map reduce
         df = self.spark.createDataFrame([(x,) for x in flattened_tokenized_words],["Word"])
-        df.write.mode("overwrite").text('DE-prj/Words')
+        df.write.mode("overwrite").text('DE-prj/TempWords')
         
         # # Stem
         # stemmer = sastrawi()
@@ -89,15 +142,92 @@ class Transformation:
         # df.write.mode("overwrite").text('DE-prj/StemmedWords')
 
         
-        return flattenned_sentences, flattened_tokenized_words
+        return "success"
+        
+    @staticmethod
+    def collect_data_from_kafka(kafka_topic,kafka_broker,partition):
+        # TOPIC = "beritaH"  
+        # KAFKA_BROKER = "localhost:9092"
+        
+        latest_message = get_kafka_topic_latest_message(kafka_topic,kafka_broker,partition)
 
+        # retrive all data
+        data_list = latest_message.value
+
+        json_file_path = 'data_output.json'
+        with open(json_file_path, 'w') as json_file:
+            json.dump(data_list, json_file, indent=4)
+        
+        with open(json_file_path, 'r', encoding='utf-8') as file:
+            bharian_data = json.load(file)
+        
+        df = pd.DataFrame(bharian_data)
+        return df
+
+    
+    def save_temp_data_to_permanent(self):
+        ## append new raw data
+        try:
+            raw_data_df = Transformation.collect_data_from_kafka(self.kafka_topic, self.kafka_broker, self.topic_partition)
+            spark_app_name = self.spark.sparkContext.appName
+            self.spark.stop() # this has to be stopped, else error
+            self.spark = SparkSession.builder.appName(spark_app_name).getOrCreate()
+            spark_raw_data_df = self.spark.createDataFrame(raw_data_df)
+            try:
+                existed_data_df = self.spark.read.parquet("DE-prj/RawData").select(['url'])
+                # if DE-prj/RawData exist drop any data duplicte with records in DE-prj/RawData
+                spark_raw_data_df = spark_raw_data_df.join(existed_data_df, existed_data_df["url"] == spark_raw_data_df["url"], "left_anti")
+                print("Number of raw data to be appeneded: ",spark_raw_data_df.count()) 
+            except AnalysisException as e:
+                pass
+            
+            output_path = "DE-prj/RawData"
+            spark_raw_data_df.write.format("parquet").mode("append").save(output_path)
+            print("Raw Data has been successfully appended to HDFS: ", output_path)
+    
+            
+            ## append new sentences data
+            sentences_json = self.redis_mgr.redis_client.get("temp_sentences")
+            output_path = 'DE-prj/Sentences'
+            if sentences_json:
+                self.spark.stop() # this has to be stopped, else error
+                self.spark = SparkSession.builder.appName(spark_app_name).getOrCreate()
+                sentences = json.loads(sentences_json)
+                df = self.spark.createDataFrame([(x,) for x in sentences],["Sentence"])
+                df.write.mode("append").text(output_path)
+                print("Sentence data has been successfully appended to HDFS: ", output_path)
+                self.redis_mgr.redis_client.delete("temp_sentences")
+            else:
+                print("Fail to append to ",output_path)
+                print("No data found in Redis.")
+    
+            ## append new word data
+            words_json = self.redis_mgr.redis_client.get("temp_words")
+            output_path = 'DE-prj/Words'
+            if words_json:
+                self.spark.stop() # this has to be stopped, else error
+                self.spark = SparkSession.builder.appName(spark_app_name).getOrCreate()
+                words = json.loads(words_json)
+                df = self.spark.createDataFrame([(x,) for x in words],["Word"])
+                df.write.mode("append").text(output_path)
+                print("Word data has been successfully appended to HDFS: ", output_path)
+                self.redis_mgr.redis_client.delete("temp_words")
+            else:
+                print("Fail to append to ", output_path)
+                print("No data found in Redis.")
+            self.spark.stop()
+            return "success"
+        except:
+            return "fail"
+        
+        
 
     @classmethod
     def wordCountMapReduce(cls):
         outputDir = "hdfs://localhost:9000/user/student/DE-prj/MR_WC_Result"
-        inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/Words/")
+        inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/TempWords/")
         try:
-            subprocess.run(f"hdfs dfs -rm -r {outputDir}", shell=True, check=True)
+            result = subprocess.run(f"hdfs dfs -rm -r {outputDir}", shell=True, check=True)
         except:
             pass
         # Set the HADOOP_HOME environment variable if not already set
@@ -158,7 +288,7 @@ class Transformation:
         result = []
         for status in file_status:
             file_path = status.getPath().toString()
-            if file_path.startswith('hdfs://localhost:9000/user/student/DE-prj/Words/part'):
+            if file_path.startswith(f'hdfs://localhost:9000{directory}part'):
                 result.append(file_path)
         return result
 
