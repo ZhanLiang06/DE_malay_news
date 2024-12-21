@@ -66,12 +66,11 @@ def start_lexicraft(config_data, demo_num_of_article=-1):
             print("Performing Lexicon Creation...")
             spark = SparkSession.builder.appName("DE-prj").getOrCreate()
             lexiconBuilder = LexiconBuilder(spark,uri,auth)
-            #lnm = LexiconNodeManager(uri, auth)
-            #lnm.clear_db()
             lexiconBuilder.build_lexicon()
-            # spark.stop()
-            # spark = SparkSession.builder.appName("DE-prj").getOrCreate()
-            # lexiconBuilder.spark = spark
+            # Stop Spark to prevent executor crashes
+            spark.stop()
+            spark = SparkSession.builder.appName("DE-prj").getOrCreate()
+            lexiconBuilder.spark = spark
             lexiconBuilder.build_peribahasa(config_data.get("peri_to_reg"),config_data.get("peri_registered"))
             spark.stop()
 
