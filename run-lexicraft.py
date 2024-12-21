@@ -68,7 +68,11 @@ def start_lexicraft(config_data, demo_num_of_article=-1):
             #lnm = LexiconNodeManager(uri, auth)
             #lnm.clear_db()
             lexiconBuilder.build_lexicon()
-            lexiconBuilder.build_peribahasa()
+            # spark.stop()
+            # spark = SparkSession.builder.appName("DE-prj").getOrCreate()
+            # lexiconBuilder.spark = spark
+            lexiconBuilder.build_peribahasa(config_data.get("peri_to_reg"),config_data.get("peri_registered"))
+            spark.stop()
 
             ## Perform analysis and send result to kafka
             print("Performing Lexicon Analysis...")
@@ -123,11 +127,19 @@ def read_config(file_path):
         exit()
 
     #Check all key has value
-    required_keys = ["db_uri", "db_username", "db_password", "next_scrap_from"]
+    required_keys = ["db_uri", "db_username", "db_password", "next_scrap_from", "peri_to_reg", "peri_registered"]
     for key in required_keys:
         if key not in config_data or not config_data[key]:
             print(f"Error: '{key}' is missing or has no value in the config file.")
             exit()
+
+    if not isinstance(config_data["peri_to_reg"], int):
+        print(f"Error: 'peri_to_reg' must be an integer.")
+        exit()
+
+    if not isinstance(config_data["peri_registered"], int):
+        print(f"Error: 'peri_registered' must be an integer.")
+        exit()
     
     next_scrap_from_str = config_data.get("next_scrap_from", None)
 
@@ -191,7 +203,7 @@ if __name__ == "__main__":
     # print("modified data", config_data)
     time_end = datetime.now()
     print("Done Creating Lexicon")
-    print("Time Start :", start_time)
+    print("Time Start : ", start_time)
     print("Time End   : ", time_end)
     print("Time Taken : ", time_end - start_time)
     

@@ -34,7 +34,7 @@ if [ "$#" -eq 2 ]; then
     fi
 
     # Command to add to crontab
-    CRON_COMMAND="$CRON_SCHEDULE bash $SCRIPT_TO_REGISTER $PYTHON_SCRIPT_ARG"
+    CRON_COMMAND="$CRON_SCHEDULE $SCRIPT_TO_REGISTER $PYTHON_SCRIPT_ARG"
 
 elif [ "$#" -eq 1 ]; then
     # Second option: register.sh <cron_schedule>
@@ -47,8 +47,7 @@ elif [ "$#" -eq 1 ]; then
     fi
 
     # Command to add to crontab
-    CRON_COMMAND="$CRON_SCHEDULE bash $SCRIPT_TO_REGISTER"
-
+    CRON_COMMAND="$CRON_SCHEDULE $SCRIPT_TO_REGISTER"
 else
     # may be redundant
     echo "Usage:"

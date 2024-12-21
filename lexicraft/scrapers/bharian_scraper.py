@@ -186,6 +186,8 @@ class BHarianScraper:
         self.relLinkToArticle_all = []
         article_teasers=[]
         self.toDateTime = datetime.now()
+        print("Links crawl to datetime ", self.toDateTime)
+        print("Links Crawling Starts...")
         #Web Crawl Begins
         self.driver = webdriver.Chrome(service=self.service, options=self.options)
         for i in range (0,21):
@@ -234,7 +236,6 @@ class BHarianScraper:
                 # get article create time
                 span_PublishTimeInfo = teaser.find('span', class_='created-ago')
                 timePublish_text = span_PublishTimeInfo.text.strip()
-    
                 # get article link
                 aTag = teaser.find('a',class_='d-flex article listing mb-3 pb-3')
                 relLinkToArticle = aTag['href']

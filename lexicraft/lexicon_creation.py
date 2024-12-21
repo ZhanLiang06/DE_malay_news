@@ -33,12 +33,13 @@ class LexiconBuilder:
         except:
             return None
 
-    def build_peribahasa(self):
+    def build_peribahasa(self,count,peri_registered):
         peri_scrap = PeriScraper()
         proverbs_data_AM = peri_scrap.scrape_page(peri_scrap.AM_Url)
         proverbs_data_NZ = peri_scrap.scrape_page(peri_scrap.NZ_Url)
         combined_peri = proverbs_data_AM + proverbs_data_NZ
-
+        combined_peri = combined_peri[last_offset:]
+        combined_peri = combined_peri[:count]
         # Load the sentiment model
         model_name = 'mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased'
         sentiment_model = load(
@@ -65,8 +66,6 @@ class LexiconBuilder:
             pos_dict = formatted_pos_dict_BC.value
             pos_model = pos_modelBC.value
             sentiment_model = sentiment_model_BC.value
-            count = 0
-            maxCount = 60
             for data in peri_metadata:
                 lnm.create_peri_node(data)
                 tokens = list(set(data['peri'].split()))
@@ -79,10 +78,8 @@ class LexiconBuilder:
                         word_metadata["SentimentLabel"] = sentiment_model.predict(token)[0]
                         lnm.create_word_node(word_metadata, article_word = False)
                         lrm.create_node_relationship("PERIBAHASA", "peribahasa", data['peri'], "WORD", "word", word_metadata["word"], "HAS_WORD")
-                count += 1
-                if count == maxCount:
-                    break
-            
+
+        
         peri_rdd = self.spark.sparkContext.parallelize(combined_peri, numSlices = 2)
         peri_rdd.foreachPartition(register_peri_node)
         return 'success register peri nodes'
