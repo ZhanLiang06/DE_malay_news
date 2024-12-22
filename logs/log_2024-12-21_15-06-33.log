@@ -1,0 +1,166 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+24/12/21 15:07:09 WARN Utils: Your hostname, Liang. resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+24/12/21 15:07:09 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/12/21 15:07:10 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/12/21 15:07:11 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/12/21 15:07:11 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+24/12/21 15:07:11 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:07:13.163190
+Links Crawling Starts...
+Traceback (most recent call last):
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.10/socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+TimeoutError: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 28, in start_lexicraft
+    result, scrapToDate = data_collection.start_collect_to_kafka(collect_from_time,'/berita/nasional',"beritaH","localhost:9092", demo_num_of_article)
+  File "/home/student/DE_malay_news/lexicraft/data_collection.py", line 30, in start_collect_to_kafka
+    crawlledUrls = bharianScraper.scrapArticleLinks(fromDate,categoryLink)
+  File "/home/student/DE_malay_news/lexicraft/scrapers/bharian_scraper.py", line 192, in scrapArticleLinks
+    self.driver = webdriver.Chrome(service=self.service, options=self.options)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/chromium/webdriver.py", line 66, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 241, in __init__
+    self.start_session(capabilities)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 329, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 382, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 404, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 428, in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/_request_methods.py", line 143, in request
+    return self.request_encode_body(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/util/retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/util/util.py", line 39, in reraise
+    raise value
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 538, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 369, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=52491): Read timed out. (read timeout=120)
+Exception has occured. Retrying the process in 45 seconds -  0
+24/12/21 15:10:26 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/12/21 15:10:26 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+24/12/21 15:10:26 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:10:32.353356
+Links Crawling Starts...
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 28, in start_lexicraft
+    result, scrapToDate = data_collection.start_collect_to_kafka(collect_from_time,'/berita/nasional',"beritaH","localhost:9092", demo_num_of_article)
+  File "/home/student/DE_malay_news/lexicraft/data_collection.py", line 30, in start_collect_to_kafka
+    crawlledUrls = bharianScraper.scrapArticleLinks(fromDate,categoryLink)
+  File "/home/student/DE_malay_news/lexicraft/scrapers/bharian_scraper.py", line 192, in scrapArticleLinks
+    self.driver = webdriver.Chrome(service=self.service, options=self.options)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/chromium/webdriver.py", line 66, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 241, in __init__
+    self.start_session(capabilities)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 329, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: DevToolsActivePort file doesn't exist
+Stacktrace:
+#0 0x55f33e8148fa <unknown>
+#1 0x55f33e325d20 <unknown>
+#2 0x55f33e362664 <unknown>
+#3 0x55f33e35d9fb <unknown>
+#4 0x55f33e358f96 <unknown>
+#5 0x55f33e3a4d86 <unknown>
+#6 0x55f33e3a43d6 <unknown>
+#7 0x55f33e398893 <unknown>
+#8 0x55f33e36730d <unknown>
+#9 0x55f33e36832e <unknown>
+#10 0x55f33e7e100b <unknown>
+#11 0x55f33e7e4f97 <unknown>
+#12 0x55f33e7cd71c <unknown>
+#13 0x55f33e7e5b17 <unknown>
+#14 0x55f33e7b26cf <unknown>
+#15 0x55f33e8036b8 <unknown>
+#16 0x55f33e803880 <unknown>
+#17 0x55f33e813776 <unknown>
+#18 0x7fe41c5bdac3 <unknown>
+
+Exception has occured. Retrying the process in 45 seconds -  1
+24/12/21 15:14:32 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/12/21 15:14:33 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+24/12/21 15:15:26 ERROR Inbox: Ignoring error
+java.lang.NullPointerException
+	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:677)
+	at org.apache.spark.storage.BlockManagerMasterEndpoint$$anonfun$receiveAndReply$1.applyOrElse(BlockManagerMasterEndpoint.scala:133)
+	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:103)
+	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:213)
+	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:100)
+	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:75)
+	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:41)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+24/12/21 15:15:33 WARN Executor: Issue communicating with driver in heartbeater
+org.apache.spark.SparkException: Exception thrown in awaitResult: 
+	at org.apache.spark.util.SparkThreadUtils$.awaitResult(SparkThreadUtils.scala:56)
+	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:310)
+	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+	at org.apache.spark.rpc.RpcEndpointRef.askSync(RpcEndpointRef.scala:101)
+	at org.apache.spark.rpc.RpcEndpointRef.askSync(RpcEndpointRef.scala:85)
+	at org.apache.spark.storage.BlockManagerMaster.registerBlockManager(BlockManagerMaster.scala:80)
+	at org.apache.spark.storage.BlockManager.reregister(BlockManager.scala:642)
+	at org.apache.spark.executor.Executor.reportHeartBeat(Executor.scala:1223)
+	at org.apache.spark.executor.Executor.$anonfun$heartbeater$1(Executor.scala:295)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:1928)
+	at org.apache.spark.Heartbeater$$anon$1.run(Heartbeater.scala:46)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: java.lang.NullPointerException
+	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:677)
+	at org.apache.spark.storage.BlockManagerMasterEndpoint$$anonfun$receiveAndReply$1.applyOrElse(BlockManagerMasterEndpoint.scala:133)
+	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:103)
+	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:213)
+	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:100)
+	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:75)
+	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:41)
+	... 3 more

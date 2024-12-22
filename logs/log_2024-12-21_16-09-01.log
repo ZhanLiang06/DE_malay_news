@@ -1,0 +1,101 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 25, in start_lexicraft
+    spark = SparkSession.builder.appName("DE-prj").getOrCreate()
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/java_gateway.py", line 97, in launch_gateway
+    proc = Popen(command, **popen_kwargs)
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/student/spark/./bin/spark-submit'
+Exception has occured. Retrying the process in 45 seconds -  0
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 25, in start_lexicraft
+    spark = SparkSession.builder.appName("DE-prj").getOrCreate()
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/java_gateway.py", line 97, in launch_gateway
+    proc = Popen(command, **popen_kwargs)
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/student/spark/./bin/spark-submit'
+Exception has occured. Retrying the process in 45 seconds -  1
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 25, in start_lexicraft
+    spark = SparkSession.builder.appName("DE-prj").getOrCreate()
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/java_gateway.py", line 97, in launch_gateway
+    proc = Popen(command, **popen_kwargs)
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/student/spark/./bin/spark-submit'
+Exception has occured. Retrying the process in 45 seconds -  2
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 25, in start_lexicraft
+    spark = SparkSession.builder.appName("DE-prj").getOrCreate()
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/java_gateway.py", line 97, in launch_gateway
+    proc = Popen(command, **popen_kwargs)
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/student/spark/./bin/spark-submit'
+Exception has occured. Retrying the process in 45 seconds -  3
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 25, in start_lexicraft
+    spark = SparkSession.builder.appName("DE-prj").getOrCreate()
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/java_gateway.py", line 97, in launch_gateway
+    proc = Popen(command, **popen_kwargs)
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/student/spark/./bin/spark-submit'
+Exception has occured. Retrying the process in 45 seconds -  4
+Errors occur even after 5 times of retry
