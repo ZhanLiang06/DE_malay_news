@@ -11,7 +11,7 @@
 
    i. Make sure you imported the latest distro provided by Choo Jun (release: 1.0.0.20241114)
 
-   ii. Perform task from **Practical 0 to 5** provided at Choo Jun GitHub
+   ii. Perform task from **Practical 0 to 4.1** provided at Choo Jun GitHub, This is to ensure all your de-venv is properly setup accordingly as well as dfs, yarn, kafka and environment variables
 
 3. Start **dfs, yarn, zookeeper and kafka server services** (basically the first step in Practical 5)
 4. su - student (switch to student)
