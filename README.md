@@ -3,6 +3,7 @@
 1. Get your distro ready!
 
   i. Make sure you imported the latest distro provided by Choo Jun (release: 1.0.0.20241114)
+  
   ii. Perform task from **Practical 0 to 5** provided at Choo Jun GitHub
 
 2. Start **dfs, yarn, zookeeper and kafka server services** (basically the first step in Practical 5)
