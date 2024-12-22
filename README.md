@@ -1,5 +1,5 @@
 # Good Day User!!
-[Setup To Run this Data Engineering System (Lexicon Construction)](#setup-to-run-this-data-engineering-system-(lexicon-construction):)
+[Setup To Run this Data Engineering System (Lexicon Construction)](#setup-to-run-this-data-engineering-system-lexicon-construction)
 ## Setup To Run this Data Engineering System (Lexicon Construction):
 1. Get your distro ready!
 
