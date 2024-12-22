@@ -26,7 +26,7 @@
    ii. make sure your hdfs doesn't have DE-prj folder _if this is your first run_.
   
 ## Run the script:
-
+   Before proceeding to Option 1, and 2, create a crontab for linux user first
    #### **Option 1**: run the bash file `schedule-run.sh` with argument format **(most ideal way)**
    - `./schedule-run.sh <max_number_of_links_to_scrap - optional> <cron schedule ("* * * * *")>`
    - e.g. - `./schedule-run.sh 1 "30 * * * *"`
