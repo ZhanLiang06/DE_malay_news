@@ -19,6 +19,7 @@ import seaborn as sns
 from wordcloud import WordCloud
 from malaya.supervised.huggingface import load
 from malaya.torch_model.huggingface import Classification
+import datetime
 
 from lexicraft.util.neo4j import LexiconNodeManager
 from lexicraft.scrapers.wiki_scraper import WikiScraper
@@ -357,7 +358,7 @@ class Analysis():
         sentiment_df = pd.DataFrame(sentiment_results)
          
         # Save results to a new CSV containing only 'cleaned_text' and 'label'
-        output_csv_path = "analysis_csv_result/sentence_emotion_analysis_results.csv"
+        output_csv_path = f"analysis_csv_result/sentence_emotion_analysis_results_{datetime.now()}.csv"
         sentiment_df.to_csv(output_csv_path, index=False)
         visualize_emotion_distribution(sentiment_df)
         

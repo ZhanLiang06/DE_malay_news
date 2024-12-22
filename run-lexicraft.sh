@@ -26,6 +26,25 @@ cd $WORKING_DIR
 source $VENV_DIR
 mkdir $LOG_DIR
 touch $LOG_FILE
+############################## Same as ~/.profile ##############################
+################# To set up environment for cron ###############################
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export HADOOP_HOME=/home/hduser/hadoop3
@@ -40,6 +59,8 @@ export PATH=$PATH:$KAFKA_HOME/bin
 
 export HBASE_HOME=/home/hduser/hbase 
 export PATH=$HBASE_HOME/bin:$PATH
+
+############################################################################################
 
 if [[ -z $input ]]; then
     # Scrap all articles from the specified date time
