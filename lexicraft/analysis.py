@@ -411,7 +411,6 @@ class Analysis():
             MATCH (n:WORD)
             RETURN n.word AS word, n.word_count AS count, n.definitions AS definitions
             ORDER BY n.word_count DESC
-            LIMIT 1000
             """
         
         result = lnm.create_custom_query(analysis_query)
