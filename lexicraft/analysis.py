@@ -19,7 +19,7 @@ import seaborn as sns
 from wordcloud import WordCloud
 from malaya.supervised.huggingface import load
 from malaya.torch_model.huggingface import Classification
-import datetime
+from datetime import datetime
 
 from lexicraft.util.neo4j import LexiconNodeManager
 from lexicraft.scrapers.wiki_scraper import WikiScraper
