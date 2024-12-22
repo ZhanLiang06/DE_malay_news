@@ -49,5 +49,29 @@ Note, there only will have analysis output when analysis is ran during the cycle
 1. Open the AccessLexicon.ipynb under DE_malay_news directory
 2. Run the first cell, a menu should be shown on the output cell.
    
-   
+## Folder Strucutre
+| Folder    | Description |
+| -------- | ------- |
+| DE-prj  | Sample of folder output to hdfs when the system is ran with one fully cycle    | 
+| analysis_csv_result | store some of the analysis result in csv format    | 
+| analyisis_spark_buffer    | buffer as temporary store for analysis result when structure stearming is used to retrieve analysis result from kafka broker    | 
+| extrinsic_sample_data    | consist sample data for extrinsic evaluation   | 
+| **lexicraft** | The package and library for this Data Engineering Projects, consist all the python files to run the script | 
+| logs | consists of log files for each cycle. e.g. log_2024-12-21_14-51-48.log | 
+
+| File    | Description |
+| -------- | ------- |
+| 1. DataCollection.ipynb | Jupyter Notebook showing data collection process |
+| 2. Transformation.ipynb | Jupyter Notebook showing data transformation process |
+| 3. LexiconCreation.ipynb | Jupyter Notebook showing lexicon creation into neo4j process |
+| 4. LexiconAnalysis.ipynb | Jupyter Notebook showing lexicon analysis process |
+| 5. AnalysisVisualization.ipynb | Jupyter Notebook to show lexicon analysis result in graphs |
+| Accesslexicon.ipynb | Jupyter Notebook showing how to access neo4j lexicon wihout login to neo4j database |
+| README.md | ReadMe file for users |
+| config.json | configuration on neo4j database location, scrap berita harian articles from which date, number of peribahasa register into neo4j lexicon |
+| data_output.json | buffer file for retrieve data collected from kafka |
+| run-lexicraft.py | python script file to run the lexicon creation process (one cycle) |
+| run-lexicraft.sh | bash file to simplify command needed to run the  lexicon creation process (one cycle) |
+| schedule-run.sh | schedule the run-lexicrafh.sh on crontab |
+| unschedule.sh | unschedule the run-lexicrafh.sh from crontab |
    
