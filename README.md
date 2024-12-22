@@ -32,7 +32,7 @@
    This only will run one cycle of lexicon construction
 
 ## To view the analysis output
-Note, there only will have analysis output when analysis is ran during the cycle or manually run on notebook "Lexicon analysis"
+Note, there only will have analysis output when analysis is ran during the cycle or manually run on notebook "4. LexiconAnalysis.ipynb"
 1. Open the "5. AnalysisVisualization.ipynb" under DE_malay_news directory
 2. Run all cell to view the output
 
