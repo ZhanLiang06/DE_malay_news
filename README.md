@@ -55,7 +55,7 @@ Note, there only will have analysis output when analysis is ran during the cycle
    
 ## Folder Strucutre
 | Folders    | Description |
-| -------- | ------- |
+| --------------------------- | ------- |
 | DE-prj  | Sample of folder output to hdfs when the system is ran with one fully cycle    | 
 | analysis_csv_result | store some of the analysis result in csv format    | 
 | analyisis_spark_buffer    | buffer as temporary store for analysis result when structure stearming is used to retrieve analysis result from kafka broker    | 
@@ -64,7 +64,7 @@ Note, there only will have analysis output when analysis is ran during the cycle
 | logs | consists of log files for each cycle. e.g. log_2024-12-21_14-51-48.log | 
 
 | Files    | Description |
-| -------- | ------- |
+| ------------------------------------- | ------- |
 | 1. DataCollection.ipynb | Jupyter Notebook showing data collection process |
 | 2. Transformation.ipynb | Jupyter Notebook showing data transformation process |
 | 3. LexiconCreation.ipynb | Jupyter Notebook showing lexicon creation into neo4j process |
