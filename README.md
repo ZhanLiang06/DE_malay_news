@@ -69,7 +69,7 @@ Note, there only will have analysis output when analysis is ran during the cycle
 | 2. Transformation.ipynb | Jupyter Notebook showing data transformation process |
 | 3. LexiconCreation.ipynb | Jupyter Notebook showing lexicon creation into neo4j process |
 | 4. LexiconAnalysis.ipynb | Jupyter Notebook showing lexicon analysis process |
-| 5. AnalysisVisualization.ipynb | Jupyter Notebook to show lexicon analysis result in graphs |
+| 5. AnalysisVisualization.ipynb    | Jupyter Notebook to show lexicon analysis result in graphs |
 | Accesslexicon.ipynb | Jupyter Notebook showing how to access neo4j lexicon wihout login to neo4j database |
 | README.md | ReadMe file for users |
 | config.json | configuration on neo4j database location, scrap berita harian articles from which date, number of peribahasa register into neo4j lexicon |
