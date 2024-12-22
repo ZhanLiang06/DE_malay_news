@@ -38,7 +38,7 @@ Note, there only will have analysis output when analysis is ran during the cycle
 
 ## To access the lexicon without directly go to Neo4j database websites
 1. Open the AccessLexicon.ipynb under DE_malay_news directory
-2. Run the first cell, then a menu should be shown on the output cell.
+2. Run the first cell, a menu should be shown on the output cell.
    
    
    
