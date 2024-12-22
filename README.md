@@ -1,5 +1,8 @@
 # Good Day User!!
 [Setup To Run this Data Engineering System (Lexicon Construction)](#setup-to-run-this-data-engineering-system-lexicon-construction)
+[Run the script](#run-the-script)
+[View the analysis output](#view-the-analysis-output)
+[Access the lexicon](#access-the-lexicon-without-directly-go-to-neo4j-database-website)
 ## Setup To Run this Data Engineering System (Lexicon Construction):
 1. Get your distro ready!
 
@@ -34,12 +37,12 @@
    - `./schedule-run.sh <max_number_of_links_to_scrap - optional>`
    - This only will run one cycle of lexicon construction
 
-## To view the analysis output
+## View the analysis output
 Note, there only will have analysis output when analysis is ran during the cycle or manually run on notebook "4. LexiconAnalysis.ipynb"
 1. Open the "5. AnalysisVisualization.ipynb" under DE_malay_news directory
 2. Run all cell to view the output
 
-## To access the lexicon without directly go to Neo4j database websites
+## Access the lexicon without directly go to Neo4j database website
 1. Open the AccessLexicon.ipynb under DE_malay_news directory
 2. Run the first cell, a menu should be shown on the output cell.
    
