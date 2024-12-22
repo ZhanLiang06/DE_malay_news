@@ -1,0 +1,55 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+24/12/21 15:08:14 WARN Utils: Your hostname, Liang. resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+24/12/21 15:08:14 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/12/21 15:08:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:10:32.500919
+Links Crawling Starts...
+Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 28, in start_lexicraft
+    result, scrapToDate = data_collection.start_collect_to_kafka(collect_from_time,'/berita/nasional',"beritaH","localhost:9092", demo_num_of_article)
+  File "/home/student/DE_malay_news/lexicraft/data_collection.py", line 30, in start_collect_to_kafka
+    crawlledUrls = bharianScraper.scrapArticleLinks(fromDate,categoryLink)
+  File "/home/student/DE_malay_news/lexicraft/scrapers/bharian_scraper.py", line 192, in scrapArticleLinks
+    self.driver = webdriver.Chrome(service=self.service, options=self.options)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/chromium/webdriver.py", line 66, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 241, in __init__
+    self.start_session(capabilities)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 329, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: DevToolsActivePort file doesn't exist
+Stacktrace:
+#0 0x55b0876968fa <unknown>
+#1 0x55b0871a7d20 <unknown>
+#2 0x55b0871e4664 <unknown>
+#3 0x55b0871df9fb <unknown>
+#4 0x55b0871daf96 <unknown>
+#5 0x55b087226d86 <unknown>
+#6 0x55b0872263d6 <unknown>
+#7 0x55b08721a893 <unknown>
+#8 0x55b0871e930d <unknown>
+#9 0x55b0871ea32e <unknown>
+#10 0x55b08766300b <unknown>
+#11 0x55b087666f97 <unknown>
+#12 0x55b08764f71c <unknown>
+#13 0x55b087667b17 <unknown>
+#14 0x55b0876346cf <unknown>
+#15 0x55b0876856b8 <unknown>
+#16 0x55b087685880 <unknown>
+#17 0x55b087695776 <unknown>
+#18 0x7f54130e7ac3 <unknown>
+
+Exception has occured. Retrying the process in 45 seconds -  0

@@ -1,0 +1,13 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+24/12/21 14:57:32 WARN Utils: Your hostname, Liang. resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+24/12/21 14:57:32 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+24/12/21 14:57:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 14:57:35.565424
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 20

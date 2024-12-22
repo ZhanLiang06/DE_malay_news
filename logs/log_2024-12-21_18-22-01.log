@@ -1,0 +1,35 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+20 0
+24/12/21 18:22:13 WARN Utils: Your hostname, Liang. resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+24/12/21 18:22:13 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+24/12/21 18:22:13 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Performing Data Collection from time 2024-12-21 16:21:18.428057...
+Links crawl to datetime  2024-12-21 18:22:14.993305
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 11
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 0:>                                                        (0 + 12) / 12][Stage 0:====================================================>    (11 + 1) / 12][Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+[Stage 1:===================>                                       (1 + 2) / 3][Stage 1:=======================================>                   (2 + 1) / 3]                                                                                Data sent to topic beritaH
+Number of articles data sent 1
+Performing Data Transformation...
+Collecting Data From Kafka...
+After dropped duplicated articles which exist in database(DE-prj/RawData),
+Number of articles left to be processed: 0
+No Article Links can scrap.
+Exiting...

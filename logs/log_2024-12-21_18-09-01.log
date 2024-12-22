@@ -1,0 +1,5 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 132
+    if key not in config_data or config_data[key] is None::
+                                                          ^
+SyntaxError: invalid syntax

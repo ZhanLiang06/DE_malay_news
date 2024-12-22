@@ -1,0 +1,1636 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+20 80
+24/12/22 06:40:18 WARN Utils: Your hostname, Liang. resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+24/12/22 06:40:18 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+24/12/22 06:40:18 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Performing Data Collection from time 2024-12-22 06:00:21.214151...
+Links crawl to datetime  2024-12-22 06:40:20.923284
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 1
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 0:>                                                        (0 + 12) / 12][Stage 0:====================================================>    (11 + 1) / 12][Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+[Stage 1:===================>                                       (1 + 2) / 3][Stage 1:=======================================>                   (2 + 1) / 3]                                                                                Data sent to topic beritaH
+Number of articles data sent 1
+Performing Data Transformation...
+Collecting Data From Kafka...
+After dropped duplicated articles which exist in database(DE-prj/RawData),
+Number of articles left to be processed: 1
+Breaking raw data into list of sentences...
+[Stage 21:==============================================>         (10 + 2) / 12]                                                                                Breaking sentences into words...
+[Stage 22:==========================================>              (9 + 3) / 12]                                                                                [Stage 23:====>                                                   (1 + 11) / 12][Stage 23:==============>                                          (3 + 9) / 12][Stage 23:===================================================>    (11 + 1) / 12]                                                                                Deleted hdfs://localhost:9000/user/student/DE-prj/MR_WC_Result
+['/home/hduser/hadoop3/bin/hadoop', 'jar', '/home/hduser/hadoop3/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar', '-input', 'hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00000-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00001-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00002-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00003-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00004-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00005-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00006-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00007-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00008-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00009-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00010-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt,hdfs://localhost:9000/user/student/DE-prj/TempWords/part-00011-dec1adbd-4243-4db5-8f18-6a7620beacbe-c000.txt', '-output', 'hdfs://localhost:9000/user/student/DE-prj/MR_WC_Result', '-mapper', 'lexicraft/MapReduce/WordCount/mapper.py', '-reducer', 'lexicraft/MapReduce/WordCount/reducer.py', '-file', 'lexicraft/MapReduce/WordCount/mapper.py', '-file', 'lexicraft/MapReduce/WordCount/reducer.py']
+Running Hadoop MapReduce for word count...
+Hadoop Streaming Command Output:
+packageJobJar: [lexicraft/MapReduce/WordCount/mapper.py, lexicraft/MapReduce/WordCount/reducer.py, /tmp/hadoop-unjar7986543932781574716/] [] /tmp/streamjob6310006838437945217.jar tmpDir=null
+
+[Stage 2:>                                                        (0 + 12) / 12]                                                                                Number of raw data to be appeneded:  1
+[Stage 6:===============================================>         (10 + 2) / 12][Stage 6:====================================================>    (11 + 1) / 12]                                                                                Raw Data has been successfully appended to HDFS:  DE-prj/RawData
+[Stage 0:>                                                        (0 + 12) / 12][Stage 0:=============================>                            (6 + 6) / 12]                                                                                Sentence data has been successfully appended to HDFS:  DE-prj/Sentences
+[Stage 0:>                                                        (0 + 12) / 12][Stage 0:=================================>                        (7 + 5) / 12]                                                                                Word data has been successfully appended to HDFS:  DE-prj/Words
+Performing Lexicon Creation...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/torch_model/rnn.py:106: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(pth, map_location='cpu'))
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+[Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+Established Connection
+Established Connection
+Established Connection
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Successfully created "bangunan" new WORD node(s)! 1
+Successfully created "abidin" new WORD node(s)! 1
+Successfully established "abidin LEMMATIZED abidin" relationship(s)!
+Successfully created "bangun" new WORD node(s)! 1
+Successfully created "aduan" new WORD node(s)! 1
+Successfully established "bangunan LEMMATIZED bangun" relationship(s)!
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Successfully created "adu" new WORD node(s)! 1
+Successfully established "aduan LEMMATIZED adu" relationship(s)!
+Successfully created "awa" new WORD node(s)! 1
+Successfully established "awa LEMMATIZED awa" relationship(s)!
+Successfully created "agar" new WORD node(s)! 1
+Successfully established "agar LEMMATIZED agar" relationship(s)!
+Successfully created "beberapa" new WORD node(s)! 1
+Successfully established "beberapa LEMMATIZED beberapa" relationship(s)!
+Successfully created "ahli" new WORD node(s)! 1
+Successfully created "bedah" new WORD node(s)! 1
+Successfully established "bedah LEMMATIZED bedah" relationship(s)!
+Successfully established "ahli LEMMATIZED ahli" relationship(s)!
+Successfully created "bagi" new WORD node(s)! 1
+Successfully established "bagi LEMMATIZED bagi" relationship(s)!
+Successfully created "beliau" new WORD node(s)! 1
+Successfully created "akta" new WORD node(s)! 1
+Successfully established "akta LEMMATIZED akta" relationship(s)!
+Successfully created "berasingan" new WORD node(s)! 1
+Successfully created "bahawa" new WORD node(s)! 1
+Successfully established "bahawa LEMMATIZED bahawa" relationship(s)!
+Successfully created "asing" new WORD node(s)! 1
+Successfully created "animal" new WORD node(s)! 1
+Successfully established "berasingan LEMMATIZED asing" relationship(s)!
+Successfully created "bandar" new WORD node(s)! 1
+Successfully established "animal LEMMATIZED animal" relationship(s)!
+Successfully established "bandar LEMMATIZED bandar" relationship(s)!
+Successfully created "berbeza" new WORD node(s)! 1
+Successfully established "berbeza LEMMATIZED berbeza" relationship(s)!
+Successfully created "bangkai" new WORD node(s)! 1
+Successfully created "apa-apa" new WORD node(s)! 1
+Successfully established "bangkai LEMMATIZED bangkai" relationship(s)!
+Successfully created "berhubung" new WORD node(s)! 1
+Successfully created "apa" new WORD node(s)! 1
+Successfully established "apa-apa LEMMATIZED apa" relationship(s)!
+Successfully created "hubung" new WORD node(s)! 1
+Successfully established "berhubung LEMMATIZED hubung" relationship(s)!
+Successfully created "berkuasa" new WORD node(s)! 1
+Successfully created "berkaitan" new WORD node(s)! 1
+Successfully created "darah" new WORD node(s)! 1
+Successfully established "darah LEMMATIZED darah" relationship(s)!
+Successfully created "kuasa" new WORD node(s)! 1
+Successfully created "kait" new WORD node(s)! 1
+Successfully established "berkuasa LEMMATIZED kuasa" relationship(s)!
+Successfully established "berkaitan LEMMATIZED kait" relationship(s)!
+Successfully created "daripada" new WORD node(s)! 1
+Successfully established "daripada LEMMATIZED daripada" relationship(s)!
+Successfully created "mandat" new WORD node(s)! 1
+Successfully created "berkata" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF mandat" relationship(s)!
+Successfully created "minat" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF minat" relationship(s)!
+Successfully created "datuk" new WORD node(s)! 1
+Successfully established "datuk LEMMATIZED datuk" relationship(s)!
+Successfully created "kawalan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF kawalan" relationship(s)!
+Successfully created "demikian" new WORD node(s)! 1
+Successfully created "pengaruh" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF pengaruh" relationship(s)!
+Successfully created "dik" new WORD node(s)! 1
+Successfully established "demikian LEMMATIZED dik" relationship(s)!
+Successfully created "keagungan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF keagungan" relationship(s)!
+Successfully created "dengan" new WORD node(s)! 1
+Successfully established "dengan LEMMATIZED dengan" relationship(s)!
+Successfully created "cengkaman" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF cengkaman" relationship(s)!
+Successfully created "kebolehan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF kebolehan" relationship(s)!
+Successfully created "ketahanan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF ketahanan" relationship(s)!
+Successfully created "haiwan" new WORD node(s)! 1
+Successfully created "kudrat" new WORD node(s)! 1
+Successfully established "haiwan LEMMATIZED haiwan" relationship(s)!
+Successfully established "berkuasa SYNONYM_OF kudrat" relationship(s)!
+Successfully created "ekonomi" new WORD node(s)! 1
+Successfully established "ekonomi LEMMATIZED ekonomi" relationship(s)!
+Successfully created "mahu" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF mahu" relationship(s)!
+Successfully created "elemen" new WORD node(s)! 1
+Successfully created "hati" new WORD node(s)! 1
+Successfully established "elemen LEMMATIZED elemen" relationship(s)!
+Successfully established "hati LEMMATIZED hati" relationship(s)!
+Successfully created "tenaga" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF tenaga" relationship(s)!
+Successfully created "hidupan" new WORD node(s)! 1
+Successfully created "empat" new WORD node(s)! 1
+Successfully established "empat LEMMATIZED empat" relationship(s)!
+Successfully created "kekuatan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF kekuatan" relationship(s)!
+Successfully created "entiti" new WORD node(s)! 1
+Successfully established "entiti LEMMATIZED entiti" relationship(s)!
+Successfully created "daya" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF daya" relationship(s)!
+Successfully created "fakta" new WORD node(s)! 1
+Successfully established "fakta LEMMATIZED fakta" relationship(s)!
+Successfully created "tinggal" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF tinggal" relationship(s)!
+Successfully created "kesanggupan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF kesanggupan" relationship(s)!
+Successfully created "fakulti" new WORD node(s)! 1
+Successfully established "fakulti LEMMATIZED fakulti" relationship(s)!
+Successfully created "gagal" new WORD node(s)! 1
+Successfully established "gagal LEMMATIZED gagal" relationship(s)!
+Successfully created "wibawa" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF wibawa" relationship(s)!
+Successfully created "gesa" new WORD node(s)! 1
+Successfully established "gesa LEMMATIZED gesa" relationship(s)!
+Successfully created "bertunas" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF bertunas" relationship(s)!
+Successfully created "rela" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF rela" relationship(s)!
+Successfully created "bercambah" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF bercambah" relationship(s)!
+Successfully created "keupayaan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF keupayaan" relationship(s)!
+Successfully created "bernyawa" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF bernyawa" relationship(s)!
+Successfully created "sanggup" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF sanggup" relationship(s)!
+Successfully created "kebajikan" new WORD node(s)! 1
+Successfully created "berputik" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF berputik" relationship(s)!
+Successfully created "hak" new WORD node(s)! 1
+Successfully created "kebaji" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF hak" relationship(s)!
+Successfully established "kebajikan LEMMATIZED kebaji" relationship(s)!
+Successfully created "menetap" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF menetap" relationship(s)!
+Successfully created "daulat" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF daulat" relationship(s)!
+Successfully created "keberkesanan" new WORD node(s)! 1
+Successfully created "tumbuh" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF tumbuh" relationship(s)!
+Successfully created "kesan" new WORD node(s)! 1
+Successfully created "kemampuan" new WORD node(s)! 1
+Successfully established "berkuasa SYNONYM_OF kemampuan" relationship(s)!
+Successfully established "keberkesanan LEMMATIZED kesan" relationship(s)!
+Successfully created "berbuah" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF berbuah" relationship(s)!
+Successfully created "tompok" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF tompok" relationship(s)!
+Successfully created "berlaku" new WORD node(s)! 1
+Successfully created "bernafas" new WORD node(s)! 1
+Successfully created "risiko" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF bernafas" relationship(s)!
+Successfully established "keberkesanan SYNONYM_OF risiko" relationship(s)!
+Successfully created "laku" new WORD node(s)! 1
+Successfully established "berlaku LEMMATIZED laku" relationship(s)!
+Successfully created "diam" new WORD node(s)! 1
+Successfully created "laris" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF diam" relationship(s)!
+Successfully created "pengaruh" new WORD node(s)! 1
+Successfully established "berlaku SYNONYM_OF laris" relationship(s)!
+Successfully established "keberkesanan SYNONYM_OF pengaruh" relationship(s)!
+Successfully created "terjual" new WORD node(s)! 1
+Successfully established "berlaku SYNONYM_OF terjual" relationship(s)!
+Successfully created "cap" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF cap" relationship(s)!
+Successfully created "larap" new WORD node(s)! 1
+Successfully established "berlaku SYNONYM_OF larap" relationship(s)!
+Successfully created "keburukan" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF keburukan" relationship(s)!
+Successfully created "duduk" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF duduk" relationship(s)!
+Successfully created "dikehendaki" new WORD node(s)! 1
+Successfully established "berlaku SYNONYM_OF dikehendaki" relationship(s)!
+Successfully created "akibat" new WORD node(s)! 1
+Successfully created "menginap" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF akibat" relationship(s)!
+Successfully established "hidupan SYNONYM_OF menginap" relationship(s)!
+Successfully created "denai" new WORD node(s)! 1
+Successfully created "membiak" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF denai" relationship(s)!
+Successfully established "hidupan SYNONYM_OF membiak" relationship(s)!
+Successfully created "bertentangan" new WORD node(s)! 1
+Successfully created "berpucuk" new WORD node(s)! 1
+Successfully created "bekas" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF berpucuk" relationship(s)!
+Successfully established "keberkesanan SYNONYM_OF bekas" relationship(s)!
+Successfully created "tentang" new WORD node(s)! 1
+Successfully established "bertentangan LEMMATIZED tentang" relationship(s)!
+Successfully created "surih" new WORD node(s)! 1
+Successfully created "menjalar" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF surih" relationship(s)!
+Successfully established "hidupan SYNONYM_OF menjalar" relationship(s)!
+Successfully created "berulang" new WORD node(s)! 1
+Successfully created "membesar" new WORD node(s)! 1
+Successfully established "hidupan SYNONYM_OF membesar" relationship(s)!
+Successfully created "tapak" new WORD node(s)! 1
+Successfully created "ulang" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF tapak" relationship(s)!
+Successfully established "berulang LEMMATIZED ulang" relationship(s)!
+Successfully created "mati" new WORD node(s)! 1
+Successfully established "hidupan ANTONYM_OF mati" relationship(s)!
+Successfully created "tanda" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF tanda" relationship(s)!
+Successfully created "palsu" new WORD node(s)! 1
+Successfully established "hidupan ANTONYM_OF palsu" relationship(s)!
+Successfully created "jejak" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF jejak" relationship(s)!
+Successfully created "bukti" new WORD node(s)! 1
+Successfully established "bukti LEMMATIZED bukti" relationship(s)!
+Successfully created "ialah" new WORD node(s)! 1
+Successfully created "tikas" new WORD node(s)! 1
+Successfully established "ialah LEMMATIZED ialah" relationship(s)!
+Successfully established "keberkesanan SYNONYM_OF tikas" relationship(s)!
+Successfully created "compliance" new WORD node(s)! 1
+Successfully established "compliance LEMMATIZED compliance" relationship(s)!
+Successfully created "efek" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF efek" relationship(s)!
+Successfully created "ini" new WORD node(s)! 1
+Successfully established "ini LEMMATIZED ini" relationship(s)!
+Successfully created "dalam" new WORD node(s)! 1
+Successfully created "insiden" new WORD node(s)! 1
+Successfully established "dalam LEMMATIZED dalam" relationship(s)!
+Successfully established "insiden LEMMATIZED insiden" relationship(s)!
+Successfully created "parut" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF parut" relationship(s)!
+Successfully created "padah" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF padah" relationship(s)!
+Successfully created "kenyataan" new WORD node(s)! 1
+Successfully established "kenyataan LEMMATIZED kenyataan" relationship(s)!
+Successfully created "ekoran" new WORD node(s)! 1
+Successfully established "keberkesanan SYNONYM_OF ekoran" relationship(s)!
+Successfully created "disember" new WORD node(s)! 1
+Successfully created "jaleh" new WORD node(s)! 1
+Successfully created "kebaikan" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF jaleh" relationship(s)!
+Successfully established "keberkesanan SYNONYM_OF kebaikan" relationship(s)!
+Successfully created "sember" new WORD node(s)! 1
+Successfully established "disember LEMMATIZED sember" relationship(s)!
+Successfully created "kasatmata" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF kasatmata" relationship(s)!
+Successfully created "kebimbangan" new WORD node(s)! 1
+Successfully created "izhar" new WORD node(s)! 1
+Successfully created "bimbang" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF izhar" relationship(s)!
+Successfully established "kebimbangan LEMMATIZED bimbang" relationship(s)!
+Successfully created "terang" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF terang" relationship(s)!
+Successfully created "ketara" new WORD node(s)! 1
+Successfully created "kejadian" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF ketara" relationship(s)!
+Successfully established "kejadian LEMMATIZED kejadian" relationship(s)!
+Successfully created "jelas" new WORD node(s)! 1
+Successfully created "kelakuan" new WORD node(s)! 1
+Successfully created "isteri" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF jelas" relationship(s)!
+Successfully established "isteri LEMMATIZED isteri" relationship(s)!
+Successfully created "laku" new WORD node(s)! 1
+Successfully created "jali" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF jali" relationship(s)!
+Successfully established "kelakuan LEMMATIZED laku" relationship(s)!
+Successfully created "laris" new WORD node(s)! 1
+Successfully established "kelakuan SYNONYM_OF laris" relationship(s)!
+Successfully created "maujud" new WORD node(s)! 1
+Successfully created "jabatan" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF maujud" relationship(s)!
+Successfully created "terjual" new WORD node(s)! 1
+Successfully established "kelakuan SYNONYM_OF terjual" relationship(s)!
+Successfully created "wujud" new WORD node(s)! 1
+Successfully established "kenyataan SYNONYM_OF wujud" relationship(s)!
+Successfully created "jabat" new WORD node(s)! 1
+Successfully established "jabatan LEMMATIZED jabat" relationship(s)!
+Successfully created "larap" new WORD node(s)! 1
+Successfully established "kelakuan SYNONYM_OF larap" relationship(s)!
+Successfully created "kabur" new WORD node(s)! 1
+Successfully created "jenayah" new WORD node(s)! 1
+Successfully established "kenyataan ANTONYM_OF kabur" relationship(s)!
+Successfully established "jenayah LEMMATIZED jenayah" relationship(s)!
+Successfully created "dikehendaki" new WORD node(s)! 1
+Successfully established "kelakuan SYNONYM_OF dikehendaki" relationship(s)!
+Successfully created "kepada" new WORD node(s)! 1
+Successfully established "kepada LEMMATIZED kepada" relationship(s)!
+Successfully created "jika" new WORD node(s)! 1
+Successfully established "jika LEMMATIZED jika" relationship(s)!
+Successfully created "kemanusiaan" new WORD node(s)! 1
+Successfully established "kemanusiaan LEMMATIZED kemanusiaan" relationship(s)!
+Successfully created "kepakaran" new WORD node(s)! 1
+Successfully created "kematian" new WORD node(s)! 1
+Successfully created "pakar" new WORD node(s)! 1
+Successfully established "kematian LEMMATIZED kematian" relationship(s)!
+Successfully established "kepakaran LEMMATIZED pakar" relationship(s)!
+Successfully created "kamera" new WORD node(s)! 1
+Successfully established "kamera LEMMATIZED kamera" relationship(s)!
+Successfully created "kes" new WORD node(s)! 1
+Successfully created "meninggal dunia" new WORD node(s)! 1
+Successfully established "kes LEMMATIZED kes" relationship(s)!
+Successfully established "kematian SYNONYM_OF meninggal dunia" relationship(s)!
+Successfully created "kampus" new WORD node(s)! 1
+Successfully established "kampus LEMMATIZED kampus" relationship(s)!
+Successfully created "kesan" new WORD node(s)! 1
+Successfully established "kesan LEMMATIZED kesan" relationship(s)!
+Successfully created "karkas" new WORD node(s)! 1
+Successfully established "karkas LEMMATIZED karkas" relationship(s)!
+Successfully created "tompok" new WORD node(s)! 1
+Successfully created "litar" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF tompok" relationship(s)!
+Successfully established "litar LEMMATIZED litar" relationship(s)!
+Successfully created "klinik" new WORD node(s)! 1
+Successfully established "klinik LEMMATIZED klinik" relationship(s)!
+Successfully created "lokasi" new WORD node(s)! 1Successfully created "risiko" new WORD node(s)! 1
+
+Successfully established "kesan SYNONYM_OF risiko" relationship(s)!
+Successfully established "lokasi LEMMATIZED lokasi" relationship(s)!
+Successfully created "lumpur" new WORD node(s)! 1
+Successfully created "pengaruh" new WORD node(s)! 1
+Successfully established "lumpur LEMMATIZED lumpur" relationship(s)!
+Successfully established "kesan SYNONYM_OF pengaruh" relationship(s)!
+Successfully created "kuala" new WORD node(s)! 1
+Successfully established "kuala LEMMATIZED kuala" relationship(s)!
+[Stage 1:>                                                          (0 + 3) / 3]Successfully created "mahasiswa" new WORD node(s)! 1
+Successfully established "mahasiswa LEMMATIZED mahasiswa" relationship(s)!
+Successfully created "cap" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF cap" relationship(s)!
+Successfully created "kucing" new WORD node(s)! 1
+Successfully established "kucing LEMMATIZED kucing" relationship(s)!
+Successfully created "maklumat" new WORD node(s)! 1
+Successfully created "keburukan" new WORD node(s)! 1
+Successfully established "maklumat LEMMATIZED maklumat" relationship(s)!
+Successfully established "kesan SYNONYM_OF keburukan" relationship(s)!
+Successfully created "lalu" new WORD node(s)! 1
+Successfully established "lalu LEMMATIZED lalu" relationship(s)!
+Successfully created "akibat" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF akibat" relationship(s)!
+Successfully created "malaysia" new WORD node(s)! 1
+Successfully established "malaysia LEMMATIZED malaysia" relationship(s)!
+Successfully created "kemudian" new WORD node(s)! 1
+Successfully created "denai" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF kemudian" relationship(s)!
+Successfully established "kesan SYNONYM_OF denai" relationship(s)!
+Successfully created "bekas" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF bekas" relationship(s)!
+Successfully created "surih" new WORD node(s)! 1
+Successfully created "manusia" new WORD node(s)! 1
+Successfully created "melintas" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF surih" relationship(s)!
+Successfully established "manusia LEMMATIZED manusia" relationship(s)!
+Successfully established "lalu SYNONYM_OF melintas" relationship(s)!
+Successfully created "bermaya" new WORD node(s)! 1
+Successfully created "meningkatkan" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF bermaya" relationship(s)!
+Successfully created "tapak" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF tapak" relationship(s)!
+Successfully created "berdaya" new WORD node(s)! 1
+Successfully created "tingkat" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF berdaya" relationship(s)!
+Successfully established "meningkatkan LEMMATIZED tingkat" relationship(s)!
+Successfully created "tanda" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF tanda" relationship(s)!
+Successfully created "menjalankan" new WORD node(s)! 1
+Successfully created "jejak" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF jejak" relationship(s)!
+Successfully created "larat" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF larat" relationship(s)!
+Successfully created "tikas" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF tikas" relationship(s)!
+Successfully created "lebuh" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF lebuh" relationship(s)!
+Successfully created "efek" new WORD node(s)! 1
+Successfully created "lewat" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF efek" relationship(s)!
+Successfully established "lalu SYNONYM_OF lewat" relationship(s)!
+Successfully created "persiaran" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF persiaran" relationship(s)!
+Successfully created "melampaui" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF melampaui" relationship(s)!
+Successfully created "latisan" new WORD node(s)! 1
+Successfully created "parut" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF latisan" relationship(s)!
+Successfully established "kesan SYNONYM_OF parut" relationship(s)!
+Successfully created "bertenaga" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF bertenaga" relationship(s)!
+Successfully created "kesempatan" new WORD node(s)! 1
+Successfully created "padah" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF padah" relationship(s)!
+Successfully established "menjalankan SYNONYM_OF kesempatan" relationship(s)!
+Successfully created "setelah" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF setelah" relationship(s)!
+Successfully created "denai" new WORD node(s)! 1
+Successfully created "ekoran" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF ekoran" relationship(s)!
+Successfully established "menjalankan SYNONYM_OF denai" relationship(s)!
+Successfully created "lebuh raya" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF lebuh raya" relationship(s)!
+Successfully created "kebaikan" new WORD node(s)! 1
+Successfully established "kesan SYNONYM_OF kebaikan" relationship(s)!
+Successfully created "maka" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF maka" relationship(s)!
+Successfully created "usaha" new WORD node(s)! 1
+Successfully created "kesatuan" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF usaha" relationship(s)!
+Successfully established "kesatuan LEMMATIZED kesatuan" relationship(s)!
+Successfully created "melewati" new WORD node(s)! 1
+Successfully established "lalu SYNONYM_OF melewati" relationship(s)!
+Successfully created "jalan raya" new WORD node(s)! 1
+Successfully created "keselamatan" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF jalan raya" relationship(s)!
+Successfully created "lanjut" new WORD node(s)! 1
+Successfully established "lanjut LEMMATIZED lanjut" relationship(s)!
+Successfully created "lorong" new WORD node(s)! 1
+Successfully created "selamat" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF lorong" relationship(s)!
+Successfully established "keselamatan LEMMATIZED selamat" relationship(s)!
+Successfully created "laporan" new WORD node(s)! 1
+Successfully created "rintisan" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF rintisan" relationship(s)!
+Successfully created "kezaliman" new WORD node(s)! 1Successfully created "lapor" new WORD node(s)! 1
+
+Successfully established "laporan LEMMATIZED lapor" relationship(s)!
+Successfully created "jejambat" new WORD node(s)! 1
+Successfully created "zalim" new WORD node(s)! 1
+Successfully established "kezaliman LEMMATIZED zalim" relationship(s)!
+Successfully established "menjalankan SYNONYM_OF jejambat" relationship(s)!
+Successfully created "law" new WORD node(s)! 1
+Successfully established "law LEMMATIZED law" relationship(s)!
+Successfully created "jejantas" new WORD node(s)! 1
+Successfully created "khuatir" new WORD node(s)! 1
+Successfully established "khuatir LEMMATIZED khuatir" relationship(s)!Successfully established "menjalankan SYNONYM_OF jejantas" relationship(s)!
+
+Successfully created "liar" new WORD node(s)! 1
+Successfully created "laluan" new WORD node(s)! 1
+Successfully established "liar LEMMATIZED liar" relationship(s)!
+Successfully established "menjalankan SYNONYM_OF laluan" relationship(s)!
+Successfully created "kira" new WORD node(s)! 1
+Successfully established "kira LEMMATIZED kira" relationship(s)!
+Successfully created "ikhtiar" new WORD node(s)! 1
+Successfully created "tidak senonoh" new WORD node(s)! 1
+Successfully created "anggaran" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF ikhtiar" relationship(s)!
+Successfully established "kira SYNONYM_OF anggaran" relationship(s)!
+Successfully established "liar SYNONYM_OF tidak senonoh" relationship(s)!
+Successfully created "rua" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF rua" relationship(s)!
+Successfully created "ganas" new WORD node(s)! 1
+Successfully created "peduli" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF peduli" relationship(s)!
+Successfully established "liar SYNONYM_OF ganas" relationship(s)!
+Successfully created "ban" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF ban" relationship(s)!
+Successfully created "jangkaan" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF jangkaan" relationship(s)!
+Successfully created "balik adab" new WORD node(s)! 1
+Successfully established "liar SYNONYM_OF balik adab" relationship(s)!
+Successfully created "peluang" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF peluang" relationship(s)!
+Successfully created "endah" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF endah" relationship(s)!
+Successfully created "terbiar" new WORD node(s)! 1
+Successfully established "liar SYNONYM_OF terbiar" relationship(s)!
+Successfully created "landasan" new WORD node(s)! 1
+Successfully established "menjalankan SYNONYM_OF landasan" relationship(s)!
+Successfully created "anggapan" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF anggapan" relationship(s)!
+Successfully created "songong" new WORD node(s)! 1
+Successfully created "menjumpai" new WORD node(s)! 1
+Successfully established "liar SYNONYM_OF songong" relationship(s)!
+Successfully created "sangkaan" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF sangkaan" relationship(s)!
+Successfully created "jumpa" new WORD node(s)! 1
+Successfully created "tambung" new WORD node(s)! 1
+Successfully established "menjumpai LEMMATIZED jumpa" relationship(s)!
+Successfully established "liar SYNONYM_OF tambung" relationship(s)!
+Successfully created "taksiran" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF taksiran" relationship(s)!
+Successfully created "hitungan" new WORD node(s)! 1
+Successfully created "menteri" new WORD node(s)! 1
+Successfully created "hutan" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF hitungan" relationship(s)!
+Successfully established "menteri LEMMATIZED menteri" relationship(s)!
+Successfully established "liar SYNONYM_OF hutan" relationship(s)!
+Successfully created "hirau" new WORD node(s)! 1
+Successfully created "buas" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF hirau" relationship(s)!
+Successfully established "liar SYNONYM_OF buas" relationship(s)!
+Successfully created "menunjukkan" new WORD node(s)! 1
+Successfully created "parwah" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF parwah" relationship(s)!
+Successfully created "tunjuk" new WORD node(s)! 1
+Successfully established "menunjukkan LEMMATIZED tunjuk" relationship(s)!
+Successfully created "biadab" new WORD node(s)! 1
+Successfully established "liar SYNONYM_OF biadab" relationship(s)!
+Successfully created "fikir" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF fikir" relationship(s)!
+Successfully created "menurut" new WORD node(s)! 1
+Successfully created "kurang ajar" new WORD node(s)! 1
+Successfully established "liar SYNONYM_OF kurang ajar" relationship(s)!
+Successfully created "pendapat" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF pendapat" relationship(s)!
+Successfully created "turut" new WORD node(s)! 1
+Successfully established "menurut LEMMATIZED turut" relationship(s)!
+Successfully created "kasar" new WORD node(s)! 1
+Successfully established "liar SYNONYM_OF kasar" relationship(s)!
+Successfully created "rasa" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF rasa" relationship(s)!
+Successfully created "menyatakan" new WORD node(s)! 1
+Successfully created "dugaan" new WORD node(s)! 1
+Successfully created "culas" new WORD node(s)! 1
+Successfully established "kira SYNONYM_OF dugaan" relationship(s)!
+Successfully established "liar SYNONYM_OF culas" relationship(s)!
+Successfully created "nyata" new WORD node(s)! 1
+Successfully established "menyatakan LEMMATIZED nyata" relationship(s)!
+Successfully created "jinak" new WORD node(s)! 1
+Successfully created "masa" new WORD node(s)! 1
+Successfully established "masa LEMMATIZED masa" relationship(s)!
+Successfully established "liar ANTONYM_OF jinak" relationship(s)!
+Successfully created "sangkala" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF sangkala" relationship(s)!
+Successfully created "jaleh" new WORD node(s)! 1
+Successfully created "sopan" new WORD node(s)! 1
+Successfully established "menyatakan SYNONYM_OF jaleh" relationship(s)!
+Successfully established "liar ANTONYM_OF sopan" relationship(s)!
+Successfully created "tempoh" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF tempoh" relationship(s)!
+Successfully created "kasatmata" new WORD node(s)! 1
+Successfully established "menyatakan SYNONYM_OF kasatmata" relationship(s)!
+Successfully created "izhar" new WORD node(s)! 1
+Successfully established "menyatakan SYNONYM_OF izhar" relationship(s)!
+Successfully created "waktu" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF waktu" relationship(s)!
+Successfully created "mempunyai" new WORD node(s)! 1
+Successfully established "mempunyai LEMMATIZED mempunyai" relationship(s)!
+Successfully created "terang" new WORD node(s)! 1
+Successfully created "jangka waktu" new WORD node(s)! 1
+Successfully established "menyatakan SYNONYM_OF terang" relationship(s)!
+Successfully established "masa SYNONYM_OF jangka waktu" relationship(s)!
+Successfully created "mendapatkan" new WORD node(s)! 1
+Successfully created "ketara" new WORD node(s)! 1
+Successfully created "jangka masa" new WORD node(s)! 1
+Successfully established "menyatakan SYNONYM_OF ketara" relationship(s)!
+Successfully established "masa SYNONYM_OF jangka masa" relationship(s)!
+Successfully created "zaman" new WORD node(s)! 1
+Successfully created "jelas" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF zaman" relationship(s)!
+Successfully established "menyatakan SYNONYM_OF jelas" relationship(s)!
+Successfully created "menerima" new WORD node(s)! 1
+Successfully established "menerima LEMMATIZED menerima" relationship(s)!
+Successfully created "detik" new WORD node(s)! 1
+Successfully created "jali" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF detik" relationship(s)!
+Successfully established "menyatakan SYNONYM_OF jali" relationship(s)!
+Successfully created "menerusi" new WORD node(s)! 1
+Successfully created "era" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF era" relationship(s)!
+Successfully created "maujud" new WORD node(s)! 1
+Successfully established "menyatakan SYNONYM_OF maujud" relationship(s)!
+Successfully created "terusi" new WORD node(s)! 1
+Successfully established "menerusi LEMMATIZED terusi" relationship(s)!
+Successfully created "sekon" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF sekon" relationship(s)!
+Successfully created "wujud" new WORD node(s)! 1
+Successfully established "menyatakan SYNONYM_OF wujud" relationship(s)!
+Successfully created "saat" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF saat" relationship(s)!
+Successfully created "tembus" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF tembus" relationship(s)!
+Successfully created "kabur" new WORD node(s)! 1
+Successfully established "menyatakan ANTONYM_OF kabur" relationship(s)!
+Successfully created "sentiasa" new WORD node(s)! 1
+Successfully created "menyayat" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF sentiasa" relationship(s)!
+Successfully created "jam" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF jam" relationship(s)!
+Successfully created "sayat" new WORD node(s)! 1
+Successfully established "menyayat LEMMATIZED sayat" relationship(s)!
+Successfully created "justeru" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF justeru" relationship(s)!
+Successfully created "tenggak" new WORD node(s)! 1
+Successfully established "masa SYNONYM_OF tenggak" relationship(s)!
+Successfully created "menyeluruh" new WORD node(s)! 1
+Successfully created "jurus" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF jurus" relationship(s)!
+Successfully created "luruh" new WORD node(s)! 1
+Successfully established "menyeluruh LEMMATIZED luruh" relationship(s)!
+Successfully created "lalu" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF lalu" relationship(s)!
+Successfully created "menyeru" new WORD node(s)! 1
+Successfully created "masalah" new WORD node(s)! 1
+Successfully established "masalah LEMMATIZED masalah" relationship(s)!
+Successfully created "seru" new WORD node(s)! 1
+Successfully established "menyeru LEMMATIZED seru" relationship(s)!
+Successfully created "berlarutan" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF berlarutan" relationship(s)!
+Successfully created "media" new WORD node(s)! 1
+Successfully established "media LEMMATIZED media" relationship(s)!
+Successfully created "penganalisis" new WORD node(s)! 1
+Successfully created "bersinambungan" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF bersinambungan" relationship(s)!
+Successfully created "analis" new WORD node(s)! 1
+Successfully created "melanggar" new WORD node(s)! 1
+Successfully established "penganalisis LEMMATIZED analis" relationship(s)!
+Successfully created "langgar" new WORD node(s)! 1
+Successfully created "lolos" new WORD node(s)! 1
+Successfully created "penganiayaan" new WORD node(s)! 1
+Successfully established "melanggar LEMMATIZED langgar" relationship(s)!
+Successfully established "menerusi SYNONYM_OF lolos" relationship(s)!
+Successfully created "aniaya" new WORD node(s)! 1
+Successfully established "penganiayaan LEMMATIZED aniaya" relationship(s)!
+Successfully created "selalu" new WORD node(s)! 1
+Successfully created "melihat" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF selalu" relationship(s)!
+Successfully created "pengurusan" new WORD node(s)! 1
+Successfully created "lihat" new WORD node(s)! 1
+Successfully created "berlanjutan" new WORD node(s)! 1
+Successfully established "melihat LEMMATIZED lihat" relationship(s)!
+Successfully established "menerusi SYNONYM_OF berlanjutan" relationship(s)!
+Successfully created "urus" new WORD node(s)! 1
+Successfully established "pengurusan LEMMATIZED urus" relationship(s)!
+Successfully created "memaklumkan" new WORD node(s)! 1
+Successfully created "penyiasat" new WORD node(s)! 1
+Successfully created "bergerak" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF bergerak" relationship(s)!
+Successfully created "maklum" new WORD node(s)! 1
+Successfully established "memaklumkan LEMMATIZED maklum" relationship(s)!
+Successfully created "siasat" new WORD node(s)! 1
+Successfully established "penyiasat LEMMATIZED siasat" relationship(s)!
+Successfully created "memastikan" new WORD node(s)! 1
+Successfully created "peranan" new WORD node(s)! 1
+Successfully created "langsung" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF langsung" relationship(s)!
+Successfully created "pasti" new WORD node(s)! 1
+Successfully established "memastikan LEMMATIZED pasti" relationship(s)!
+Successfully created "peran" new WORD node(s)! 1
+Successfully established "peranan LEMMATIZED peran" relationship(s)!
+Successfully created "berpanjangan" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF berpanjangan" relationship(s)!
+Successfully created "membabitkan" new WORD node(s)! 1
+Successfully created "perdana" new WORD node(s)! 1
+Successfully established "perdana LEMMATIZED perdana" relationship(s)!
+Successfully created "segera" new WORD node(s)! 1
+Successfully created "babit" new WORD node(s)! 1
+Successfully established "menerusi SYNONYM_OF segera" relationship(s)!
+Successfully established "membabitkan LEMMATIZED babit" relationship(s)!
+Successfully created "perkhidmatan" new WORD node(s)! 1
+Successfully created "lantas" new WORD node(s)! 1
+Successfully established "perkhidmatan LEMMATIZED perkhidmatan" relationship(s)!
+Successfully established "menerusi SYNONYM_OF lantas" relationship(s)!
+Successfully created "membantu" new WORD node(s)! 1
+Successfully created "bantu" new WORD node(s)! 1
+Successfully created "jasa" new WORD node(s)! 1
+Successfully established "membantu LEMMATIZED bantu" relationship(s)!
+Successfully established "perkhidmatan SYNONYM_OF jasa" relationship(s)!
+Successfully created "sopan santun" new WORD node(s)! 1
+Successfully established "perkhidmatan SYNONYM_OF sopan santun" relationship(s)!
+Successfully created "membawa" new WORD node(s)! 1
+Successfully created "berhenti" new WORD node(s)! 1
+Successfully established "menerusi ANTONYM_OF berhenti" relationship(s)!
+Successfully created "bawa" new WORD node(s)! 1
+Successfully established "membawa LEMMATIZED bawa" relationship(s)!
+Successfully created "kerja" new WORD node(s)! 1
+Successfully established "perkhidmatan SYNONYM_OF kerja" relationship(s)!
+Successfully created "menyuarakan" new WORD node(s)! 1
+Successfully created "singgah" new WORD node(s)! 1
+Successfully created "takzim" new WORD node(s)! 1
+Successfully established "menerusi ANTONYM_OF singgah" relationship(s)!
+Successfully established "perkhidmatan SYNONYM_OF takzim" relationship(s)!
+Successfully created "suara" new WORD node(s)! 1
+Successfully established "menyuarakan LEMMATIZED suara" relationship(s)!
+Successfully created "hormat" new WORD node(s)! 1
+Successfully established "perkhidmatan SYNONYM_OF hormat" relationship(s)!
+Successfully created "mengecam" new WORD node(s)! 1
+Successfully created "ucapan" new WORD node(s)! 1
+Successfully established "menyuarakan SYNONYM_OF ucapan" relationship(s)!
+Successfully created "tugas" new WORD node(s)! 1
+Successfully established "perkhidmatan SYNONYM_OF tugas" relationship(s)!
+Successfully created "cam" new WORD node(s)! 1
+Successfully established "mengecam LEMMATIZED cam" relationship(s)!
+Successfully created "nada" new WORD node(s)! 1
+Successfully established "menyuarakan SYNONYM_OF nada" relationship(s)!
+Successfully created "sumbangan" new WORD node(s)! 1
+Successfully established "perkhidmatan SYNONYM_OF sumbangan" relationship(s)!
+Successfully created "mengenal" new WORD node(s)! 1
+Successfully created "tutur" new WORD node(s)! 1
+Successfully established "menyuarakan SYNONYM_OF tutur" relationship(s)!
+Successfully created "bakti" new WORD node(s)! 1
+Successfully established "perkhidmatan SYNONYM_OF bakti" relationship(s)!
+Successfully created "kenal" new WORD node(s)! 1
+Successfully established "mengenal LEMMATIZED kenal" relationship(s)!
+Successfully created "perlakuan" new WORD node(s)! 1
+Successfully created "mengesahkan" new WORD node(s)! 1
+Successfully created "kalimah" new WORD node(s)! 1
+Successfully established "menyuarakan SYNONYM_OF kalimah" relationship(s)!
+Successfully created "laku" new WORD node(s)! 1
+Successfully created "kesah" new WORD node(s)! 1
+Successfully established "perlakuan LEMMATIZED laku" relationship(s)!
+Successfully established "mengesahkan LEMMATIZED kesah" relationship(s)!
+Successfully created "perkataan" new WORD node(s)! 1
+Successfully created "halal" new WORD node(s)! 1
+Successfully established "menyuarakan SYNONYM_OF perkataan" relationship(s)!
+Successfully established "mengesahkan SYNONYM_OF halal" relationship(s)!
+Successfully created "perlu" new WORD node(s)! 1
+Successfully established "perlu LEMMATIZED perlu" relationship(s)!
+Successfully created "percakapan" new WORD node(s)! 1
+Successfully established "menyuarakan SYNONYM_OF percakapan" relationship(s)!
+Successfully created "wajib" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF wajib" relationship(s)!
+Successfully created "sabit" new WORD node(s)! 1
+Successfully created "sora" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF sabit" relationship(s)!
+Successfully established "menyuarakan SYNONYM_OF sora" relationship(s)!
+Successfully created "absah" new WORD node(s)! 1
+Successfully created "terpaksa" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF absah" relationship(s)!
+Successfully established "perlu SYNONYM_OF terpaksa" relationship(s)!
+Successfully created "mereka" new WORD node(s)! 1
+Successfully established "mereka LEMMATIZED mereka" relationship(s)!
+Successfully created "pasti" new WORD node(s)! 1
+Successfully created "pasti" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF pasti" relationship(s)!
+Successfully established "perlu SYNONYM_OF pasti" relationship(s)!
+Successfully created "namun" new WORD node(s)! 1
+Successfully established "namun LEMMATIZED namun" relationship(s)!
+Successfully created "nyata" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF nyata" relationship(s)!
+Successfully created "ngeri" new WORD node(s)! 1
+Successfully established "ngeri LEMMATIZED ngeri" relationship(s)!
+Successfully created "isbat" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF isbat" relationship(s)!
+Successfully created "berguna" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF berguna" relationship(s)!
+Successfully created "nilai" new WORD node(s)! 1
+Successfully established "nilai LEMMATIZED nilai" relationship(s)!
+Successfully created "tentu" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF tentu" relationship(s)!
+Successfully created "muktamad" new WORD node(s)! 1
+Successfully created "timbangan" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF muktamad" relationship(s)!
+Successfully established "nilai SYNONYM_OF timbangan" relationship(s)!
+Successfully created "berfaedah" new WORD node(s)! 1
+Successfully created "kimah" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF berfaedah" relationship(s)!
+Successfully established "nilai SYNONYM_OF kimah" relationship(s)!
+Successfully created "mesti" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF mesti" relationship(s)!
+Successfully created "harga" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF harga" relationship(s)!
+Successfully created "bermanfaat" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF bermanfaat" relationship(s)!
+Successfully created "harkat" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF harkat" relationship(s)!
+Successfully created "mustahak" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF mustahak" relationship(s)!
+Successfully created "kadar" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF kadar" relationship(s)!
+Successfully created "tentu" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF tentu" relationship(s)!
+Successfully created "penting" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF penting" relationship(s)!
+Successfully created "ukuran" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF ukuran" relationship(s)!
+Successfully created "sidi" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF sidi" relationship(s)!
+Successfully created "hendaklah" new WORD node(s)! 1
+Successfully established "perlu SYNONYM_OF hendaklah" relationship(s)!
+Successfully created "kualiti" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF kualiti" relationship(s)!
+Successfully created "sahih" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF sahih" relationship(s)!
+Successfully created "mutu" new WORD node(s)! 1
+Successfully created "perniagaan" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF mutu" relationship(s)!
+Successfully created "pentan" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF pentan" relationship(s)!
+Successfully created "niaga" new WORD node(s)! 1
+Successfully created "lulus" new WORD node(s)! 1
+Successfully created "darjat" new WORD node(s)! 1
+Successfully established "perniagaan LEMMATIZED niaga" relationship(s)!
+Successfully established "mengesahkan SYNONYM_OF lulus" relationship(s)!
+Successfully established "nilai SYNONYM_OF darjat" relationship(s)!
+Successfully created "skala" new WORD node(s)! 1
+Successfully created "asi" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF skala" relationship(s)!
+Successfully established "mengesahkan SYNONYM_OF asi" relationship(s)!
+Successfully created "sekitar" new WORD node(s)! 1Successfully created "darjah" new WORD node(s)! 1
+
+Successfully established "sekitar LEMMATIZED sekitar" relationship(s)!
+Successfully established "nilai SYNONYM_OF darjah" relationship(s)!
+Successfully created "selaras" new WORD node(s)! 1
+Successfully established "selaras LEMMATIZED selaras" relationship(s)!
+Successfully created "aji" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF aji" relationship(s)!
+Successfully created "cerat" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF cerat" relationship(s)!
+Successfully created "semalam" new WORD node(s)! 1
+Successfully created "nisbah" new WORD node(s)! 1
+Successfully established "nilai SYNONYM_OF nisbah" relationship(s)!
+Successfully created "terang" new WORD node(s)! 1
+Successfully established "mengesahkan SYNONYM_OF terang" relationship(s)!
+Successfully created "malam" new WORD node(s)! 1
+Successfully established "semalam LEMMATIZED malam" relationship(s)!
+Successfully created "ogos" new WORD node(s)! 1
+Successfully established "ogos LEMMATIZED ogos" relationship(s)!
+Successfully created "haram" new WORD node(s)! 1
+Successfully established "mengesahkan ANTONYM_OF haram" relationship(s)!
+Successfully created "sementara" new WORD node(s)! 1
+Successfully established "sementara LEMMATIZED sementara" relationship(s)!
+Successfully created "oleh" new WORD node(s)! 1
+Successfully established "oleh LEMMATIZED oleh" relationship(s)!
+Successfully created "samar-samar" new WORD node(s)! 1
+Successfully established "mengesahkan ANTONYM_OF samar-samar" relationship(s)!
+Successfully created "menggesa" new WORD node(s)! 1
+Successfully created "seketika" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF seketika" relationship(s)!
+Successfully created "pada" new WORD node(s)! 1
+Successfully established "pada LEMMATIZED pada" relationship(s)!
+Successfully created "gesa" new WORD node(s)! 1
+Successfully established "menggesa LEMMATIZED gesa" relationship(s)!
+Successfully created "persatuan" new WORD node(s)! 1
+Successfully created "parlimen" new WORD node(s)! 1
+Successfully established "parlimen LEMMATIZED parlimen" relationship(s)!
+Successfully created "di samping" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF di samping" relationship(s)!
+Successfully created "satu" new WORD node(s)! 1
+Successfully created "pasti" new WORD node(s)! 1
+Successfully established "persatuan LEMMATIZED satu" relationship(s)!
+Successfully established "pasti LEMMATIZED pasti" relationship(s)!
+Successfully created "sembari" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF sembari" relationship(s)!
+[Stage 1:>                                                          (0 + 3) / 3]Successfully created "persekutuan" new WORD node(s)! 1
+Successfully created "pasukan" new WORD node(s)! 1
+Successfully created "sekutu" new WORD node(s)! 1
+Successfully created "pasu" new WORD node(s)! 1
+Successfully established "persekutuan LEMMATIZED sekutu" relationship(s)!
+Successfully established "pasukan LEMMATIZED pasu" relationship(s)!
+Successfully created "sambil" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF sambil" relationship(s)!
+Successfully created "gabungan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF gabungan" relationship(s)!
+Successfully created "pejabat" new WORD node(s)! 1
+Successfully created "ikatan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF ikatan" relationship(s)!
+Successfully created "jabat" new WORD node(s)! 1
+Successfully established "pejabat LEMMATIZED jabat" relationship(s)!
+Successfully created "dengan" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF dengan" relationship(s)!
+Successfully created "kelompok" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF kelompok" relationship(s)!
+Successfully created "pelbagai" new WORD node(s)! 1
+Successfully established "pelbagai LEMMATIZED pelbagai" relationship(s)!
+Successfully created "serta" new WORD node(s)! 1
+Successfully created "taulan" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF serta" relationship(s)!
+Successfully created "pembabitan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF taulan" relationship(s)!
+Successfully created "babit" new WORD node(s)! 1
+Successfully created "syarik" new WORD node(s)! 1
+Successfully established "pembabitan LEMMATIZED babit" relationship(s)!
+Successfully established "persekutuan SYNONYM_OF syarik" relationship(s)!
+Successfully created "pula" new WORD node(s)! 1
+Successfully created "sahabat" new WORD node(s)! 1
+Successfully created "pemeriksaan" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF pula" relationship(s)!
+Successfully established "persekutuan SYNONYM_OF sahabat" relationship(s)!
+Successfully created "periksa" new WORD node(s)! 1
+Successfully established "pemeriksaan LEMMATIZED periksa" relationship(s)!
+Successfully created "pasangan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF pasangan" relationship(s)!
+Successfully created "penaung" new WORD node(s)! 1
+Successfully created "bersama" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF bersama" relationship(s)!
+Successfully created "pengikut" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF pengikut" relationship(s)!
+Successfully created "naung" new WORD node(s)! 1
+Successfully established "penaung LEMMATIZED naung" relationship(s)!
+Successfully created "sekejap" new WORD node(s)! 1
+Successfully created "alif" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF sekejap" relationship(s)!
+Successfully established "persekutuan SYNONYM_OF alif" relationship(s)!
+Successfully created "pencinta" new WORD node(s)! 1
+Successfully created "handai" new WORD node(s)! 1
+Successfully created "manakala" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF handai" relationship(s)!
+Successfully established "sementara SYNONYM_OF manakala" relationship(s)!
+Successfully created "cinta" new WORD node(s)! 1
+Successfully established "pencinta LEMMATIZED cinta" relationship(s)!
+Successfully created "nyapang" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF nyapang" relationship(s)!
+Successfully created "seraya" new WORD node(s)! 1
+Successfully established "sementara SYNONYM_OF seraya" relationship(s)!
+Successfully created "penemuan" new WORD node(s)! 1
+Successfully created "saing" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF saing" relationship(s)!
+Successfully created "kekal" new WORD node(s)! 1
+Successfully established "sementara ANTONYM_OF kekal" relationship(s)!
+Successfully created "temu" new WORD node(s)! 1
+Successfully established "penemuan LEMMATIZED temu" relationship(s)!
+Successfully created "rakan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF rakan" relationship(s)!
+Successfully created "semua" new WORD node(s)! 1
+Successfully established "semua LEMMATIZED semua" relationship(s)!
+Successfully created "golongan" new WORD node(s)! 1
+Successfully created "rakan" new WORD node(s)! 1
+Successfully established "rakan LEMMATIZED rakan" relationship(s)!
+Successfully established "persekutuan SYNONYM_OF golongan" relationship(s)!
+Successfully created "rasa" new WORD node(s)! 1
+Successfully created "saudara" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF saudara" relationship(s)!
+Successfully established "rasa LEMMATIZED rasa" relationship(s)!
+Successfully created "seantero." new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF seantero." relationship(s)!
+Successfully created "agak" new WORD node(s)! 1
+Successfully established "rasa SYNONYM_OF agak" relationship(s)!
+Successfully created "syarikat" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF syarikat" relationship(s)!
+Successfully created "ingat" new WORD node(s)! 1
+Successfully created "serata" new WORD node(s)! 1
+Successfully created "teman" new WORD node(s)! 1
+Successfully established "rasa SYNONYM_OF ingat" relationship(s)!
+Successfully established "semua SYNONYM_OF serata" relationship(s)!
+Successfully established "persekutuan SYNONYM_OF teman" relationship(s)!
+Successfully created "kenalan" new WORD node(s)! 1
+Successfully created "kira" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF kenalan" relationship(s)!
+Successfully established "rasa SYNONYM_OF kira" relationship(s)!
+Successfully created "rafik" new WORD node(s)! 1
+Successfully created "fikir" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF rafik" relationship(s)!Successfully established "rasa SYNONYM_OF fikir" relationship(s)!
+
+Successfully created "segala" new WORD node(s)! 1
+Successfully created "rasmi" new WORD node(s)! 1
+Successfully created "perkumpulan" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF segala" relationship(s)!
+Successfully established "rasmi LEMMATIZED rasmi" relationship(s)!
+Successfully established "persekutuan SYNONYM_OF perkumpulan" relationship(s)!
+Successfully created "kerabat" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF kerabat" relationship(s)!
+Successfully created "saksi" new WORD node(s)! 1
+Successfully established "saksi LEMMATIZED saksi" relationship(s)!
+Successfully created "kesemuanya" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF kesemuanya" relationship(s)!
+Successfully created "kawan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF kawan" relationship(s)!
+Successfully created "keterangan" new WORD node(s)! 1
+Successfully established "saksi SYNONYM_OF keterangan" relationship(s)!
+Successfully created "sobat" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF sobat" relationship(s)!
+Successfully created "dalil" new WORD node(s)! 1
+Successfully established "saksi SYNONYM_OF dalil" relationship(s)!
+Successfully created "Pantun" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF Pantun" relationship(s)!
+Successfully created "kombinasi" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF kombinasi" relationship(s)!
+Successfully created "tanda" new WORD node(s)! 1
+Successfully created "semuanya" new WORD node(s)! 1
+Successfully established "saksi SYNONYM_OF tanda" relationship(s)!
+Successfully established "semua SYNONYM_OF semuanya" relationship(s)!
+Successfully created "pertubuhan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF pertubuhan" relationship(s)!
+Successfully created "bukti" new WORD node(s)! 1
+Successfully established "saksi SYNONYM_OF bukti" relationship(s)!
+Successfully created "kesatuan" new WORD node(s)! 1
+Successfully established "persekutuan SYNONYM_OF kesatuan" relationship(s)!
+Successfully created "sama" new WORD node(s)! 1
+Successfully created "konco" new WORD node(s)! 1
+Successfully established "sama LEMMATIZED sama" relationship(s)!
+Successfully established "persekutuan SYNONYM_OF konco" relationship(s)!
+Successfully created "Ensiklopedia" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF Ensiklopedia" relationship(s)!
+Successfully created "sebarang" new WORD node(s)! 1
+Successfully created "individu" new WORD node(s)! 1
+Successfully established "sebarang LEMMATIZED sebarang" relationship(s)!
+Successfully established "persekutuan ANTONYM_OF individu" relationship(s)!
+Successfully created "musuh" new WORD node(s)! 1
+Successfully established "persekutuan ANTONYM_OF musuh" relationship(s)!
+Successfully created "setiap" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF setiap" relationship(s)!
+Successfully created "pertama" new WORD node(s)! 1
+Successfully established "pertama LEMMATIZED pertama" relationship(s)!
+Successfully created "Bahasa Daerah" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF Bahasa Daerah" relationship(s)!
+Successfully created "terdapat" new WORD node(s)! 1
+Successfully created "sekotah" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF sekotah" relationship(s)!
+Successfully created "terutama" new WORD node(s)! 1
+Successfully established "pertama SYNONYM_OF terutama" relationship(s)!
+Successfully created "terhadap" new WORD node(s)! 1
+Successfully created "hadap" new WORD node(s)! 1
+Successfully established "terhadap LEMMATIZED hadap" relationship(s)!
+Successfully created "akhir" new WORD node(s)! 1
+Successfully established "pertama ANTONYM_OF akhir" relationship(s)!
+Successfully created "sarwa" new WORD node(s)! 1
+Successfully created "hala" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF sarwa" relationship(s)!
+Successfully established "terhadap SYNONYM_OF hala" relationship(s)!
+Successfully created "Korpus" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF Korpus" relationship(s)!
+Successfully created "pihak" new WORD node(s)! 1
+Successfully created "paran" new WORD node(s)! 1
+Successfully established "pihak LEMMATIZED pihak" relationship(s)!
+Successfully established "terhadap SYNONYM_OF paran" relationship(s)!
+Successfully created "belah" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF belah" relationship(s)!
+Successfully created "muka" new WORD node(s)! 1
+Successfully established "terhadap SYNONYM_OF muka" relationship(s)!
+Successfully created "kelompok" new WORD node(s)! 1
+Successfully created "tala" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF kelompok" relationship(s)!
+Successfully established "terhadap SYNONYM_OF tala" relationship(s)!
+Successfully created "sisi" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF sisi" relationship(s)!
+Successfully created "tuju" new WORD node(s)! 1
+Successfully established "terhadap SYNONYM_OF tuju" relationship(s)!
+Successfully created "kumpulan" new WORD node(s)! 1
+Successfully created "arah" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF kumpulan" relationship(s)!
+Successfully created "Khidmat Nasihat" new WORD node(s)! 1
+Successfully established "terhadap SYNONYM_OF arah" relationship(s)!
+Successfully established "semua SYNONYM_OF Khidmat Nasihat" relationship(s)!
+Successfully created "pasukan" new WORD node(s)! 1
+Successfully created "tepas" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF pasukan" relationship(s)!
+Successfully established "terhadap SYNONYM_OF tepas" relationship(s)!
+Successfully created "puak" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF puak" relationship(s)!
+Successfully created "depan" new WORD node(s)! 1
+Successfully established "terhadap SYNONYM_OF depan" relationship(s)!
+Successfully created "regu" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF regu" relationship(s)!
+Successfully created "haluan" new WORD node(s)! 1
+Successfully established "terhadap SYNONYM_OF haluan" relationship(s)!
+Successfully created "golongan" new WORD node(s)! 1
+Successfully established "pihak SYNONYM_OF golongan" relationship(s)!
+Successfully created "hadapan" new WORD node(s)! 1
+Successfully established "terhadap SYNONYM_OF hadapan" relationship(s)!
+Successfully created "seluruh" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF seluruh" relationship(s)!
+Successfully created "polis" new WORD node(s)! 1
+Successfully established "polis LEMMATIZED polis" relationship(s)!
+Successfully created "belakang" new WORD node(s)! 1
+Successfully established "terhadap ANTONYM_OF belakang" relationship(s)!
+Successfully created "terkejut" new WORD node(s)! 1
+Successfully created "polis marin" new WORD node(s)! 1
+Successfully established "polis SYNONYM_OF polis marin" relationship(s)!
+Successfully created "segenap" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF segenap" relationship(s)!
+Successfully created "kejut" new WORD node(s)! 1
+Successfully established "terkejut LEMMATIZED kejut" relationship(s)!
+Successfully created "polis simpanan" new WORD node(s)! 1
+Successfully established "polis SYNONYM_OF polis simpanan" relationship(s)!
+Successfully created "terperinci" new WORD node(s)! 1
+Successfully created "polis rahsia" new WORD node(s)! 1
+Successfully established "polis SYNONYM_OF polis rahsia" relationship(s)!
+Successfully created "perinci" new WORD node(s)! 1
+Successfully established "terperinci LEMMATIZED perinci" relationship(s)!
+Successfully created "Buku" new WORD node(s)! 1
+Successfully established "semua SYNONYM_OF Buku" relationship(s)!
+Successfully created "polis tentera" new WORD node(s)! 1
+Successfully established "polis SYNONYM_OF polis tentera" relationship(s)!
+Successfully created "polis pencegah rusuhan" new WORD node(s)! 1
+Successfully created "tertutup" new WORD node(s)! 1
+Successfully established "polis SYNONYM_OF polis pencegah rusuhan" relationship(s)!
+Successfully created "tutup" new WORD node(s)! 1
+Successfully established "tertutup LEMMATIZED tutup" relationship(s)!
+Successfully created "politik" new WORD node(s)! 1
+Successfully established "politik LEMMATIZED politik" relationship(s)!
+Successfully created "terurai" new WORD node(s)! 1
+Successfully created "presiden" new WORD node(s)! 1
+Successfully established "presiden LEMMATIZED presiden" relationship(s)!
+Successfully created "urai" new WORD node(s)! 1
+Successfully created "sekalian" new WORD node(s)! 1
+Successfully established "terurai LEMMATIZED urai" relationship(s)!
+Successfully established "semua SYNONYM_OF sekalian" relationship(s)!
+Successfully created "pula" new WORD node(s)! 1
+Successfully established "pula LEMMATIZED pula" relationship(s)!
+Successfully created "punca" new WORD node(s)! 1
+Successfully established "punca LEMMATIZED punca" relationship(s)!
+Successfully created "tiada" new WORD node(s)! 1
+Successfully established "tiada LEMMATIZED tiada" relationship(s)!
+Successfully created "seperti" new WORD node(s)! 1
+Successfully created "tajuk" new WORD node(s)! 1
+Successfully established "seperti LEMMATIZED seperti" relationship(s)!
+Successfully established "punca SYNONYM_OF tajuk" relationship(s)!
+Successfully created "serangan" new WORD node(s)! 1
+Successfully created "tindakan" new WORD node(s)! 1
+Successfully created "serang" new WORD node(s)! 1
+Successfully established "serangan LEMMATIZED serang" relationship(s)!
+Successfully created "perdu" new WORD node(s)! 1
+Successfully established "punca SYNONYM_OF perdu" relationship(s)!
+Successfully created "tindak" new WORD node(s)! 1
+Successfully established "tindakan LEMMATIZED tindak" relationship(s)!
+[Stage 1:===================>                                       (1 + 2) / 3]Successfully created "seri" new WORD node(s)! 1
+Successfully established "seri LEMMATIZED seri" relationship(s)!
+Successfully created "kilau" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF kilau" relationship(s)!
+Successfully created "asal" new WORD node(s)! 1
+Successfully established "punca SYNONYM_OF asal" relationship(s)!
+Successfully created "kemuliaan" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF kemuliaan" relationship(s)!
+Successfully created "pangkal" new WORD node(s)! 1
+Successfully established "punca SYNONYM_OF pangkal" relationship(s)!
+Successfully created "cahaya" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF cahaya" relationship(s)!
+Successfully created "mula" new WORD node(s)! 1
+Successfully established "punca SYNONYM_OF mula" relationship(s)!
+Successfully created "kilat" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF kilat" relationship(s)!
+Successfully created "asas" new WORD node(s)! 1
+Successfully established "punca SYNONYM_OF asas" relationship(s)!
+Successfully created "sinar" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF sinar" relationship(s)!
+Successfully created "serta" new WORD node(s)! 1
+Successfully established "serta LEMMATIZED serta" relationship(s)!
+Successfully created "keindahan" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF keindahan" relationship(s)!
+Successfully created "kemegahan" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF kemegahan" relationship(s)!
+Successfully created "sewaktu" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF sewaktu" relationship(s)!
+Successfully created "semarak" new WORD node(s)! 1
+Successfully established "seri SYNONYM_OF semarak" relationship(s)!
+Successfully created "ikut" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF ikut" relationship(s)!
+Successfully created "tubuh" new WORD node(s)! 1
+Successfully established "tubuh LEMMATIZED tubuh" relationship(s)!
+Successfully created "semasa" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF semasa" relationship(s)!
+Successfully created "tun" new WORD node(s)! 1
+Successfully established "tun LEMMATIZED tun" relationship(s)!
+Successfully created "bersama" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF bersama" relationship(s)!
+Successfully created "turut" new WORD node(s)! 1
+Successfully established "turut LEMMATIZED turut" relationship(s)!
+Successfully created "setelah" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF setelah" relationship(s)!
+Successfully created "um" new WORD node(s)! 1
+Successfully established "um LEMMATIZED um" relationship(s)!
+Successfully created "sesudah" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF sesudah" relationship(s)!
+Successfully created "undang-undang" new WORD node(s)! 1
+Successfully established "undang-undang LEMMATIZED undang-undang" relationship(s)!
+Successfully created "turut" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF turut" relationship(s)!
+Successfully created "unit" new WORD node(s)! 1
+Successfully established "unit LEMMATIZED unit" relationship(s)!
+Successfully created "seraya" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF seraya" relationship(s)!
+Successfully created "universiti" new WORD node(s)! 1
+Successfully established "universiti LEMMATIZED universiti" relationship(s)!
+Successfully created "sementara" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF sementara" relationship(s)!
+Successfully created "unsur" new WORD node(s)! 1
+Successfully established "unsur LEMMATIZED unsur" relationship(s)!
+Successfully created "elemen" new WORD node(s)! 1
+Successfully established "unsur SYNONYM_OF elemen" relationship(s)!
+Successfully created "zat" new WORD node(s)! 1
+Successfully established "unsur SYNONYM_OF zat" relationship(s)!
+Successfully created "apakala" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF apakala" relationship(s)!
+Successfully created "komponen" new WORD node(s)! 1
+Successfully established "unsur SYNONYM_OF komponen" relationship(s)!
+Successfully created "bersekali" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF bersekali" relationship(s)!
+Successfully created "selepas" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF selepas" relationship(s)!
+Successfully created "veterinar" new WORD node(s)! 1
+Successfully established "veterinar LEMMATIZED veterinar" relationship(s)!
+Successfully created "belan-belan" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF belan-belan" relationship(s)!
+Successfully created "wakil" new WORD node(s)! 1
+Successfully established "wakil LEMMATIZED wakil" relationship(s)!
+Successfully created "badal" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF badal" relationship(s)!
+Successfully created "sambil" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF sambil" relationship(s)!
+Successfully created "utusan" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF utusan" relationship(s)!
+Successfully created "pemangku" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF pemangku" relationship(s)!
+Successfully created "apabila" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF apabila" relationship(s)!
+Successfully created "telangkai" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF telangkai" relationship(s)!
+Successfully created "bilamana" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF bilamana" relationship(s)!
+Successfully created "sulih" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF sulih" relationship(s)!
+Successfully created "naib" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF naib" relationship(s)!
+Successfully created "penolong" new WORD node(s)! 1
+Successfully created "tatkala" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF penolong" relationship(s)!
+Successfully established "serta SYNONYM_OF tatkala" relationship(s)!
+Successfully created "timbalan" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF timbalan" relationship(s)!
+Successfully created "bersama-sama" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF bersama-sama" relationship(s)!
+Successfully created "pengantara" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF pengantara" relationship(s)!
+Successfully created "bersaing" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF bersaing" relationship(s)!
+Successfully created "orang tengah" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF orang tengah" relationship(s)!
+Successfully created "manakala" new WORD node(s)! 1
+Successfully established "serta SYNONYM_OF manakala" relationship(s)!
+Successfully created "wasitah" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF wasitah" relationship(s)!
+Successfully created "pengganti" new WORD node(s)! 1
+Successfully created "setiausaha" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF pengganti" relationship(s)!
+Successfully established "setiausaha LEMMATIZED setiausaha" relationship(s)!
+Successfully created "ejen" new WORD node(s)! 1
+Successfully established "wakil SYNONYM_OF ejen" relationship(s)!
+Successfully created "siasat" new WORD node(s)! 1
+[Stage 1:=======================================>                   (2 + 1) / 3]Successfully established "siasat LEMMATIZED siasat" relationship(s)!
+Successfully created "siasatan" new WORD node(s)! 1
+Successfully created "siasat" new WORD node(s)! 1
+Successfully established "siasatan LEMMATIZED siasat" relationship(s)!
+Successfully created "sidang" new WORD node(s)! 1
+Successfully established "sidang LEMMATIZED sidang" relationship(s)!
+Successfully created "sini" new WORD node(s)! 1
+Successfully established "sini LEMMATIZED sini" relationship(s)!
+Successfully created "telah" new WORD node(s)! 1
+Successfully established "telah LEMMATIZED telah" relationship(s)!
+Successfully created "teliti" new WORD node(s)! 1
+Successfully established "teliti LEMMATIZED teliti" relationship(s)!
+Successfully created "wan" new WORD node(s)! 1
+Successfully established "wan LEMMATIZED wan" relationship(s)!
+Successfully created "wilayah" new WORD node(s)! 1
+Successfully established "wilayah LEMMATIZED wilayah" relationship(s)!
+Successfully created "yang" new WORD node(s)! 1
+Successfully established "yang LEMMATIZED yang" relationship(s)!
+                                                                                Processing Start Time: 2024-12-22 06:41:48.344870
+Processing End Time: 2024-12-22 06:44:54.730730
+Total Time Taken: 0:03:06.385860
+24/12/22 06:44:55 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+[Stage 0:>                                                          (0 + 2) / 2]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+Established Connection
+Established Connection
+Successfully created "alah bisa oleh kerana tegal biasa" new PERIBAHASA node(s)! 1
+Successfully created "akan dijadikan tabuh singkat akan dijadikan gendang berlebih" new PERIBAHASA node(s)! 1
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Successfully created "kerana" new WORD node(s)! 1
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Successfully established "alah bisa oleh kerana tegal biasa HAS_WORD kerana" relationship(s)!
+Successfully created "singkat" new WORD node(s)! 1
+Successfully established "akan dijadikan tabuh singkat akan dijadikan gendang berlebih HAS_WORD singkat" relationship(s)!
+Successfully created "biasa" new WORD node(s)! 1
+Successfully established "alah bisa oleh kerana tegal biasa HAS_WORD biasa" relationship(s)!
+Successfully created "berlebih" new WORD node(s)! 1
+Successfully established "akan dijadikan tabuh singkat akan dijadikan gendang berlebih HAS_WORD berlebih" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "alah bisa oleh kerana tegal biasa HAS_WORD alah" relationship(s)!
+Successfully created "oleh" new WORD node(s)! 1
+Successfully created "gendang" new WORD node(s)! 1
+Successfully established "alah bisa oleh kerana tegal biasa HAS_WORD oleh" relationship(s)!
+Successfully established "akan dijadikan tabuh singkat akan dijadikan gendang berlebih HAS_WORD gendang" relationship(s)!
+Successfully created "tegal" new WORD node(s)! 1
+Successfully established "alah bisa oleh kerana tegal biasa HAS_WORD tegal" relationship(s)!
+Successfully created "tabuh" new WORD node(s)! 1
+Successfully established "akan dijadikan tabuh singkat akan dijadikan gendang berlebih HAS_WORD tabuh" relationship(s)!
+Successfully created "bisa" new WORD node(s)! 1
+Successfully created "akan memikul tiada berbahu akan menjunjung kepala luncung" new PERIBAHASA node(s)! 1
+Successfully established "alah bisa oleh kerana tegal biasa HAS_WORD bisa" relationship(s)!
+Successfully created "alah di rumpun betung" new PERIBAHASA node(s)! 1
+Successfully created "luncung" new WORD node(s)! 1
+Successfully established "akan memikul tiada berbahu akan menjunjung kepala luncung HAS_WORD luncung" relationship(s)!
+Successfully created "rumpun" new WORD node(s)! 1
+Successfully established "alah di rumpun betung HAS_WORD rumpun" relationship(s)!
+Successfully created "kepala" new WORD node(s)! 1
+Successfully established "akan memikul tiada berbahu akan menjunjung kepala luncung HAS_WORD kepala" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "alah di rumpun betung HAS_WORD alah" relationship(s)!
+Successfully created "tiada" new WORD node(s)! 1
+Successfully established "akan memikul tiada berbahu akan menjunjung kepala luncung HAS_WORD tiada" relationship(s)!
+Successfully created "betung" new WORD node(s)! 1
+Successfully established "alah di rumpun betung HAS_WORD betung" relationship(s)!
+Successfully created "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain" new PERIBAHASA node(s)! 1
+Successfully created "menjunjung" new WORD node(s)! 1
+Successfully established "akan memikul tiada berbahu akan menjunjung kepala luncung HAS_WORD menjunjung" relationship(s)!
+Successfully created "benalu" new WORD node(s)! 1
+Successfully established "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain HAS_WORD benalu" relationship(s)!
+Successfully created "memikul" new WORD node(s)! 1
+Successfully established "akan memikul tiada berbahu akan menjunjung kepala luncung HAS_WORD memikul" relationship(s)!
+Successfully created "akan mengaji surat lah hilang akan bertanya guru lah mati" new PERIBAHASA node(s)! 1
+Successfully created "mati" new WORD node(s)! 1
+Successfully established "akan mengaji surat lah hilang akan bertanya guru lah mati HAS_WORD mati" relationship(s)!
+Successfully created "guru" new WORD node(s)! 1
+Successfully established "akan mengaji surat lah hilang akan bertanya guru lah mati HAS_WORD guru" relationship(s)!
+Successfully created "limau" new WORD node(s)! 1
+Successfully established "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain HAS_WORD limau" relationship(s)!
+Successfully created "mengaji" new WORD node(s)! 1
+Successfully established "akan mengaji surat lah hilang akan bertanya guru lah mati HAS_WORD mengaji" relationship(s)!
+Successfully created "pohon" new WORD node(s)! 1
+Successfully established "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain HAS_WORD pohon" relationship(s)!
+Successfully created "tumbuh" new WORD node(s)! 1
+Successfully established "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain HAS_WORD tumbuh" relationship(s)!
+Successfully created "lah" new WORD node(s)! 1
+Successfully established "akan mengaji surat lah hilang akan bertanya guru lah mati HAS_WORD lah" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain HAS_WORD alah" relationship(s)!
+Successfully created "hilang" new WORD node(s)! 1
+Successfully established "akan mengaji surat lah hilang akan bertanya guru lah mati HAS_WORD hilang" relationship(s)!
+Successfully created "bertanya" new WORD node(s)! 1
+Successfully established "akan mengaji surat lah hilang akan bertanya guru lah mati HAS_WORD bertanya" relationship(s)!
+Successfully created "yang" new WORD node(s)! 1
+Successfully established "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain HAS_WORD yang" relationship(s)!
+Successfully created "surat" new WORD node(s)! 1
+Successfully established "akan mengaji surat lah hilang akan bertanya guru lah mati HAS_WORD surat" relationship(s)!
+Successfully created "akan pembasuh kaki tangan" new PERIBAHASA node(s)! 1
+Successfully created "oleh" new WORD node(s)! 1
+Successfully established "alah limau oleh benalu benalu tumbuhtumbuhan yang tumbuh di pohon lain HAS_WORD oleh" relationship(s)!
+Successfully created "alah mahu bertimbang enggan cungkil merih akan pembayar" new PERIBAHASA node(s)! 1
+Successfully created "tangan" new WORD node(s)! 1
+Successfully established "akan pembasuh kaki tangan HAS_WORD tangan" relationship(s)!
+Successfully created "pembasuh" new WORD node(s)! 1
+Successfully established "akan pembasuh kaki tangan HAS_WORD pembasuh" relationship(s)!
+Successfully created "cungkil" new WORD node(s)! 1
+Successfully established "alah mahu bertimbang enggan cungkil merih akan pembayar HAS_WORD cungkil" relationship(s)!
+Successfully created "mahu" new WORD node(s)! 1
+Successfully established "alah mahu bertimbang enggan cungkil merih akan pembayar HAS_WORD mahu" relationship(s)!
+Successfully created "akan surut air lah besar akan lalu jalan lah semak" new PERIBAHASA node(s)! 1
+Successfully created "pembayar" new WORD node(s)! 1
+Successfully established "alah mahu bertimbang enggan cungkil merih akan pembayar HAS_WORD pembayar" relationship(s)!
+Successfully created "air" new WORD node(s)! 1
+Successfully established "akan surut air lah besar akan lalu jalan lah semak HAS_WORD air" relationship(s)!
+Successfully created "enggan" new WORD node(s)! 1
+Successfully established "alah mahu bertimbang enggan cungkil merih akan pembayar HAS_WORD enggan" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "alah mahu bertimbang enggan cungkil merih akan pembayar HAS_WORD alah" relationship(s)!
+Successfully created "bertimbang" new WORD node(s)! 1
+Successfully established "alah mahu bertimbang enggan cungkil merih akan pembayar HAS_WORD bertimbang" relationship(s)!
+Successfully created "merih" new WORD node(s)! 1Successfully created "semak" new WORD node(s)! 1
+
+Successfully established "akan surut air lah besar akan lalu jalan lah semak HAS_WORD semak" relationship(s)!Successfully established "alah mahu bertimbang enggan cungkil merih akan pembayar HAS_WORD merih" relationship(s)!
+
+Successfully created "lalu" new WORD node(s)! 1
+Successfully created "alah membeli menang memakai" new PERIBAHASA node(s)! 1
+Successfully established "akan surut air lah besar akan lalu jalan lah semak HAS_WORD lalu" relationship(s)!
+Successfully created "membeli" new WORD node(s)! 1
+Successfully established "alah membeli menang memakai HAS_WORD membeli" relationship(s)!
+Successfully created "memakai" new WORD node(s)! 1
+Successfully established "alah membeli menang memakai HAS_WORD memakai" relationship(s)!
+Successfully created "lah" new WORD node(s)! 1
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "akan surut air lah besar akan lalu jalan lah semak HAS_WORD lah" relationship(s)!
+Successfully established "alah membeli menang memakai HAS_WORD alah" relationship(s)!
+Successfully created "surut" new WORD node(s)! 1
+Successfully established "akan surut air lah besar akan lalu jalan lah semak HAS_WORD surut" relationship(s)!
+Successfully created "menang" new WORD node(s)! 1
+Successfully created "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar" new PERIBAHASA node(s)! 1
+Successfully established "alah membeli menang memakai HAS_WORD menang" relationship(s)!
+Successfully created "alah menang tak tahu bersorak boleh" new PERIBAHASA node(s)! 1
+Successfully created "dahan" new WORD node(s)! 1
+Successfully created "bersorak" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD dahan" relationship(s)!
+Successfully established "alah menang tak tahu bersorak boleh HAS_WORD bersorak" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "alah menang tak tahu bersorak boleh HAS_WORD alah" relationship(s)!
+Successfully created "menegun" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD menegun" relationship(s)!
+Successfully created "tak" new WORD node(s)! 1
+Successfully established "alah menang tak tahu bersorak boleh HAS_WORD tak" relationship(s)!
+Successfully created "bergantung" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD bergantung" relationship(s)!
+Successfully created "terjumbai" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD terjumbai" relationship(s)!
+Successfully created "tahu" new WORD node(s)! 1
+Successfully established "alah menang tak tahu bersorak boleh HAS_WORD tahu" relationship(s)!
+Successfully created "rumbai" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD rumbai" relationship(s)!
+Successfully created "menang" new WORD node(s)! 1
+Successfully established "alah menang tak tahu bersorak boleh HAS_WORD menang" relationship(s)!
+Successfully created "alah pinta dibuat sempena" new PERIBAHASA node(s)! 1
+Successfully created "tupai" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD tupai" relationship(s)!
+Successfully created "sempena" new WORD node(s)! 1
+Successfully created "berhenti" new WORD node(s)! 1
+Successfully established "alah pinta dibuat sempena HAS_WORD sempena" relationship(s)!
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD berhenti" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "alah pinta dibuat sempena HAS_WORD alah" relationship(s)!
+Successfully created "akar" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD akar" relationship(s)!
+Successfully created "pinta" new WORD node(s)! 1
+Successfully established "alah pinta dibuat sempena HAS_WORD pinta" relationship(s)!
+Successfully created "alah sabung menang sorak" new PERIBAHASA node(s)! 1
+Successfully created "sebentar" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD sebentar" relationship(s)!
+Successfully created "sabung" new WORD node(s)! 1
+Successfully established "alah sabung menang sorak HAS_WORD sabung" relationship(s)!
+Successfully created "siamang" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD siamang" relationship(s)!
+Successfully created "sorak" new WORD node(s)! 1
+Successfully established "alah sabung menang sorak HAS_WORD sorak" relationship(s)!
+Successfully created "jumbai" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD jumbai" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "alah sabung menang sorak HAS_WORD alah" relationship(s)!
+Successfully created "berpegang" new WORD node(s)! 1
+Successfully established "akar terjumbai tempat siamang berpegang bergantung dahan mengajur tempat tupai menegun jumbai rumbai menegun berhenti sebentar HAS_WORD berpegang" relationship(s)!
+Successfully created "akik disangka batu akik sejenis batu berwarna" new PERIBAHASA node(s)! 1
+Successfully created "menang" new WORD node(s)! 1
+Successfully established "alah sabung menang sorak HAS_WORD menang" relationship(s)!
+Successfully created "alang berjawab tepuk berbalas alang pemberian hadiah" new PERIBAHASA node(s)! 1
+Successfully created "akik" new WORD node(s)! 1
+Successfully established "akik disangka batu akik sejenis batu berwarna HAS_WORD akik" relationship(s)!
+Successfully created "berjawab" new WORD node(s)! 1
+Successfully established "alang berjawab tepuk berbalas alang pemberian hadiah HAS_WORD berjawab" relationship(s)!
+Successfully created "batu" new WORD node(s)! 1
+Successfully created "berbalas" new WORD node(s)! 1
+Successfully established "akik disangka batu akik sejenis batu berwarna HAS_WORD batu" relationship(s)!
+Successfully established "alang berjawab tepuk berbalas alang pemberian hadiah HAS_WORD berbalas" relationship(s)!
+Successfully created "pemberian" new WORD node(s)! 1
+Successfully created "berwarna" new WORD node(s)! 1
+Successfully established "alang berjawab tepuk berbalas alang pemberian hadiah HAS_WORD pemberian" relationship(s)!
+Successfully established "akik disangka batu akik sejenis batu berwarna HAS_WORD berwarna" relationship(s)!
+Successfully created "tepuk" new WORD node(s)! 1
+Successfully established "alang berjawab tepuk berbalas alang pemberian hadiah HAS_WORD tepuk" relationship(s)!
+Successfully created "sejenis" new WORD node(s)! 1
+Successfully established "akik disangka batu akik sejenis batu berwarna HAS_WORD sejenis" relationship(s)!
+Successfully created "aku alah engkaulah menang" new PERIBAHASA node(s)! 1
+Successfully created "hadiah" new WORD node(s)! 1
+Successfully established "alang berjawab tepuk berbalas alang pemberian hadiah HAS_WORD hadiah" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully established "aku alah engkaulah menang HAS_WORD alah" relationship(s)!
+Successfully created "alang" new WORD node(s)! 1
+Successfully established "alang berjawab tepuk berbalas alang pemberian hadiah HAS_WORD alang" relationship(s)!
+Successfully created "alang dijawat tepuk dibalas alang pemberian hadiah" new PERIBAHASA node(s)! 1
+Successfully created "pemberian" new WORD node(s)! 1
+Successfully established "alang dijawat tepuk dibalas alang pemberian hadiah HAS_WORD pemberian" relationship(s)!
+Successfully created "menang" new WORD node(s)! 1
+Successfully established "aku alah engkaulah menang HAS_WORD menang" relationship(s)!
+Successfully created "aku alah engkau tak menang" new PERIBAHASA node(s)! 1
+Successfully created "tepuk" new WORD node(s)! 1
+Successfully established "alang dijawat tepuk dibalas alang pemberian hadiah HAS_WORD tepuk" relationship(s)!
+Successfully created "engkau" new WORD node(s)! 1
+Successfully established "aku alah engkau tak menang HAS_WORD engkau" relationship(s)!
+Successfully created "hadiah" new WORD node(s)! 1
+Successfully established "alang dijawat tepuk dibalas alang pemberian hadiah HAS_WORD hadiah" relationship(s)!
+Successfully created "alah" new WORD node(s)! 1
+Successfully created "alang" new WORD node(s)! 1
+Successfully established "aku alah engkau tak menang HAS_WORD alah" relationship(s)!
+Successfully established "alang dijawat tepuk dibalas alang pemberian hadiah HAS_WORD alang" relationship(s)!
+[Stage 0:=============================>                             (1 + 1) / 2]Successfully created "tak" new WORD node(s)! 1
+Successfully established "aku alah engkau tak menang HAS_WORD tak" relationship(s)!
+Successfully created "menang" new WORD node(s)! 1
+Successfully established "aku alah engkau tak menang HAS_WORD menang" relationship(s)!
+Successfully created "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat" new PERIBAHASA node(s)! 1
+Successfully created "tabiat" new WORD node(s)! 1
+Successfully established "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat HAS_WORD tabiat" relationship(s)!
+Successfully created "nampak" new WORD node(s)! 1
+Successfully established "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat HAS_WORD nampak" relationship(s)!
+Successfully created "laku" new WORD node(s)! 1
+Successfully established "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat HAS_WORD laku" relationship(s)!
+Successfully created "tingkah" new WORD node(s)! 1
+Successfully established "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat HAS_WORD tingkah" relationship(s)!
+Successfully created "kelibat" new WORD node(s)! 1
+Successfully established "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat HAS_WORD kelibat" relationship(s)!
+Successfully created "olak" new WORD node(s)! 1
+Successfully established "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat HAS_WORD olak" relationship(s)!
+Successfully created "olah" new WORD node(s)! 1
+Successfully established "aku nampak olah olak kelibatmu sudah kutahu olah tingkah laku kelibat tabiat HAS_WORD olah" relationship(s)!
+                                                                                Performing Lexicon Analysis...
+Established Connection
+Successfully retrieved all words no. of words = 885!
+Message sent to word_length_analysis partition 0 at offset 1
+Established Connection
+Successfully run 
+            MATCH (n:WORD)-[:LEMMATIZED]->(lematizedNode)
+            RETURN DISTINCT lematizedNode.word AS lemmatized
+        !
+Message sent to lemma_length_analysis partition 0 at offset 1
+Established Connection
+Successfully retrieved all words no. of words = 885!
+[Stage 0:>                                                        (0 + 12) / 12][Stage 1:>                                                          (0 + 6) / 6]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/model/stem.py:28: FutureWarning: Possible nested set at position 3
+  or re.findall(_expressions['ic'], word.lower())
+[Stage 1:=========>                                                 (1 + 5) / 6][Stage 1:===================>                                       (2 + 4) / 6][Stage 1:=======================================>                   (4 + 2) / 6]                                                                                Message sent to morphological_analysis partition 0 at offset 1
+Established Connection
+Successfully run 
+            MATCH (n:WORD)
+            RETURN n.POS AS pos, COUNT(n) AS total_count
+            ORDER BY total_count DESC
+            !
+Message sent to POSDistribution partition 0 at offset 1
+Established Connection
+Successfully run 
+            MATCH (n:WORD)
+            RETURN n.Label AS label, COUNT(n) AS total_count
+            ORDER BY total_count DESC
+            !
+Message sent to sentiment_dist_analysis partition 0 at offset 1
+Established Connection
+Successfully run 
+            MATCH (n:WORD)
+            RETURN n.word AS word, n.word_count AS count
+            ORDER BY n.word_count DESC
+            LIMIT 15
+            !
+Message sent to word_freq_with_stopwords partition 0 at offset 1
+Established Connection
+Successfully run 
+            MATCH (n:WORD)
+            RETURN n.word AS word, n.word_count AS count
+            ORDER BY n.word_count DESC
+            LIMIT 1500
+            !
+Message sent to word_freq_without_stopwords partition 0 at offset 1
+Analysis Done. Result sent to kafka.
+Established Connection
+Successfully run 
+        MATCH (n:WORD)
+        WITH COUNT(n) AS totalWords
+        MATCH (n:PERIBAHASA)
+        RETURN totalWords, COUNT(n) AS totalPeri;
+        !
+Message sent to lexicon_analysis partition 0 at offset 1
+Config file updated successfully.
+Modification verified: The config file was updated successfully.
+Done Creating Lexicon
+Time Start :  2024-12-22 06:40:16.332415
+Time End   :  2024-12-22 06:46:11.563549
+Time Taken :  0:05:55.231134

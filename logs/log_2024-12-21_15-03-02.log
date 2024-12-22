@@ -1,0 +1,22 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+24/12/21 15:03:48 WARN Utils: Your hostname, Liang. resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+24/12/21 15:03:48 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/12/21 15:03:49 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:03:51.798942
+Links Crawling Starts...
+Timeout error on 'https://www.bharian.com.my/berita/nasional?page=0'. Scrap Attempt: 1 time(s)
+Article teaser found on page 0.
+Current no. of link: 20
+Article teaser found on page 1.
+Current no. of link: 30
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 0:>                                                        (0 + 12) / 12][Stage 1:>                                                          (0 + 3) / 3]24/12/21 15:07:03 ERROR Executor: Exception in task 2.0 in stage 1.0 (TID 14): Python worker exited unexpectedly (crashed)
+24/12/21 15:07:03 ERROR Executor: Exception in task 1.0 in stage 1.0 (TID 13): Python worker exited unexpectedly (crashed)
+24/12/21 15:07:03 ERROR Executor: Exception in task 0.0 in stage 1.0 (TID 12): Python worker exited unexpectedly (crashed)

@@ -1,0 +1,216 @@
+Demo run lexicraft.py with scrapping maximum 1 article(s)...
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+24/12/21 15:35:18 WARN Utils: Your hostname, Liang. resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+24/12/21 15:35:18 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/12/21 15:35:19 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:35:21.225663
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 20
+Article teaser found on page 1.
+Current no. of link: 32
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 0:>                                                        (0 + 12) / 12][Stage 0:====================================================>    (11 + 1) / 12][Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+[Stage 1:=======================================>                   (2 + 1) / 3]                                                                                Data sent to topic beritaH
+Number of articles data sent 1
+Performing Data Transformation...
+Collecting Data From Kafka...
+Is this your first time running the system?
+If not please contact support as there is problem in accessing the DE-prj/RawData file in your hadoop file system.
+[Stage 2:====================================================>    (11 + 1) / 12]                                                                                Breaking raw data into list of sentences...
+Breaking sentences into words...
+[Stage 6:===========================================>              (9 + 3) / 12]                                                                                [Stage 7:====================================================>    (11 + 1) / 12]                                                                                Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 52, in start_lexicraft
+    result = Transformation.wordCountMapReduce()
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 220, in wordCountMapReduce
+    inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/TempWords/")
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 280, in get_processed_words_file_path
+    file_status = fs.listStatus(path)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.IllegalArgumentException: Wrong FS: hdfs://localhost:9000/user/student/DE-prj/TempWords, expected: file:///
+Exception has occured. Retrying the process in 45 seconds -  0
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:36:41.103302
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 20
+Article teaser found on page 1.
+Current no. of link: 32
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+[Stage 1:===================>                                       (1 + 2) / 3][Stage 1:=======================================>                   (2 + 1) / 3]                                                                                Data sent to topic beritaH
+Number of articles data sent 1
+Performing Data Transformation...
+Collecting Data From Kafka...
+Is this your first time running the system?
+If not please contact support as there is problem in accessing the DE-prj/RawData file in your hadoop file system.
+Breaking raw data into list of sentences...
+[Stage 5:===========================================>              (9 + 3) / 12]                                                                                Breaking sentences into words...
+[Stage 6:===========================================>              (9 + 3) / 12]                                                                                [Stage 7:===========================================>              (9 + 3) / 12]                                                                                Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 52, in start_lexicraft
+    result = Transformation.wordCountMapReduce()
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 220, in wordCountMapReduce
+    inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/TempWords/")
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 280, in get_processed_words_file_path
+    file_status = fs.listStatus(path)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.IllegalArgumentException: Wrong FS: hdfs://localhost:9000/user/student/DE-prj/TempWords, expected: file:///
+Exception has occured. Retrying the process in 45 seconds -  1
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:37:56.722788
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 20
+Article teaser found on page 1.
+Current no. of link: 32
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 0:=========>                                               (2 + 10) / 12][Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+[Stage 1:===================>                                       (1 + 2) / 3][Stage 1:=======================================>                   (2 + 1) / 3]                                                                                Data sent to topic beritaH
+Number of articles data sent 1
+Performing Data Transformation...
+Collecting Data From Kafka...
+Is this your first time running the system?
+If not please contact support as there is problem in accessing the DE-prj/RawData file in your hadoop file system.
+Breaking raw data into list of sentences...
+Breaking sentences into words...
+[Stage 7:===========================================>              (9 + 3) / 12]                                                                                Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 52, in start_lexicraft
+    result = Transformation.wordCountMapReduce()
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 220, in wordCountMapReduce
+    inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/TempWords/")
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 280, in get_processed_words_file_path
+    file_status = fs.listStatus(path)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.IllegalArgumentException: Wrong FS: hdfs://localhost:9000/user/student/DE-prj/TempWords, expected: file:///
+Exception has occured. Retrying the process in 45 seconds -  2
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:39:07.469437
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 20
+Article teaser found on page 1.
+Current no. of link: 32
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 0:====>                                                    (1 + 11) / 12][Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+[Stage 1:===================>                                       (1 + 2) / 3][Stage 1:=======================================>                   (2 + 1) / 3]                                                                                Data sent to topic beritaH
+Number of articles data sent 1
+Performing Data Transformation...
+Collecting Data From Kafka...
+Is this your first time running the system?
+If not please contact support as there is problem in accessing the DE-prj/RawData file in your hadoop file system.
+Breaking raw data into list of sentences...
+[Stage 5:===========================================>              (9 + 3) / 12]                                                                                Breaking sentences into words...
+[Stage 6:===========================================>              (9 + 3) / 12]                                                                                [Stage 7:===========================================>              (9 + 3) / 12][Stage 7:===============================================>         (10 + 2) / 12]                                                                                Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 52, in start_lexicraft
+    result = Transformation.wordCountMapReduce()
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 220, in wordCountMapReduce
+    inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/TempWords/")
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 280, in get_processed_words_file_path
+    file_status = fs.listStatus(path)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.IllegalArgumentException: Wrong FS: hdfs://localhost:9000/user/student/DE-prj/TempWords, expected: file:///
+Exception has occured. Retrying the process in 45 seconds -  3
+Performing Data Collection from time 2024-12-21 06:05:50.395568...
+Links crawl to datetime  2024-12-21 15:40:24.597887
+Links Crawling Starts...
+Article teaser found on page 0.
+Current no. of link: 20
+Article teaser found on page 1.
+Current no. of link: 32
+Current is in demo stage, 1 number of article(s) will be scrapped
+[Stage 1:>                                                          (0 + 3) / 3]/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3397
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+/home/student/de-prj/de-venv/lib/python3.10/site-packages/malaya/tokenizer.py:214: FutureWarning: Possible nested set at position 3927
+  self.tok = re.compile(r'({})'.format('|'.join(pipeline)))
+[Stage 1:===================>                                       (1 + 2) / 3][Stage 1:=======================================>                   (2 + 1) / 3]                                                                                Data sent to topic beritaH
+Number of articles data sent 1
+Performing Data Transformation...
+Collecting Data From Kafka...
+Is this your first time running the system?
+If not please contact support as there is problem in accessing the DE-prj/RawData file in your hadoop file system.
+Breaking raw data into list of sentences...
+[Stage 5:===============================================>         (10 + 2) / 12]                                                                                Breaking sentences into words...
+[Stage 6:===========================================>              (9 + 3) / 12][Stage 6:===============================================>         (10 + 2) / 12]                                                                                [Stage 7:===========================================>              (9 + 3) / 12]                                                                                Traceback (most recent call last):
+  File "/home/student/DE_malay_news/run-lexicraft.py", line 52, in start_lexicraft
+    result = Transformation.wordCountMapReduce()
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 220, in wordCountMapReduce
+    inputFiles = cls.get_processed_words_file_path("/user/student/DE-prj/TempWords/")
+  File "/home/student/DE_malay_news/lexicraft/transformation.py", line 280, in get_processed_words_file_path
+    file_status = fs.listStatus(path)
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/student/de-prj/de-venv/lib/python3.10/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.IllegalArgumentException: Wrong FS: hdfs://localhost:9000/user/student/DE-prj/TempWords, expected: file:///
+Exception has occured. Retrying the process in 45 seconds -  4
+Errors occur even after 5 times of retry
