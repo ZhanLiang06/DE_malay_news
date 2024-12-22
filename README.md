@@ -19,25 +19,19 @@
 ## Run the script:
 
    #### **Option 1**: run the bash file `schedule-run.sh` with argument format **(most ideal way)**
-   `./schedule-run.sh <max_number_of_links_to_scrap - optional> <cron schedule ("* * * * *")>`
-   
-   e.g. - `./schedule-run.sh 1 "30 * * * *"`
-   
-   Then the pipeline will be run at background.
-   
-   To view the real-time output, navigate to DE_malay_news/logs, find the latest created log files
-   
-   Then, fire this command `tail -f <the latest log file file path>`
+   - `./schedule-run.sh <max_number_of_links_to_scrap - optional> <cron schedule ("* * * * *")>`
+   - e.g. - `./schedule-run.sh 1 "30 * * * *"`
+   - Then the pipeline will be run at background.
+   - To view the real-time output, navigate to DE_malay_news/logs, find the latest created log files
+   - Then, fire this command `tail -f <the latest log file file path>`
 
    #### **Option 2**: schedule the run-lexicraft.sh file yourself on crontab using `crontab -e` **(most ideal way)**
-   **Note that, you must follow this format to schedule the run.
-   
-   Format: `<crontab schedule> /home/student/DE_malay_news/run-lexicraft.sh <max_number_of_links_to_scrap - optional>`
+   - **Note that, you must follow this format to schedule the run.
+   - Format: `<crontab schedule> /home/student/DE_malay_news/run-lexicraft.sh <max_number_of_links_to_scrap - optional>`
 
    #### **Option 3**: run the bash file `run-lexicraft.sh` with argument format
-   `./schedule-run.sh <max_number_of_links_to_scrap - optional>`
-   
-   This only will run one cycle of lexicon construction
+   - `./schedule-run.sh <max_number_of_links_to_scrap - optional>`
+   - This only will run one cycle of lexicon construction
 
 ## To view the analysis output
 Note, there only will have analysis output when analysis is ran during the cycle or manually run on notebook "4. LexiconAnalysis.ipynb"
