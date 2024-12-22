@@ -6,6 +6,9 @@
 [View the analysis output](#view-the-analysis-output)
 
 [Access the lexicon](#access-the-lexicon-without-directly-go-to-neo4j-database-website)
+
+[Folder Strucutre](#folder-strucutre)
+
 ## Setup To Run this Data Engineering System (Lexicon Construction):
 1. Get your distro ready!
 
@@ -50,7 +53,7 @@ Note, there only will have analysis output when analysis is ran during the cycle
 2. Run the first cell, a menu should be shown on the output cell.
    
 ## Folder Strucutre
-| Folder    | Description |
+| Folders    | Description |
 | -------- | ------- |
 | DE-prj  | Sample of folder output to hdfs when the system is ran with one fully cycle    | 
 | analysis_csv_result | store some of the analysis result in csv format    | 
@@ -59,7 +62,7 @@ Note, there only will have analysis output when analysis is ran during the cycle
 | **lexicraft** | The package and library for this Data Engineering Projects, consist all the python files to run the script | 
 | logs | consists of log files for each cycle. e.g. log_2024-12-21_14-51-48.log | 
 
-| File    | Description |
+| Files    | Description |
 | -------- | ------- |
 | 1. DataCollection.ipynb | Jupyter Notebook showing data collection process |
 | 2. Transformation.ipynb | Jupyter Notebook showing data transformation process |
