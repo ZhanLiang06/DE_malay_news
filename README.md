@@ -16,11 +16,12 @@
 3. Start **dfs, yarn, zookeeper and kafka server services** (basically the first step in Practical 5)
 4. su - student (switch to student)
 5. Place DE_malay_news folder in your student home directory
-6. **Run the DE_malay_news/setup.sh** file at python virtual environment setup duirng practical class
-7. Navigate to config.json file under DE_malay_news
-8. Upate the value with your neo4j credentials and when you wish to start scrap the data from.
-9. (Optional) set ideal number of peribahasa to register in neo4j
-10. Before running the script
+6. Activate your de-venv, (python virtual environment)
+7. **Run the DE_malay_news/setup.sh** file at python virtual environment setup duirng practical class
+8. Navigate to config.json file under DE_malay_news
+9. Upate the value with your neo4j credentials and when you wish to start scrap the data from.
+10. (Optional) set ideal number of peribahasa to register in neo4j
+11. Before running the script
     i. make sure that the neo4j database provided is empty to ensure data relevancy.
    ii. make sure your hdfs doesn't have DE-prj folder _if this is your first run_.
   
