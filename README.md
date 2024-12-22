@@ -33,6 +33,7 @@
    - Then the pipeline will be run at background.
    - To view the real-time output, navigate to DE_malay_news/logs, find the latest created log files
    - Then, fire this command `tail -f <the latest log file file path>`
+   For the first time schedule, if you found out there is output "no crontab for user" after you ran the .sh file with valid input, just ignore it, it stil successfully registed to crontab, you crontab -e to verify it.
 
    #### **Option 2**: schedule the run-lexicraft.sh file yourself on crontab using `crontab -e` **(most ideal way)**
    - **Note that, you must follow this format to schedule the run.
