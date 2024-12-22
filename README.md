@@ -1,13 +1,14 @@
 # Good Day User!!
-[Setup To Run this Data Engineering System (Lexicon Construction)](#setup-to-run-this-data-engineering-system-lexicon-construction)
+## Sections
+1. [Setup To Run this Data Engineering System (Lexicon Construction)](#setup-to-run-this-data-engineering-system-lexicon-construction)
 
-[Run the script](#run-the-script)
+2. [Run the script](#run-the-script)
 
-[View the analysis output](#view-the-analysis-output)
+3. [View the analysis output](#view-the-analysis-output)
 
-[Access the lexicon](#access-the-lexicon-without-directly-go-to-neo4j-database-website)
+4. [Access the lexicon](#access-the-lexicon-without-directly-go-to-neo4j-database-website)
 
-[Folder Strucutre](#folder-strucutre)
+5. [Folder Strucutre](#folder-strucutre)
 
 ## Setup To Run this Data Engineering System (Lexicon Construction):
 1. Get your distro ready!
