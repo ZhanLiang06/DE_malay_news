@@ -1,5 +1,5 @@
-## Good Day User!!
-### To Run this Data Engineering System (Lexicon Construction):
+# Good Day User!!
+## Setup To Run this Data Engineering System (Lexicon Construction):
 1. Get your distro ready!
 
    i. Make sure you imported the latest distro provided by Choo Jun (release: 1.0.0.20241114)
@@ -16,7 +16,7 @@
     i. make sure that the neo4j database provided is empty to ensure data relevancy.
    ii. make sure your hdfs doesn't have DE-prj folder _if this is your first run_.
   
-10. Run the script:
+## Run the script:
 
    #### **Option 1**: run the bash file `schedule-run.sh` with argument format **(most ideal way)**
    `./schedule-run.sh <max_number_of_links_to_scrap - optional> <cron schedule ("* * * * *")>`
