@@ -26,7 +26,7 @@
    ii. make sure your hdfs doesn't have DE-prj folder _if this is your first run_.
   
 ## Run the script:
-   Before proceeding to Option 1, and 2, create a crontab for linux user first
+   Before proceeding to Option 1, and 2, create a crontab for linux user first.
    #### **Option 1**: run the bash file `schedule-run.sh` with argument format **(most ideal way)**
    - `./schedule-run.sh <max_number_of_links_to_scrap - optional> <cron schedule ("* * * * *")>`
    - e.g. - `./schedule-run.sh 1 "30 * * * *"`
@@ -43,6 +43,14 @@
    #### **Option 3**: run the bash file `run-lexicraft.sh` with argument format
    - `./schedule-run.sh <max_number_of_links_to_scrap - optional>`
    - This only will run one cycle of lexicon construction
+
+
+   ##### Note that the cycle might crash due to hardware dependencies. If the log files show that pyspark error, it's mostly due to hardware dependecies.
+   By changing the number of partitions, in the code, you might be able to run one cycle.
+
+   
+   ##### Note when you run on the first time on fresh distro or machine, you may encounter hadoop map reduce function stucking. 
+   If you encounter this issue, you have to rerun the cycle again. The issue that process stuck on Hadoop MapReduce should be solved.
 
 ## View the analysis output
 Note, there only will have analysis output when analysis is ran during the cycle or manually run on notebook "4. LexiconAnalysis.ipynb"
